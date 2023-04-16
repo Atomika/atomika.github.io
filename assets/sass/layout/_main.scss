@@ -8,11 +8,11 @@
 		@include vendor('justify-content', 'center');
 		@include vendor('flex-direction', 'column');
 		position: relative;
-		max-width: 300%;
+		max-width: 100%;
 		z-index: 3;
 
 		article {
-			@include vendor('transform', 'translateY(0.25rem)');
+			@include vendor('transform', 'translateY(1rem)');
 			@include vendor('transition', (
 				'opacity #{_duration(article)} ease-in-out',
 				'transform #{_duration(article)} ease-in-out'
@@ -20,7 +20,7 @@
 			@include padding(2.5rem, 2.5rem, (2rem, 0, 1rem, 0));
 			position: relative;
 			width: 40rem;
-			max-width: 300%;
+			max-width: 100%;
 			background-color: transparentize(_palette(bg), 0.15);
 			border-radius: _size(border-radius);
 			opacity: 0;
