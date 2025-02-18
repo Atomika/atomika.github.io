@@ -1618,15 +1618,7 @@ input, select, textarea {
 
 		}
 
-/* Adjust the panel size for the Work page */
-#work .image.main {
-    width: 100%; 2150px
-    height: auto;
-}
-
-#work p {
-    font-size: 1.2rem; /* Example: Adjust text size */
-}
+		
 
 /* Footer */
 
@@ -1664,3 +1656,16 @@ input, select, textarea {
 		body.is-preload #footer {
 			opacity: 0;
 		}
+
+/* Adjust the panel size for the Work page */
+#work {
+    width: 50rem !important;
+    max-width: 100% !important;
+    height: auto !important;
+    padding: 3rem !important;
+}
+
+article#work {
+    width: 50rem !important;
+    padding: 3rem !important;
+}
