@@ -1618,6 +1618,17 @@ input, select, textarea {
 
 		}
 
+
+
+
+/* Adjust panel size for Work Page*/
+#work {
+	width: 50rem; 1000px
+	max-width: 100%
+	height: auto;
+	padding: 3rem;
+}
+
 /* Footer */
 
 	#footer {
