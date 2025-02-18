@@ -1664,8 +1664,3 @@ input, select, textarea {
     height: auto !important;
     padding: 3rem !important;
 }
-
-article#work {
-    width: 50rem !important;
-    padding: 3rem !important;
-}
