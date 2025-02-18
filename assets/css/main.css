@@ -1672,13 +1672,13 @@ article#work {
 
 /* Adjust the panel size for the about page */
 #about {
-    width: 75rem !important;
+    width: 60rem !important;
     max-width: 100% !important;
     height: auto !important;
     padding: 2rem !important;
 }
 
 article#about {
-    width: 75rem% !important;
+    width: 60rem% !important;
     padding: 2rem !important;
 }
