@@ -1659,13 +1659,26 @@ input, select, textarea {
 
 /* Adjust the panel size for the Work page */
 #work {
-    width: 100rem !important;
+    width: 90% !important;
     max-width: 100% !important;
     height: auto !important;
-    padding: 3rem !important;
+    padding: 1rem !important;
 }
 
 article#work {
-    width: 100rem !important;
-    padding: 3rem !important;
+    width: 90% !important;
+    padding: 1rem !important;
+}
+
+/* Adjust the panel size for the about page */
+#about {
+    width: 75rem !important;
+    max-width: 100% !important;
+    height: auto !important;
+    padding: 2rem !important;
+}
+
+article#about {
+    width: 75rem% !important;
+    padding: 2rem !important;
 }
