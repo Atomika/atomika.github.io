@@ -1679,13 +1679,9 @@ body.is-preload #bg:before {
     max-width: 100% !important;
     height: auto !important;
     padding: 1rem !important;
-	background-color: transparent !important;
+	background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-article#work {
-    width: 80% !important;
-    padding: 1rem !important;
-}
 
 
 
