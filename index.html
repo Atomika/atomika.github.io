@@ -424,43 +424,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<div id="bg"></div>
 
 
-		<!-- changing background -->
-			<script>
-				document.addEventListener("DOMContentLoaded", function () {
-					console.log("Script loaded successfully!"); // Debugging
-			
-					// Background image for the Work section
-					const workBackground = "images/pic02.jpg";
-			
-					function changeBackground() {
-						console.log("Checking active section...");
-						const activeArticle = document.querySelector("article.active");
-			
-						if (activeArticle) {
-							console.log("Active section ID:", activeArticle.id);
-						}
-			
-						if (activeArticle && activeArticle.id === "work") {
-							let bgElement = document.getElementById("bg");
-							if (bgElement) {
-								console.log("Changing background to:", workBackground);
-								bgElement.style.backgroundImage = `url('${workBackground}')`;
-							} else {
-								console.log("Error: #bg element not found!");
-							}
-						}
-					}
-			
-					// MutationObserver to detect section changes
-					const observer = new MutationObserver(changeBackground);
-					observer.observe(document.getElementById("wrapper"), { childList: true, subtree: true });
-			
-					console.log("Observer setup complete.");
-				});
-			</script>
-
-
-
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
@@ -468,6 +431,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="assets/js/background.js"></script>
+
 
 
 
