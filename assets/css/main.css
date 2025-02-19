@@ -1117,9 +1117,13 @@ input, select, textarea {
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
+
+    /* Fade-in effect */
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* Keeps the gradient overlay but removes static background image */
+/* Restore gradient overlay but remove static background image */
 #bg:before {
     -moz-transition: background-color 2.5s ease-in-out;
     -webkit-transition: background-color 2.5s ease-in-out;
@@ -1129,7 +1133,7 @@ input, select, textarea {
     -webkit-transition-delay: 0.75s;
     -ms-transition-delay: 0.75s;
     transition-delay: 0.75s;
-    
+
     background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("../../images/overlay.png");
     background-size: auto, 256px 256px;
     background-position: center, center;
@@ -1137,7 +1141,7 @@ input, select, textarea {
     z-index: 2;
 }
 
-/* Scaling & transitions remain but remove static background */
+/* Keep the scaling & transitions */
 #bg:after {
     -moz-transform: scale(1.125);
     -webkit-transform: scale(1.125);
@@ -1147,13 +1151,13 @@ input, select, textarea {
     -webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out;
     -ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
     transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
-    
+
     /* REMOVE background-image so JavaScript can control it */
     background: none;
     z-index: 1;
 }
 
-/* Keeps the blur effect when transitioning into articles */
+/* Blur effect when transitioning into articles */
 body.is-article-visible #bg:after {
     -moz-transform: scale(1.0825);
     -webkit-transform: scale(1.0825);
@@ -1170,6 +1174,11 @@ body.is-preload #bg:before {
     background-color: #000000;
 }
 
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
 /* Wrapper */
 
