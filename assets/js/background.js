@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const bgElement = document.getElementById("bg");
+    const bgElementAlt = document.getElementById("bgAlt"); // A second background element for cross-fade
 
-    if (bgElement) {
+    if (bgElement && bgElementAlt) {
         const backgrounds = [
             "images/bg.jpg",
             "images/bg2.jpg",
@@ -21,20 +22,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Start by fading out the current background
-            bgElement.style.opacity = 0;
+            // Reset opacity for cross-fade effect
+            bgElement.style.opacity = 0;  // Fade out the current background
+            bgElementAlt.style.opacity = 1; // Make the alternate background fully visible
 
-            // Trigger reflow to reset the background
+            // Trigger reflow to apply the background change
             bgElement.offsetHeight; // Trigger reflow
 
-            // Change the background image
-            bgElement.style.backgroundImage = `url('${selectedBg}')`;
+            // Set the new background image to the second element (for the cross-fade effect)
+            bgElementAlt.style.backgroundImage = `url('${selectedBg}')`;
 
-            // Reapply fade-in effect after a short delay
+            // Reapply fade-in effect for the main background element
             setTimeout(() => {
-                bgElement.style.transition = "opacity 2s ease-in-out";  // Slow opacity transition
+                bgElement.style.transition = "opacity 2s ease-in-out";  // Smooth opacity transition
                 bgElement.style.opacity = 1;  // Fade in the new background
-            }, 50);  // Short delay to apply the transition after setting the new image
+
+                // After fading in the main background, reset the alt background
+                bgElementAlt.style.opacity = 0;
+            }, 50);  // Small delay for the transition to kick in
 
             // Apply defocus (blur) effect to ensure it's visible
             const bgAfterElement = document.getElementById("bg:after");
@@ -70,6 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(changeBackground, 500); // Ensures background is updated on initial page load if there's a hash
         }
     } else {
-        console.log("Error: #bg element not found!");
+        console.log("Error: #bg or #bgAlt element not found!");
     }
 });
