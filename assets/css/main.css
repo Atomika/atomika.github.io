@@ -1709,25 +1709,26 @@ article#about {
 /* Grid container for work images */
 .work-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr); /* Exactly 6 columns */
-    grid-template-rows: repeat(3, 1fr); /* Exactly 3 rows */
+    grid-template-columns: repeat(6, 100px); /* 6 columns, each 100px wide */
+    grid-template-rows: repeat(3, 100px); /* 3 rows, each 100px tall */
     gap: 10px; /* Space between images */
+    justify-content: center; /* Center the grid */
+    align-items: center; /* Center images inside their cells */
     padding: 10px;
-    width: 100%; /* Make sure the grid stays responsive */
-    max-width: 1200px; /* Optional: Set max width for better scaling */
-    margin: 0 auto; /* Center the grid */
+    width: fit-content; /* Ensure the grid only takes up necessary space */
+    margin: 0 auto; /* Center the entire grid */
 }
 
-/* Make all images fit neatly within grid cells */
+/* Make all images fit neatly within the grid cells */
 .work-grid img {
-    width: 100%; /* Fill the entire grid cell */
-    height: 180px; /* Fixed height to keep a uniform aspect ratio */
-    object-fit: cover; /* Ensure images fit without distortion */
+    width: 100px; /* Exact width of the grid cell */
+    height: 100px; /* Exact height of the grid cell */
+    object-fit: cover; /* Crop images to fill the square */
     border-radius: 6px; /* Optional: Adds rounded corners */
     transition: transform 0.3s ease-in-out; /* Smooth hover effect */
 }
 
 /* Hover effect */
 .work-grid img:hover {
-    transform: scale(1.03); /* Slight zoom effect */
+    transform: scale(1.05); /* Slight zoom effect */
 }
