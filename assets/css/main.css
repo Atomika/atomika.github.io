@@ -1705,25 +1705,24 @@ article#about {
     padding: 2rem !important;
 
 
-
 /* Grid container for work images */
 .work-grid {
     display: grid;
     grid-template-columns: repeat(6, 100px); /* 6 columns, each 100px wide */
     grid-template-rows: repeat(3, 100px); /* 3 rows, each 100px tall */
     gap: 10px; /* Space between images */
-    justify-content: center; /* Center the grid */
-    align-items: center; /* Center images inside their cells */
+    justify-content: center; /* Center the grid horizontally */
+    align-items: center; /* Center items in each grid cell */
     padding: 10px;
-    width: fit-content; /* Ensure the grid only takes up necessary space */
+    width: fit-content; /* Make grid only as wide as needed */
     margin: 0 auto; /* Center the entire grid */
 }
 
-/* Make all images fit neatly within the grid cells */
+/* Force all images to be 100px x 100px */
 .work-grid img {
-    width: 100px; /* Exact width of the grid cell */
-    height: 100px; /* Exact height of the grid cell */
-    object-fit: cover; /* Crop images to fill the square */
+    width: 100px !important; /* Force exact width */
+    height: 100px !important; /* Force exact height */
+    object-fit: cover !important; /* Ensure images fit properly */
     border-radius: 6px; /* Optional: Adds rounded corners */
     transition: transform 0.3s ease-in-out; /* Smooth hover effect */
 }
