@@ -1111,7 +1111,7 @@ input, select, textarea {
     left: 0;
     width: 100%;
     height: 100vh;
-    z-index: 1;
+    z-index: -1; /* Ensure it's behind the content */
 
     /* Ensure JavaScript can control background */
     background-size: cover !important;
@@ -1123,8 +1123,15 @@ input, select, textarea {
     animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* Restore gradient overlay but remove static background image */
+/* Restoring the overlay image with the gradient for the background */
 #bg:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
     -moz-transition: background-color 2.5s ease-in-out;
     -webkit-transition: background-color 2.5s ease-in-out;
     -ms-transition: background-color 2.5s ease-in-out;
@@ -1134,30 +1141,23 @@ input, select, textarea {
     -ms-transition-delay: 0.75s;
     transition-delay: 0.75s;
 
+    /* Apply gradient + overlay image */
     background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("../../images/overlay.png");
-    background-size: auto, 256px 256px;
+    background-size: auto, 256px 256px;  /* Gradient + image sizes */
     background-position: center, center;
     background-repeat: no-repeat, repeat;
-    z-index: 2;
+    z-index: 2; /* Make sure overlay stays on top of the background */
 }
 
-/* Keep the scaling & transitions */
+/* Correcting brightness on #bg:after (no additional brightness needed) */
 #bg:after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    z-index: 1;
 
-    /* Copy the background from #bg */
-    background-image: inherit;
-
-    /* Restore the scaling & blur effect */
     -moz-transform: scale(1.125);
     -webkit-transform: scale(1.125);
     -ms-transform: scale(1.125);
@@ -1167,12 +1167,12 @@ input, select, textarea {
     -ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
     transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
 
-	filter: brightness(0.8); /* Adjust brightness */
-	background: none;
+    /* REMOVE any additional brightness or filter effects */
+    background: none;
     z-index: 1;
 }
 
-/* Apply blur when transitioning into articles */
+/* Ensure blur effect is preserved */
 body.is-article-visible #bg:after {
     -moz-transform: scale(1.0825);
     -webkit-transform: scale(1.0825);
@@ -1184,7 +1184,6 @@ body.is-article-visible #bg:after {
     filter: blur(0.2rem);
 }
 
-
 /* Preload background effect */
 body.is-preload #bg:before {
     background-color: #000000;
@@ -1195,6 +1194,7 @@ body.is-preload #bg:before {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
 
 /* Wrapper */
 
