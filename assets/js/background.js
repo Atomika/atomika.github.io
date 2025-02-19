@@ -24,14 +24,24 @@ document.addEventListener("DOMContentLoaded", function () {
         // Initial background change on page load
         changeBackground();
 
-        // Listen for article navigation (clicking a new article)
-        const articleLinks = document.querySelectorAll("article a"); // Assuming articles have links
+        // Listen for clicks on article links (if they exist)
+        const articleLinks = document.querySelectorAll("article a");
 
         articleLinks.forEach(link => {
             link.addEventListener("click", function () {
-                setTimeout(changeBackground, 500); // Small delay to ensure background changes after article is shown
+                setTimeout(changeBackground, 500); // Slight delay after clicking an article link
             });
         });
+
+        // Listen for hash changes in the URL (for internal navigation)
+        window.addEventListener("hashchange", function () {
+            setTimeout(changeBackground, 500); // Change background when navigating between articles via anchor links
+        });
+
+        // Trigger the background change when an article is selected from the main page (hash in the URL)
+        if (window.location.hash) {
+            setTimeout(changeBackground, 500); // Ensures background is updated on initial page load if there's a hash
+        }
     } else {
         console.log("Error: #bg element not found!");
     }
