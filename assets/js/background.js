@@ -8,25 +8,44 @@ document.addEventListener("DOMContentLoaded", function () {
             "images/pic02.jpg"
         ];
 
+        let lastBackgroundIndex = -1; // Variable to track the last selected background
+
         // Function to change the background and apply fade-in and defocus
         function changeBackground() {
-            const randomIndex = Math.floor(Math.random() * backgrounds.length);
+            let randomIndex;
+
+            // Ensure the new background is different from the last one
+            do {
+                randomIndex = Math.floor(Math.random() * backgrounds.length);
+            } while (randomIndex === lastBackgroundIndex); // Loop until a different image is selected
+
             const selectedBg = backgrounds[randomIndex];
 
-            // Ensure fade-in animation starts fresh
-            bgElement.style.opacity = 0; // Reset opacity to 0 before fade-in
+            // Reset opacity to trigger fade-in
+            bgElement.style.opacity = 0;
+
+            // Reset background image to force animation
+            bgElement.style.backgroundImage = "none";
+
+            // Trigger reflow to apply the background change
+            bgElement.offsetHeight; // Trigger reflow
 
             // Change the background image
             bgElement.style.backgroundImage = `url('${selectedBg}')`;
 
-            // Trigger the fade-in animation
-            bgElement.style.animation = "fadeIn 1.5s ease-in-out forwards";
+            // Reapply fade-in animation
+            bgElement.style.animation = "none";  // Reset animation
+            bgElement.offsetHeight; // Trigger reflow again
+            bgElement.style.animation = "fadeIn 1.5s ease-in-out forwards"; // Apply animation
 
-            // Reapply defocus effect
+            // Apply defocus (blur) effect to ensure it's visible
             const bgAfterElement = document.getElementById("bg:after");
             if (bgAfterElement) {
-                bgAfterElement.style.filter = "blur(0.2rem)"; // Reapply blur to ensure defocus effect
+                bgAfterElement.style.filter = "blur(0.2rem)"; // Ensure blur is reapplied
             }
+
+            // Update the last background index
+            lastBackgroundIndex = randomIndex;
 
             console.log("Background set to:", selectedBg);
         }
