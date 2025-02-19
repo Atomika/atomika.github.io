@@ -423,6 +423,46 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 		<!-- BG -->
 			<div id="bg"></div>
 
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+					console.log("Debug: Script loaded!"); 
+			
+					const workBackground = "images/pic02.jpg";
+			
+					function changeBackground() {
+						console.log("Debug: Checking active section...");
+						const activeArticle = document.querySelector("article.active");
+			
+						if (activeArticle) {
+							console.log("Debug: Active section ID:", activeArticle.id);
+						}
+			
+						if (activeArticle && activeArticle.id === "work") {
+							let bgElement = document.getElementById("bg");
+							if (bgElement) {
+								console.log("Debug: Changing background to:", workBackground);
+								bgElement.style.backgroundImage = `url('${workBackground}')`;
+							} else {
+								console.log("Debug: Error - #bg element not found!");
+							}
+						}
+					}
+			
+					// Check background change when "Work" is active
+					document.querySelectorAll("article").forEach(article => {
+						article.addEventListener("click", function () {
+							changeBackground();
+						});
+					});
+			
+					console.log("Debug: Script setup complete.");
+				});
+			</script>
+			
+
+
+
+
 
 
 		<!-- Scripts -->
