@@ -8,8 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
             "images/pic02.jpg"
         ];
 
+        // Store the last used background in session storage to avoid repetition
+        let lastBackgroundIndex = sessionStorage.getItem("lastBgIndex");
+
         function changeBackground() {
-            const randomIndex = Math.floor(Math.random() * backgrounds.length);
+            let randomIndex;
+
+            // Ensure a different background from last time
+            do {
+                randomIndex = Math.floor(Math.random() * backgrounds.length);
+            } while (randomIndex == lastBackgroundIndex);
+
             const selectedBg = backgrounds[randomIndex];
 
             // Fade out before changing the background
@@ -22,6 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Fade it back in
                 bgElement.style.animation = "fadeIn 1.5s ease-in-out forwards";
                 console.log("Background set to:", selectedBg);
+
+                // Save the new background index to session storage
+                sessionStorage.setItem("lastBgIndex", randomIndex);
             }, 500); // Small delay before changing the background
         }
 
