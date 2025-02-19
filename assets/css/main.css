@@ -1111,19 +1111,19 @@ input, select, textarea {
     left: 0;
     width: 100%;
     height: 100vh;
-    z-index: -1; /* Ensure it's behind the content */
+    z-index: -1; /* Keep it behind content */
 
     /* Ensure JavaScript can control background */
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
 
-    /* Fade-in effect */
+    /* Apply fade-in effect smoothly */
     opacity: 0;
     animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* Restoring the overlay image with the gradient for the background */
+/* Background overlay */
 #bg:before {
     content: '';
     position: absolute;
@@ -1131,25 +1131,20 @@ input, select, textarea {
     left: 0;
     width: 100%;
     height: 100%;
-    
-    -moz-transition: background-color 2.5s ease-in-out;
-    -webkit-transition: background-color 2.5s ease-in-out;
-    -ms-transition: background-color 2.5s ease-in-out;
-    transition: background-color 2.5s ease-in-out;
-    -moz-transition-delay: 0.75s;
-    -webkit-transition-delay: 0.75s;
-    -ms-transition-delay: 0.75s;
-    transition-delay: 0.75s;
 
-    /* Apply gradient + overlay image */
+    /* Transition for background change */
     background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("../../images/overlay.png");
-    background-size: auto, 256px 256px;  /* Gradient + image sizes */
+    background-size: auto, 256px 256px;
     background-position: center, center;
     background-repeat: no-repeat, repeat;
-    z-index: 2; /* Make sure overlay stays on top of the background */
+    z-index: 2;
+
+    /* Smooth fade-in effect for background image */
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* Correcting brightness on #bg:after (no additional brightness needed) */
+/* Apply scaling to the background */
 #bg:after {
     content: '';
     position: absolute;
@@ -1157,22 +1152,21 @@ input, select, textarea {
     left: 0;
     width: 100%;
     height: 100%;
-
+    
     -moz-transform: scale(1.125);
     -webkit-transform: scale(1.125);
     -ms-transform: scale(1.125);
     transform: scale(1.125);
-    -moz-transition: -moz-transform 0.325s ease-in-out, -moz-filter 0.325s ease-in-out;
-    -webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out;
-    -ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
-    transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
+    -moz-transition: -moz-transform 0.325s ease-in-out;
+    -webkit-transition: -webkit-transform 0.325s ease-in-out;
+    -ms-transition: -ms-transform 0.325s ease-in-out;
+    transition: transform 0.325s ease-in-out;
 
-    /* REMOVE any additional brightness or filter effects */
     background: none;
     z-index: 1;
 }
 
-/* Ensure blur effect is preserved */
+/* Blur effect when transitioning into articles */
 body.is-article-visible #bg:after {
     -moz-transform: scale(1.0825);
     -webkit-transform: scale(1.0825);
@@ -1194,7 +1188,6 @@ body.is-preload #bg:before {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-
 
 /* Wrapper */
 
