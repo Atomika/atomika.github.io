@@ -1,4 +1,3 @@
-<script>
 document.addEventListener("DOMContentLoaded", function () {
     const bgElement = document.getElementById("bg");
 
@@ -21,4 +20,3 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Error: #bg element not found!");
     }
 });
-</script>
