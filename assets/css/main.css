@@ -1704,26 +1704,25 @@ article#about {
     height: auto !important;
     padding: 2rem !important;
 
-
-/* Grid container for work images */
+	
+/* Grid container inside 'work' article */
 .work-grid {
     display: grid;
-    grid-template-columns: repeat(6, 100px); /* 6 columns, each 100px wide */
-    grid-template-rows: repeat(3, 100px); /* 3 rows, each 100px tall */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Dynamic grid based on available space */
     gap: 10px; /* Space between images */
-    justify-content: center; /* Center the grid horizontally */
-    align-items: center; /* Center items in each grid cell */
     padding: 10px;
-    width: fit-content; /* Make grid only as wide as needed */
-    margin: 0 auto; /* Center the entire grid */
+    width: 100%; /* Ensure it fits within the article */
+    max-width: 800px; /* Prevent it from becoming too wide */
+    margin: 0 auto; /* Center within the article */
 }
 
-/* Force all images to be 100px x 100px */
+/* Make all images fit neatly within grid cells */
 .work-grid img {
-    width: 100px !important; /* Force exact width */
-    height: 100px !important; /* Force exact height */
-    object-fit: cover !important; /* Ensure images fit properly */
-    border-radius: 6px; /* Optional: Adds rounded corners */
+    width: 100%; /* Ensure images fill their grid cell */
+    max-width: 120px; /* Set a max width for uniform sizing */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Crop images to fill space without stretching */
+    border-radius: 6px; /* Optional: Rounded corners */
     transition: transform 0.3s ease-in-out; /* Smooth hover effect */
 }
 
