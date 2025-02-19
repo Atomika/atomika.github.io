@@ -1118,12 +1118,12 @@ input, select, textarea {
     background-position: center !important;
     background-repeat: no-repeat !important;
 
-    /* Apply fade-in effect smoothly */
+    /* Fade-in effect */
     opacity: 0;
     animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* Background overlay */
+/* Background overlay applied to the background only */
 #bg:before {
     content: '';
     position: absolute;
@@ -1131,20 +1131,20 @@ input, select, textarea {
     left: 0;
     width: 100%;
     height: 100%;
-
-    /* Transition for background change */
+    
+    /* Transition for background changes */
     background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("../../images/overlay.png");
     background-size: auto, 256px 256px;
     background-position: center, center;
     background-repeat: no-repeat, repeat;
-    z-index: 2;
+    z-index: 2; /* Ensure overlay stays on top of the background */
 
-    /* Smooth fade-in effect for background image */
+    /* Fade-in effect for overlay image */
     opacity: 0;
     animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* Apply scaling to the background */
+/* #bg:after applies blur and scaling effects */
 #bg:after {
     content: '';
     position: absolute;
@@ -1160,22 +1160,12 @@ input, select, textarea {
     -moz-transition: -moz-transform 0.325s ease-in-out;
     -webkit-transition: -webkit-transform 0.325s ease-in-out;
     -ms-transition: -ms-transform 0.325s ease-in-out;
-    transition: transform 0.325s ease-in-out;
+    transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
 
+    /* Apply blur effect */
+    filter: blur(0.2rem);
     background: none;
     z-index: 1;
-}
-
-/* Blur effect when transitioning into articles */
-body.is-article-visible #bg:after {
-    -moz-transform: scale(1.0825);
-    -webkit-transform: scale(1.0825);
-    -ms-transform: scale(1.0825);
-    transform: scale(1.0825);
-    -moz-filter: blur(0.2rem);
-    -webkit-filter: blur(0.2rem);
-    -ms-filter: blur(0.2rem);
-    filter: blur(0.2rem);
 }
 
 /* Preload background effect */
@@ -1188,6 +1178,13 @@ body.is-preload #bg:before {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+/* Ensure content is unaffected by background changes */
+article {
+    position: relative; /* Keeps content above background */
+    z-index: 1; /* Ensure content stays on top */
+}
+
 
 /* Wrapper */
 
