@@ -1121,7 +1121,7 @@ input, select, textarea {
 
     /* Apply fade-in effect smoothly */
     opacity: 0;
-    animation: fadeIn 1.5s ease-in-out forwards;
+    animation: fadeIn 4s ease-in-out forwards;
 }
 
 /* Background overlay */
@@ -1142,7 +1142,7 @@ input, select, textarea {
 
     /* Smooth fade-in effect for background image */
     opacity: 0;
-    animation: fadeIn 1.5s ease-in-out forwards;
+    animation: fadeIn 4s ease-in-out forwards;
 }
 
 /* Apply scaling to the background */
