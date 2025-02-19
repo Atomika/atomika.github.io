@@ -1703,3 +1703,29 @@ article#about {
     max-width: 100% !important;
     height: auto !important;
     padding: 2rem !important;
+
+
+
+/* Grid container for work images */
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* Force 6 columns per row */
+    grid-template-rows: repeat(3, auto); /* 3 rows, height adjusts to content */
+    gap: 10px; /* Space between images */
+    padding: 10px;
+    justify-content: center;
+}
+
+/* Make all images fit equally within the grid */
+.work-grid img {
+    width: 100%; /* Fill grid cell width */
+    height: 200px; /* Set a fixed height to align all images */
+    object-fit: cover; /* Crop and fit images to avoid stretching */
+    border-radius: 8px; /* Optional: Adds rounded corners */
+    transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+/* Hover effect */
+.work-grid img:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
