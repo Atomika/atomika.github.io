@@ -1709,23 +1709,25 @@ article#about {
 /* Grid container for work images */
 .work-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr); /* Force 6 columns per row */
-    grid-template-rows: repeat(3, auto); /* 3 rows, height adjusts to content */
+    grid-template-columns: repeat(6, 1fr); /* Exactly 6 columns */
+    grid-template-rows: repeat(3, 1fr); /* Exactly 3 rows */
     gap: 10px; /* Space between images */
     padding: 10px;
-    justify-content: center;
+    width: 100%; /* Make sure the grid stays responsive */
+    max-width: 1200px; /* Optional: Set max width for better scaling */
+    margin: 0 auto; /* Center the grid */
 }
 
-/* Make all images fit equally within the grid */
+/* Make all images fit neatly within grid cells */
 .work-grid img {
-    width: 100%; /* Fill grid cell width */
-    height: 200px; /* Set a fixed height to align all images */
-    object-fit: cover; /* Crop and fit images to avoid stretching */
-    border-radius: 8px; /* Optional: Adds rounded corners */
+    width: 100%; /* Fill the entire grid cell */
+    height: 180px; /* Fixed height to keep a uniform aspect ratio */
+    object-fit: cover; /* Ensure images fit without distortion */
+    border-radius: 6px; /* Optional: Adds rounded corners */
     transition: transform 0.3s ease-in-out; /* Smooth hover effect */
 }
 
 /* Hover effect */
 .work-grid img:hover {
-    transform: scale(1.05); /* Slight zoom effect on hover */
+    transform: scale(1.03); /* Slight zoom effect */
 }
