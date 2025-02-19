@@ -1707,6 +1707,8 @@ article#about {
 
 /* Basic grid with two fixed-size images */
 .work-grid {
+	width: 80% !important;
+	,ax-width: 100% !important;
     display: grid;
     grid-template-columns: repeat(2, 150px); /* Exactly 2 columns, each 150px wide */
     gap: 10px; /* Space between images */
