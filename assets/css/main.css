@@ -1099,27 +1099,32 @@ input, select, textarea {
 		line-height: calc(2.75rem - 2px);
 	}
 
-/* Background Elements (Cross-Fade Setup) */
-#bg, #bgAlt {
+
+/* BG */
+#bg {
+    -moz-transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+    -ms-transform: scale(1.0);
+    transform: scale(1.0);
+    -webkit-backface-visibility: hidden;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: -1; /* Ensure background stays behind content */
-    opacity: 0;  /* Both start invisible for fade effect */
-    transition: opacity 2.5s ease-in-out;  /* Smooth cross-fade */
+    z-index: -1; /* Keep it behind content */
+
+    /* Ensure JavaScript can control background */
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+
+    /* Apply fade-in effect smoothly */
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* Alternate background for cross-fade effect */
-#bgAlt {
-    opacity: 0; /* Initially hidden */
-}
-
-/* Background Overlay (Keeps Darkened Effect) */
+/* Background overlay */
 #bg:before {
     content: '';
     position: absolute;
@@ -1127,16 +1132,20 @@ input, select, textarea {
     left: 0;
     width: 100%;
     height: 100%;
-    
-    /* Gradient overlay + texture (Ensures brightness consistency) */
-    background-image: linear-gradient(to top, rgba(19, 21, 25, 0.4), rgba(19, 21, 25, 0.4)), url("../../images/overlay.png");
+
+    /* Transition for background change */
+    background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("../../images/overlay.png");
     background-size: auto, 256px 256px;
     background-position: center, center;
     background-repeat: no-repeat, repeat;
     z-index: 2;
+
+    /* Smooth fade-in effect for background image */
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* Background Blur Effect */
+/* Apply scaling to the background */
 #bg:after {
     content: '';
     position: absolute;
@@ -1152,17 +1161,33 @@ input, select, textarea {
     -moz-transition: -moz-transform 0.325s ease-in-out;
     -webkit-transition: -webkit-transform 0.325s ease-in-out;
     -ms-transition: -ms-transform 0.325s ease-in-out;
-    transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
+    transition: transform 0.325s ease-in-out;
 
-    /* Blur effect */
-    filter: blur(0.2rem);
     background: none;
     z-index: 1;
 }
 
-/* Preload background effect (Prevents bright flash on page load) */
+/* Blur effect when transitioning into articles */
+body.is-article-visible #bg:after {
+    -moz-transform: scale(1.0825);
+    -webkit-transform: scale(1.0825);
+    -ms-transform: scale(1.0825);
+    transform: scale(1.0825);
+    -moz-filter: blur(0.2rem);
+    -webkit-filter: blur(0.2rem);
+    -ms-filter: blur(0.2rem);
+    filter: blur(0.2rem);
+}
+
+/* Preload background effect */
 body.is-preload #bg:before {
     background-color: #000000;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 
