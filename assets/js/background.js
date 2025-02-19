@@ -1,27 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Background script loaded!"); // Debugging
+    console.log("Background script loaded!");
 
-    const workBackground = "images/pic02.jpg"; // Set the background image
+    const workBackground = "images/pic02.jpg";
 
     function changeBackground() {
-        const activeArticle = document.querySelector("article.active");
-
-        if (activeArticle) {
-            console.log("Active section ID:", activeArticle.id);
-        }
-
-        if (activeArticle && activeArticle.id === "work") {
+        setTimeout(() => { // Delay to ensure it overrides other scripts
             let bgElement = document.getElementById("bg");
             if (bgElement) {
-                console.log("Changing background to:", workBackground);
-                bgElement.style.backgroundImage = `url('${workBackground}')`;
+                console.log("Forcing background change to:", workBackground);
+                bgElement.style.setProperty("background-image", `url('${workBackground}')`, "important");
             } else {
                 console.log("Error: #bg element not found!");
             }
-        }
+        }, 500); // Wait 0.5s to ensure override
     }
 
-    // Use MutationObserver to detect when "Work" becomes active
+    // MutationObserver to detect when "Work" becomes active
     const observer = new MutationObserver(changeBackground);
     observer.observe(document.getElementById("wrapper"), { childList: true, subtree: true });
 
