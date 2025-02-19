@@ -21,20 +21,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Fade out before changing the background
+            // Fade out smoothly before changing the background
+            bgElement.style.transition = "opacity 2s ease-in-out"; // Slower fade-out
             bgElement.style.opacity = "0";
 
             setTimeout(() => {
                 // Change the background image
                 bgElement.style.backgroundImage = `url('${selectedBg}')`;
 
-                // Fade it back in
-                bgElement.style.animation = "fadeIn 1.5s ease-in-out forwards";
+                // Fade it back in with a longer transition
+                bgElement.style.transition = "opacity 4s ease-in-out"; // Slower fade-in
+                bgElement.style.opacity = "1";
+
                 console.log("Background set to:", selectedBg);
 
                 // Save the new background index to session storage
                 sessionStorage.setItem("lastBgIndex", randomIndex);
-            }, 500); // Small delay before changing the background
+            }, 1500); // Delay before changing the background for a smoother transition
         }
 
         // Initial background change on page load
