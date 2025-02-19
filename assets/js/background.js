@@ -21,20 +21,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Apply fade effect using opacity and background transition
-            bgElement.style.opacity = 0;  // Start by fading out the current background
+            // Start by fading out the current background
+            bgElement.style.opacity = 0;
 
             // Trigger reflow to reset the background
             bgElement.offsetHeight; // Trigger reflow
 
-            // Change the background image (with a smooth fade)
+            // Change the background image
             bgElement.style.backgroundImage = `url('${selectedBg}')`;
 
-            // Reapply the fade-in effect after a slight delay
+            // Reapply fade-in effect after a short delay
             setTimeout(() => {
-                bgElement.style.transition = "opacity 1.5s ease-in-out";  // Smooth opacity transition
+                bgElement.style.transition = "opacity 2s ease-in-out";  // Slow opacity transition
                 bgElement.style.opacity = 1;  // Fade in the new background
             }, 50);  // Short delay to apply the transition after setting the new image
+
+            // Apply defocus (blur) effect to ensure it's visible
+            const bgAfterElement = document.getElementById("bg:after");
+            if (bgAfterElement) {
+                bgAfterElement.style.filter = "blur(0.2rem)"; // Reapply blur
+            }
 
             // Update the last background index
             lastBackgroundIndex = randomIndex;
