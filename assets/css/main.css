@@ -1705,21 +1705,25 @@ article#about {
     padding: 2rem !important;
 
 
-/* Basic grid with two fixed-size images */
+/* Basic grid with two test boxes */
 .work-grid {
-	width: 80% !important;
-	max-width: 100% !important;
     display: grid;
-    grid-template-columns: repeat(2, 150px); /* Exactly 2 columns, each 150px wide */
-    gap: 10px; /* Space between images */
-    justify-content: center; /* Center within the article */
+    grid-template-columns: repeat(2, 150px); /* Two fixed columns */
+    gap: 10px; /* Space between items */
+    justify-content: center; /* Center the grid */
     padding: 10px;
+    background-color: lightgray; /* Make grid area visible */
 }
 
-/* Force images to stay within grid cells */
-.work-grid img {
-    width: 150px; /* Set exact width */
-    height: 150px; /* Set exact height */
-    object-fit: cover !important; /* Ensure images fit properly without distortion */
-    border-radius: 6px; /* Optional: Rounded corners */
+/* Style for test boxes */
+.grid-box {
+    width: 150px;
+    height: 150px;
+    background-color: blue;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
 }
