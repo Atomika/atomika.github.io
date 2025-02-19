@@ -1696,38 +1696,37 @@ article#about {
     padding: 2rem !important;
 
 
-/* Work Article - Ensures Proper Sizing & Backdrop */
+/* Ensure Work article is properly formatted and transparent */
 #work {
     width: 80% !important;
     max-width: 100% !important;
     height: auto !important;
     padding: 1rem !important;
-    background-color: rgba(0, 0, 0, 0.2) !important; /* Semi-transparent backdrop */
+    background-color: rgba(0, 0, 0, 0.2) !important;
     display: flex;
-    flex-direction: column; /* Ensures content stacks correctly */
-    align-items: center; /* Centers the grid */
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
-/* Grid Container */
+/* Responsive Grid for Work article */
 .work-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Auto-responsive grid */
-    gap: 10px; /* Space between items */
-    width: 100%; /* Full width of the article */
-    max-width: 600px; /* Restricts size */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    width: 100%;
+    max-width: 600px; /* Adjust to fit within the article */
+    padding: 10px;
+    box-sizing: border-box;
 }
 
-/* Grid Box Styling - Responsive */
-.grid-box {
-    width: 100%; /* Flexible sizing */
-    aspect-ratio: 1 / 1; /* Keeps it square */
-    background-color: blue;
+/* Ensure grid items resize properly */
+.work-grid div {
+    background: blue;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(12px, 2vw, 20px); /* Scales text */
-    font-weight: bold;
-    border: 2px solid black;
+    font-size: 1rem;
+    height: 100px; /* Ensures they stay square */
 }
