@@ -433,36 +433,23 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 
 			<script>
-				// Define background images for different sections
-				const backgrounds = {
-					"work": "images/pic02.jpg",
-				};
-			
-				function changeBackground(sectionId) {
-					if (backgrounds[sectionId]) {
-						document.getElementById("bg").style.backgroundImage = `url('${backgrounds[sectionId]}')`;
-					}
-				}
-			
-				// Event listener to detect section changes
-				document.querySelectorAll("article").forEach(article => {
-					article.addEventListener("click", function () {
-						changeBackground(this.id);
-					});
-				});
-			
-				// Also update background when an article is opened via navigation
 				document.addEventListener("DOMContentLoaded", function () {
-					document.querySelectorAll("nav a").forEach(link => {
-						link.addEventListener("click", function (event) {
-							let sectionId = this.getAttribute("href").replace("#", ""); // Get section ID
-							changeBackground(sectionId);
-						});
-					});
+					// Set the background image only for the Work section
+					const workBackground = "images/pic02.jpg";
+			
+					function changeBackground() {
+						const activeArticle = document.querySelector("article.active");
+						if (activeArticle && activeArticle.id === "work") {
+							document.getElementById("bg").style.backgroundImage = `url('${workBackground}')`;
+						}
+					}
+			
+					// MutationObserver to detect when the Work section becomes active
+					const observer = new MutationObserver(changeBackground);
+					observer.observe(document.getElementById("wrapper"), { childList: true, subtree: true });
 				});
 			</script>
-
-
+			
 
 
 
