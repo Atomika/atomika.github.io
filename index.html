@@ -431,29 +431,34 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/main.js"></script>
 
 
-
 			<script>
 				document.addEventListener("DOMContentLoaded", function () {
-					// Set the background image only for the Work section
+					// Set the background image only for the "Work" section
 					const workBackground = "images/pic02.jpg";
 			
 					function changeBackground() {
 						const activeArticle = document.querySelector("article.active");
 						if (activeArticle && activeArticle.id === "work") {
-							document.getElementById("bg").style.backgroundImage = `url('${workBackground}')`;
+							let bgElement = document.getElementById("bg");
+							bgElement.style.backgroundImage = `url('${workBackground}')`;
+							
+							// Force the browser to recognize the change
+							bgElement.style.transition = "background 0.5s ease-in-out"; 
 						}
 					}
 			
-					// MutationObserver to detect when the Work section becomes active
+					// Use MutationObserver to detect when the "Work" section becomes active
 					const observer = new MutationObserver(changeBackground);
 					observer.observe(document.getElementById("wrapper"), { childList: true, subtree: true });
+			
+					// Also update when user navigates manually
+					document.querySelectorAll("nav a").forEach(link => {
+						link.addEventListener("click", function (event) {
+							setTimeout(changeBackground, 500); // Delay to ensure transition happens
+						});
+					});
 				});
 			</script>
-			
-
-
-
-
 
 
 
