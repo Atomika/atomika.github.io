@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let lastBackgroundIndex = -1; // Variable to track the last selected background
 
-        // Function to change the background and apply fade-in and defocus
+        // Function to change the background with a cross-fade effect
         function changeBackground() {
             let randomIndex;
 
@@ -21,28 +21,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Reset opacity to trigger fade-in
-            bgElement.style.opacity = 0;
+            // Apply fade effect using opacity and background transition
+            bgElement.style.opacity = 0;  // Start by fading out the current background
 
-            // Reset background image to force animation
-            bgElement.style.backgroundImage = "none";
-
-            // Trigger reflow to apply the background change
+            // Trigger reflow to reset the background
             bgElement.offsetHeight; // Trigger reflow
 
-            // Change the background image
+            // Change the background image (with a smooth fade)
             bgElement.style.backgroundImage = `url('${selectedBg}')`;
 
-            // Reapply fade-in animation
-            bgElement.style.animation = "none";  // Reset animation
-            bgElement.offsetHeight; // Trigger reflow again
-            bgElement.style.animation = "fadeIn 1.5s ease-in-out forwards"; // Apply animation
-
-            // Apply defocus (blur) effect to ensure it's visible
-            const bgAfterElement = document.getElementById("bg:after");
-            if (bgAfterElement) {
-                bgAfterElement.style.filter = "blur(0.2rem)"; // Ensure blur is reapplied
-            }
+            // Reapply the fade-in effect after a slight delay
+            setTimeout(() => {
+                bgElement.style.transition = "opacity 1.5s ease-in-out";  // Smooth opacity transition
+                bgElement.style.opacity = 1;  // Fade in the new background
+            }, 50);  // Short delay to apply the transition after setting the new image
 
             // Update the last background index
             lastBackgroundIndex = randomIndex;
