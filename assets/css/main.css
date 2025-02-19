@@ -1166,6 +1166,10 @@ input, select, textarea {
     -webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out;
     -ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
     transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
+
+	filter: brightness(0.8); /* Adjust brightness */
+	background: none;
+    z-index: 1;
 }
 
 /* Apply blur when transitioning into articles */
