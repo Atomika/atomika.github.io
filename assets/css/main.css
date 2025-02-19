@@ -1659,14 +1659,14 @@ input, select, textarea {
 
 /* Adjust the panel size for the Work page */
 #work {
-    width: 80% !important;
+    width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
     padding: 1rem !important;
 }
 
 article#work {
-    width: 80% !important;
+    width: 100% !important;
     padding: 1rem !important;
 }
 
