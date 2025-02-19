@@ -8,16 +8,26 @@ document.addEventListener("DOMContentLoaded", function () {
             "images/pic02.jpg"
         ];
 
-        // Function to change the background
+        // Function to change the background and apply fade-in and defocus
         function changeBackground() {
             const randomIndex = Math.floor(Math.random() * backgrounds.length);
             const selectedBg = backgrounds[randomIndex];
 
+            // Ensure fade-in animation starts fresh
+            bgElement.style.opacity = 0; // Reset opacity to 0 before fade-in
+
             // Change the background image
             bgElement.style.backgroundImage = `url('${selectedBg}')`;
 
-            // Fade-in effect
+            // Trigger the fade-in animation
             bgElement.style.animation = "fadeIn 1.5s ease-in-out forwards";
+
+            // Reapply defocus effect
+            const bgAfterElement = document.getElementById("bg:after");
+            if (bgAfterElement) {
+                bgAfterElement.style.filter = "blur(0.2rem)"; // Reapply blur to ensure defocus effect
+            }
+
             console.log("Background set to:", selectedBg);
         }
 
