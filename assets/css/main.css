@@ -1143,6 +1143,21 @@ input, select, textarea {
 
 /* Keep the scaling & transitions */
 #bg:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    z-index: 1;
+
+    /* Copy the background from #bg */
+    background-image: inherit;
+
+    /* Restore the scaling & blur effect */
     -moz-transform: scale(1.125);
     -webkit-transform: scale(1.125);
     -ms-transform: scale(1.125);
@@ -1151,13 +1166,9 @@ input, select, textarea {
     -webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out;
     -ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
     transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
-
-    /* REMOVE background-image so JavaScript can control it */
-    background: none;
-    z-index: 1;
 }
 
-/* Blur effect when transitioning into articles */
+/* Apply blur when transitioning into articles */
 body.is-article-visible #bg:after {
     -moz-transform: scale(1.0825);
     -webkit-transform: scale(1.0825);
@@ -1168,6 +1179,7 @@ body.is-article-visible #bg:after {
     -ms-filter: blur(0.2rem);
     filter: blur(0.2rem);
 }
+
 
 /* Preload background effect */
 body.is-preload #bg:before {
