@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Start by fading in the background immediately with a slow transition
-            bgElement.style.transition = "opacity 10s ease-in-out"; // Slow fade-in transition
+            // Start by fading in the background immediately with a slow start and fast end
+            bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1)"; // Slow start, fast end
             bgElement.style.opacity = "0"; // Start with opacity 0
 
             setTimeout(() => {
