@@ -433,33 +433,38 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 			<script>
 				document.addEventListener("DOMContentLoaded", function () {
-					// Set the background image only for the "Work" section
-					const workBackground = "images/pic02.jpg";
+					console.log("Script loaded successfully!"); // Debugging
+			
+					// Background image for the Work section
+					const workBackground = "images/bg01.jpg";
 			
 					function changeBackground() {
+						console.log("Checking active section...");
 						const activeArticle = document.querySelector("article.active");
+			
+						if (activeArticle) {
+							console.log("Active section ID:", activeArticle.id);
+						}
+			
 						if (activeArticle && activeArticle.id === "work") {
 							let bgElement = document.getElementById("bg");
-							bgElement.style.backgroundImage = `url('${workBackground}')`;
-							
-							// Force the browser to recognize the change
-							bgElement.style.transition = "background 0.5s ease-in-out"; 
+							if (bgElement) {
+								console.log("Changing background to:", workBackground);
+								bgElement.style.backgroundImage = `url('${workBackground}')`;
+							} else {
+								console.log("Error: #bg element not found!");
+							}
 						}
 					}
 			
-					// Use MutationObserver to detect when the "Work" section becomes active
+					// MutationObserver to detect section changes
 					const observer = new MutationObserver(changeBackground);
 					observer.observe(document.getElementById("wrapper"), { childList: true, subtree: true });
 			
-					// Also update when user navigates manually
-					document.querySelectorAll("nav a").forEach(link => {
-						link.addEventListener("click", function (event) {
-							setTimeout(changeBackground, 500); // Delay to ensure transition happens
-						});
-					});
+					console.log("Observer setup complete.");
 				});
 			</script>
-
+			
 
 
 
