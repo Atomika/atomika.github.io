@@ -1673,6 +1673,15 @@ body.is-preload #bg:before {
 			opacity: 0;
 		}
 
+/* Adjust the panel size for the Work page */
+#work {
+    width: 80% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    padding: 1rem !important;
+	background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
 
 
 /* Adjust the panel size for the about page */
@@ -1694,14 +1703,6 @@ article#about {
     max-width: 100% !important;
     height: auto !important;
     padding: 2rem !important;
-
-
-
-/* Adjust the panel size for the Work page */
-#work {
-    width: 80% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    padding: 1rem !important;
-    background-color: rgba(0, 0, 0, 0.2) !important;
 }
+
+	
