@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
             "images/pic05.jpg",
             "images/pic06.jpg",
             "images/pic07.jpg",
+            "images/pic08.jpg",
+            "images/pic09.jpg",
             "images/pic04.jpg"
         ];
 
