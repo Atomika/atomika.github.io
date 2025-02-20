@@ -1724,3 +1724,29 @@ html, body {
     box-sizing: border-box; /* Ensures padding/borders don't add extra width */
     max-width: 100vw; /* Prevents elements from exceeding viewport width */
 }
+
+
+
+/* Target only social icons inside the header */
+#header .icons {
+    opacity: 0; /* Start hidden */
+    transform: translateY(20px); /* Start slightly lower */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Smooth animation */
+}
+
+/* Make header icons visible when the page loads */
+body.loaded #header .icons {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover effect for header icons */
+#header .icons a {
+    display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#header .icons a:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
