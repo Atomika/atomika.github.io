@@ -1690,7 +1690,7 @@ body.is-preload #bg:before {
     max-width: 100% !important;
     height: auto !important;
     padding: 2rem !important;
-	background-color: rgba(0, 0, 0, 0.2) !important;
+	background-color: rgba(0, 0, 0, 0.4) !important;
 }
 
 article#about {
@@ -1704,7 +1704,7 @@ article#about {
     max-width: 100% !important;
     height: auto !important;
     padding: 2rem !important;
-	background-color: rgba(0, 0, 0, 0.2) !important;
+	background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 	
