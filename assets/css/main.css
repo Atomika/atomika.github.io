@@ -1705,37 +1705,3 @@ article#about {
     padding: 1rem !important;
     background-color: rgba(0, 0, 0, 0.2) !important;
 }
-
-
-
-/* Ensure Work article is properly formatted and transparent */
-#work {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.work-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(100px, 1fr)) !important;
-    gap: 10px;
-    padding: 10px;
-    background-color: lightgray !important;
-    border: 2px solid red !important;
-    width: 100% !important;
-    min-height: 200px !important; /* Ensures the grid is visible */
-}
-
-.grid-box {
-    background-color: blue !important;
-    color: white !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 20px !important;
-    font-weight: bold !important;
-    border: 2px solid black !important;
-    width: 100% !important;
-    aspect-ratio: 1 !important; /* Ensures square shape */
-}
