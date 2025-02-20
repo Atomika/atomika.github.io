@@ -1705,9 +1705,13 @@ article#about {
     max-width: 100% !important;
     height: auto !important;
     padding: 2rem !important;
-	background-color: rgba(0, 0, 0, 0.5) !important;
+	background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 	
 p{ margin: 0; }
 
+html, body {
+    min-height: 100vh; /* Ensures the page is always at least 100% of the viewport height */
+    overflow-y: scroll; /* Forces the scrollbar to be present */
+}
