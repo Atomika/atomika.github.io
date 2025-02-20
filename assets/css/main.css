@@ -1711,6 +1711,3 @@ article#about {
 	
 p{ margin: 0; }
 
-html {
-    overflow-y: scroll; /* Always show vertical scrollbar */
-}
