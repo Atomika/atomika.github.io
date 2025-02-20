@@ -4,8 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (bgElement) {
         const backgrounds = [
             "images/bg.jpg",
-            "images/bg2.jpg",
+            // "images/bg2.jpg",
             "images/pic02.jpg"
+            "images/pic04.jpg"
         ];
 
         // Store the last used background in session storage to avoid repetition
