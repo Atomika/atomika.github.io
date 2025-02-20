@@ -1701,7 +1701,7 @@ article#about {
 
 /* Adjust the panel size for the showreel page */
 #showreel {
-    width: 80rem !important;
+    width: 90% !important;
     max-width: 100% !important;
     height: auto !important;
     padding: 2rem !important;
