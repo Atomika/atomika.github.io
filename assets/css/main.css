@@ -1712,6 +1712,9 @@ article#about {
 p{ margin: 0; }
 
 html, body {
-    min-height: 100vh; /* Ensures the page is always at least 100% of the viewport height */
-    overflow-y: scroll; /* Forces the scrollbar to be present */
+    min-height: 100vh; /* Ensures full viewport height */
+    overflow-y: scroll; /* Forces vertical scrollbar */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+    margin: 0; /* Ensures no unwanted margins */
+    padding: 0; /* Removes any default padding */
 }
