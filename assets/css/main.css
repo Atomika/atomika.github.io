@@ -1766,7 +1766,7 @@ footer {
     z-index: 2; /* Moves hovered image above others */
 }
 
-/* Blur non-hovered posters when one is hovered */
-.work-gallery:hover img:not(:hover) {
-    filter: blur(3px); /* Apply blur to non-hovered posters */
+/* Apply blur only to non-hovered images */
+.work-gallery img:not(:hover) {
+    filter: brightness(75%) grayscale(50%) blur(3px); /* Blur non-hovered images */
 }
