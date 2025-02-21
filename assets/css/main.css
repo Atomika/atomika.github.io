@@ -1733,9 +1733,16 @@ footer {
 
 
 
+
+/* Ensure the container centers everything */
+.work-container {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 /* Ensure the gallery images are properly aligned */
 .work-gallery {
-    display: flex;
     flex-wrap: wrap; /* Allows wrapping to new rows */
     justify-content: center; /* Centers items */
     gap: 10px; /* Adds space between images */
