@@ -1726,6 +1726,6 @@ html, body {
 }
 
 footer {
-    margin-bottom: 20px; /* Decreases space below footer */
+    margin-bottom: 50px; /* Decreases space below footer */
     position: relative; /* Ensures it moves correctly */
 }
