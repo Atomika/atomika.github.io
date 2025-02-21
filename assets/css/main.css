@@ -1747,14 +1747,15 @@ footer {
     gap: 10px; /* Adds space between images */
 }
 
-/* Work gallery images - start darker */
+/* Work gallery images - start desaturated and darker */
 .work-gallery img {
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease; /* Smooth hover effect */
-    filter: brightness(85%); /* Darker initially */
+    filter: brightness(85%) grayscale(100%); /* Darker and black & white initially */
+    border-radius: 5px; /* Optional: Slight rounding for a smoother look */
 }
 
-/* Brighten on hover */
+/* Brighten, add color, and slightly enlarge on hover */
 .work-gallery img:hover {
     transform: scale(1.05); /* Slight zoom effect */
-    filter: brightness(102%); /* Full brightness on hover */
+    filter: brightness(102%) grayscale(0%); /* Full brightness and restore color on hover */
 }
