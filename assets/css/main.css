@@ -1729,3 +1729,33 @@ footer {
     margin-bottom: 80px; /* Decreases space below footer */
     position: relative; /* Ensures it moves correctly */
 }
+
+
+
+
+
+/* Ensure the container centers everything */
+.work-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ensure the gallery images are properly aligned */
+.work-gallery {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping to new rows */
+    justify-content: center; /* Centers items */
+    gap: 10px; /* Adds space between images */
+}
+
+/* Apply mouseover effect */
+.work-gallery img {
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth effect */
+}
+
+.work-gallery img:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+    opacity: 0.8; /* Fade effect */
+}
