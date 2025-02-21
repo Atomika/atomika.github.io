@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // On hover, blur all other images
             images.forEach(otherImg => {
                 if (otherImg !== img) {
-                    otherImg.style.filter = "brightness(75%) grayscale(50%) blur(3px)"; // Apply blur to non-hovered images
+                    otherImg.style.filter = "brightness(75%) grayscale(50%) blur(15px)"; // Apply blur to non-hovered images
                 }
             });
         });
