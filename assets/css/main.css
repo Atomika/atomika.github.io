@@ -1753,7 +1753,6 @@ footer {
 .work-gallery img {
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease; /* Smooth hover effect */
     filter: brightness(75%) grayscale(50%); /* Darker and black & white initially */
-    border-radius: 5px; /* Optional: Slight rounding for a smoother look */
     position: relative; /* Needed for proper stacking */
     z-index: 1; /* Default stacking order */
 }
