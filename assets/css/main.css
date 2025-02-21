@@ -1734,12 +1734,6 @@ footer {
 
 
 
-/* Ensure the container centers everything */
-.work-container {
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
 
 /* Apply mouseover effect */
 .work-gallery img {
