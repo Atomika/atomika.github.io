@@ -1731,6 +1731,9 @@ footer {
 }
 
 
+
+
+
 /* Ensure the container centers everything */
 .work-container {
     display: flex;
@@ -1752,17 +1755,18 @@ footer {
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease; /* Smooth hover effect */
     filter: brightness(75%) grayscale(50%); /* Darker and black & white initially */
     border-radius: 5px; /* Optional: Slight rounding for a smoother look */
+    position: relative; /* Needed for proper stacking */
+    z-index: 1; /* Default stacking order */
 }
 
-/* Brighten, add color, and slightly enlarge on hover */
+/* Brighten, add color, and slightly elevate on hover */
 .work-gallery img:hover {
-    transform: scale(1.1); /* Slight zoom effect */
-    filter: brightness(100%) grayscale(0%); /* Full brightness and restore color on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+    filter: brightness(100%) grayscale(0%); /* Full brightness and restore color */
+    z-index: 2; /* Moves hovered image above others */
 }
 
-/* Defocus other posters when hovering over one */
-.work-gallery img:not(:hover) {
-    filter: brightness(60%) grayscale(80%); /* Darken and desaturate non-hovered images */
-    opacity: 0.7; /* Slight fade effect */
-
+/* Blur non-hovered posters when one is hovered */
+.work-gallery:hover img:not(:hover) {
+    filter: blur(3px); /* Apply blur to non-hovered posters */
 }
