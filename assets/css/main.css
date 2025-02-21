@@ -1733,7 +1733,6 @@ footer {
 
 
 
-
 /* Ensure the container centers everything */
 .work-container {
     display: flex;
@@ -1766,7 +1765,7 @@ footer {
     z-index: 2; /* Moves hovered image above others */
 }
 
-/* Apply blur only to non-hovered images */
-.work-gallery img:not(:hover) {
-    filter: brightness(75%) grayscale(50%) blur(3px); /* Blur non-hovered images */
+/* Apply blur only to non-hovered images in the same gallery */
+.work-gallery:hover img:not(:hover) {
+    filter: blur(3px); /* Only blur non-hovered images */
 }
