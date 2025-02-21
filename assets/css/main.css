@@ -1731,16 +1731,3 @@ footer {
 }
 
 
-
-
-
-
-/* Apply mouseover effect */
-.work-gallery img {
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth effect */
-}
-
-.work-gallery img:hover {
-    transform: scale(1.1); /* Slight zoom effect */
-    opacity: 0.8; /* Fade effect */
-}
