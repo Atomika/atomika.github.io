@@ -4,21 +4,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (bgElement) {
         const backgrounds = [
-            { src: "images/bg.jpg", description: "A scenic mountain view at sunrise." },
+            { src: "images/bg.jpg", description: "Guardians of the Galaxy (2014)" },
             // { src: "images/bg2.jpg", description: "A peaceful forest pathway in autumn." },
             // { src: "images/pic02.jpg", description: "A misty lake surrounded by tall trees." },
             // { src: "images/pic05.jpg", description: "Rolling hills under a golden sunset." },
-            { src: "images/pic06.jpg", description: "A futuristic city glowing at night." },
-            { src: "images/pic07.jpg", description: "A quiet snowy village in the mountains." },
-            { src: "images/pic08.jpg", description: "A tropical beach with crystal clear waters." },
-            { src: "images/pic09.jpg", description: "A starry sky over a desert landscape." },
-            { src: "images/pic10.jpg", description: "A historic castle surrounded by fog." },
-            { src: "images/pic11.jpg", description: "A dramatic waterfall in the jungle." },
-            { src: "images/pic12.jpg", description: "A deep space nebula with vibrant colors." },
-            { src: "images/pic13.jpg", description: "An abandoned city overtaken by nature." },
-            { src: "images/pic14.jpg", description: "A vast wheat field swaying in the wind." },
-            { src: "images/pic15.jpg", description: "A neon cyberpunk street scene at midnight." },
-            { src: "images/pic04.jpg", description: "A lighthouse standing strong in a storm." }
+            { src: "images/pic06.jpg", description: "Loki, Season 2 - Glorious Purpose (2023)" },
+            { src: "images/pic07.jpg", description: "Dark Crystal: Age of Resistance (2019)" },
+            { src: "images/pic08.jpg", description: "Guardians of the Galaxy 3 (2023)" },
+            { src: "images/pic09.jpg", description: "Guardians of the Galaxy 3 (2023)" },
+            { src: "images/pic10.jpg", description: "Loki, Season 2 - Science/Fiction (2023)" },
+            { src: "images/pic11.jpg", description: "His Dark Materials, Season 3 - The Clouded Mountain (2022)" },
+            { src: "images/pic12.jpg", description: "The School for Good and Evil (2022)" },
+            { src: "images/pic13.jpg", description: "The School for Good and Evil (2022)" },
+            { src: "images/pic14.jpg", description: "Chernobyl - 1:23:45 (2019)" },
+            { src: "images/pic15.jpg", description: "Wonder Woman (2017)" },
+            { src: "images/pic04.jpg", description: "Venom (2018)" }
         ];
 
         // Store the last used background in session storage to avoid repetition
