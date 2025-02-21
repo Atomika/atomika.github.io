@@ -1750,11 +1750,11 @@ footer {
 /* Work gallery images - start darker */
 .work-gallery img {
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease; /* Smooth hover effect */
-    filter: brightness(70%); /* Darker initially */
+    filter: brightness(85%); /* Darker initially */
 }
 
 /* Brighten on hover */
 .work-gallery img:hover {
     transform: scale(1.05); /* Slight zoom effect */
-    filter: brightness(100%); /* Full brightness on hover */
+    filter: brightness(102%); /* Full brightness on hover */
 }
