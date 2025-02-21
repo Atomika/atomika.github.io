@@ -1756,6 +1756,13 @@ footer {
 
 /* Brighten, add color, and slightly enlarge on hover */
 .work-gallery img:hover {
-    transform: scale(1.05); /* Slight zoom effect */
+    transform: scale(1.1); /* Slight zoom effect */
     filter: brightness(100%) grayscale(0%); /* Full brightness and restore color on hover */
+}
+
+/* Defocus other posters when hovering over one */
+.work-gallery img:not(:hover) {
+    filter: brightness(60%) grayscale(80%); /* Darken and desaturate non-hovered images */
+    opacity: 0.7; /* Slight fade effect */
+
 }
