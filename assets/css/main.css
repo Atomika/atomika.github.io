@@ -1756,6 +1756,6 @@ footer {
 
 /* Brighten, add color, and slightly enlarge on hover */
 .work-gallery img:hover {
-    transform: scale(1.0); /* Slight zoom effect */
-    filter: brightness(102%) grayscale(0%); /* Full brightness and restore color on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+    filter: brightness(100%) grayscale(0%); /* Full brightness and restore color on hover */
 }
