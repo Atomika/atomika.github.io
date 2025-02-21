@@ -1724,3 +1724,8 @@ html, body {
     box-sizing: border-box; /* Ensures padding/borders don't add extra width */
     max-width: 100vw; /* Prevents elements from exceeding viewport width */
 }
+
+footer {
+    margin-bottom: 20px; /* Decreases space below footer */
+    position: relative; /* Ensures it moves correctly */
+}
