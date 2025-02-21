@@ -1733,15 +1733,6 @@ footer {
 
 
 
-
-/* Ensure the container centers everything */
-.work-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
 /* Ensure the gallery images are properly aligned */
 .work-gallery {
     display: flex;
@@ -1758,20 +1749,4 @@ footer {
 .work-gallery img:hover {
     transform: scale(1.1); /* Slight zoom effect */
     opacity: 0.8; /* Fade effect */
-}
-
-
-/* Ensure only one article is visible at a time */
-article {
-    display: none; /* Hide all articles by default */
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-/* Make the active article visible */
-body.is-article-visible article {
-    display: block; /* Show only the selected article */
-    opacity: 1;
-    transform: translateY(0);
 }
