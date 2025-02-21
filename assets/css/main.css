@@ -1746,20 +1746,20 @@ footer {
     display: flex;
     flex-wrap: wrap; /* Allows wrapping to new rows */
     justify-content: center; /* Centers items */
-    gap: 10px; /* Adds space between images */
+    gap: 5px; /* Adds space between images */
 }
 
 /* Work gallery images - start desaturated and darker */
 .work-gallery img {
     transition: transform 0.5s ease, filter 0.5s ease, opacity 0.3s ease; /* Smooth transition for filter and transform */
-    filter: brightness(75%) grayscale(50%); /* Darker and black & white initially */
+    filter: brightness(85%) grayscale(0%); /* Darker and black & white initially */
     position: relative; /* Needed for proper stacking */
     z-index: 1; /* Default stacking order */
 }
 
 /* Brighten, add color, and slightly elevate on hover */
 .work-gallery img:hover {
-    transform: scale(1.05); /* Slight zoom effect */
+    transform: scale(1.1); /* Slight zoom effect */
     filter: brightness(100%) grayscale(0%); /* Full brightness and restore color */
     z-index: 2; /* Moves hovered image above others */
 }

@@ -6,12 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
         img.addEventListener('mouseenter', function () {
             images.forEach(otherImg => {
                 if (otherImg !== img) {
-                    otherImg.style.filter = "brightness(75%) grayscale(50%) blur(3px)"; // Apply blur to non-hovered images
+                    otherImg.style.filter = "brightness(65%) grayscale(75%) blur(2px)"; // Apply blur to non-hovered images
                 }
             });
             // Ensure hovered image has full brightness and saturation
             img.style.filter = "brightness(100%) grayscale(0%)"; // Full color and brightness
-            img.style.transform = "scale(1.05)"; // Slight zoom effect
+            img.style.transform = "scale(1.1)"; // Slight zoom effect
             img.style.zIndex = "2"; // Ensure hovered image is above others
         });
 
