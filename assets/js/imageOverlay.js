@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Create overlay elements
     const overlay = document.createElement("div");
     overlay.classList.add("image-overlay");
 
@@ -11,8 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
     imageContainer.classList.add("overlay-image-container");
 
     const overlayImage = document.createElement("img");
-    overlayImage.style.maxWidth = "100%";
-    overlayImage.style.borderRadius = "5px";
+    overlayImage.classList.add("overlay-image"); // Added a class for styling
+
     imageContainer.appendChild(overlayImage);
 
     // Create text container (side panel)
@@ -21,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const overlayText = document.createElement("p");
     overlayText.classList.add("overlay-description");
+
     textContainer.appendChild(overlayText);
 
     // Append elements to overlay
@@ -34,19 +34,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     images.forEach(img => {
         img.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevent unwanted event bubbling
+            event.stopPropagation();
 
             const imgSrc = img.getAttribute("src");
             const imgAlt = img.getAttribute("alt");
+            const imgText = img.nextElementSibling?.textContent || "No additional info available."; // Get text from HTML
 
             // Set the overlay content
             overlayImage.src = imgSrc;
-            overlayText.textContent = imgAlt || "Image description unavailable";
+            overlayText.textContent = imgText; // Display text from the HTML
 
             // Show the overlay
             overlay.classList.add("active");
 
-            // Add Escape key event listener with highest priority
+            // Add Escape key event listener
             document.addEventListener("keydown", closeOnEscape, { capture: true });
         });
     });
@@ -57,11 +58,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.removeEventListener("keydown", closeOnEscape, { capture: true });
     }
 
-    // Function to close overlay with Escape key while blocking site navigation
+    // Function to close overlay with Escape key
     function closeOnEscape(event) {
         if (event.key === "Escape") {
-            event.stopImmediatePropagation(); // Fully block other event listeners
-            event.preventDefault(); // Prevent default Escape behavior
+            event.stopImmediatePropagation();
+            event.preventDefault();
             closeOverlay();
         }
     }
@@ -69,10 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Close overlay when clicking outside of the modal
     overlay.addEventListener("click", function (event) {
         if (event.target === overlay) {
-            event.stopPropagation(); // Stops any event from propagating to the body
+            event.stopPropagation();
             closeOverlay();
             event.preventDefault();
-            return false;
         }
     });
 });
