@@ -36,14 +36,14 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.classList.add("active");
 
             // Disable site's default Escape navigation while overlay is open
-            document.addEventListener("keydown", closeOnEscape, true);
+            document.addEventListener("keydown", closeOnEscape, { capture: true });
         });
     });
 
     // Function to close the overlay
     function closeOverlay() {
         overlay.classList.remove("active");
-        document.removeEventListener("keydown", closeOnEscape, true); // Re-enable normal Escape behavior
+        document.removeEventListener("keydown", closeOnEscape, { capture: true }); // Ensure Escape key is re-enabled for navigation
     }
 
     // Function to close overlay with Escape key without affecting article navigation
