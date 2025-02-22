@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 img.style.filter = "brightness(100%) grayscale(0%)"; // Full color and brightness
                 img.style.transform = "scale(1.1)"; // Slight zoom effect
                 img.style.zIndex = "2"; // Ensure hovered image is above others
-            }, 300); // 300ms delay before applying hover effect
+            }, 1000); // 1000ms delay before applying hover effect
         });
 
         // On mouse leave, reset all images

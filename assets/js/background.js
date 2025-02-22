@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (body.classList.contains("is-article-visible")) {
                         // Apply background blur when article is visible
                         bgElement.style.transition = "filter 0.5s ease";
-                        bgElement.style.filter = "blur(0.1rem)";
+                        bgElement.style.filter = "blur(0.15rem)";
                     } else {
                         // Remove the background blur when article is not visible
                         bgElement.style.transition = "filter 0.5s ease";
