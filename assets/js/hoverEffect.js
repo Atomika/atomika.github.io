@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Apply the delay before enabling hover effects
                     setTimeout(() => {
                         hoverEffectEnabled = true; // Enable hover effects after 825ms
-                    }, 825);
+                    }, 625);
                 } else {
                     // Article is not visible, reset the effect
                     isArticleVisible = false;
