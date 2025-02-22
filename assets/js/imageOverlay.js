@@ -6,15 +6,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayContent = document.createElement("div");
     overlayContent.classList.add("overlay-content");
 
+    // Create image container
+    const imageContainer = document.createElement("div");
+    imageContainer.classList.add("overlay-image-container");
+
     const overlayImage = document.createElement("img");
     overlayImage.style.maxWidth = "100%";
     overlayImage.style.borderRadius = "5px";
+    imageContainer.appendChild(overlayImage);
+
+    // Create text container (side panel)
+    const textContainer = document.createElement("div");
+    textContainer.classList.add("overlay-text-container");
 
     const overlayText = document.createElement("p");
+    overlayText.classList.add("overlay-description");
+    textContainer.appendChild(overlayText);
 
     // Append elements to overlay
-    overlayContent.appendChild(overlayImage);
-    overlayContent.appendChild(overlayText);
+    overlayContent.appendChild(imageContainer);
+    overlayContent.appendChild(textContainer);
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 
