@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // On mouse leave, reset all images
         img.addEventListener('mouseleave', function () {
             images.forEach(otherImg => {
-                otherImg.style.filter = "brightness(75%) grayscale(50%)"; // Restore default brightness and grayscale
+                otherImg.style.filter = "brightness(85%) grayscale(0%)"; // Restore default brightness and grayscale
                 otherImg.style.transform = "scale(1)"; // Reset zoom effect
                 otherImg.style.zIndex = "1"; // Reset stacking order
             });
