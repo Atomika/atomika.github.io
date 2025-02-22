@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                     // Ensure hovered image has full brightness and saturation
                     img.style.filter = "brightness(100%) grayscale(0%)"; // Full color and brightness
-                    img.style.transform = "scale(1.3)"; // Slight zoom effect
+                    img.style.transform = "scale(1.2)"; // Slight zoom effect
                     img.style.zIndex = "2"; // Ensure hovered image is above others
 
                     // After the first hover, set the flag to true
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 // Ensure hovered image has full brightness and saturation
                 img.style.filter = "brightness(100%) grayscale(0%)"; // Full color and brightness
-                img.style.transform = "scale(1.3)"; // Slight zoom effect
+                img.style.transform = "scale(1.2)"; // Slight zoom effect
                 img.style.zIndex = "2"; // Ensure hovered image is above others
             }
         });
