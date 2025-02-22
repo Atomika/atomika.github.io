@@ -1747,14 +1747,13 @@ footer {
     flex-wrap: wrap; /* Allows wrapping to new rows */
     justify-content: center; /* Centers items */
     gap: 10px; /* Adds space between images */
-	padding-bottom: 30px; /* Adjust the value as needed */
 }
 
 /* Work gallery images - start desaturated and darker */
 .work-gallery img {
     transition: transform 0.5s ease, filter 0.5s ease, opacity 0.3s ease; /* Smooth transition for filter and transform */
     filter: brightness(85%) grayscale(0%); /* Darker and black & white initially */
-	border-radius: 5px; /* Optional: Slight rounding for a smoother look */
+	border-radius: 3px; /* Optional: Slight rounding for a smoother look */
     position: relative; /* Needed for proper stacking */
     z-index: 1; /* Default stacking order */
 }
