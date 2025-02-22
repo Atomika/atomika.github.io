@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     imageContainer.classList.add("overlay-image-container");
 
     const overlayImage = document.createElement("img");
-    overlayImage.classList.add("overlay-image"); // Added a class for styling
+    overlayImage.classList.add("overlay-image");
 
     imageContainer.appendChild(overlayImage);
 
@@ -37,12 +37,11 @@ document.addEventListener("DOMContentLoaded", function () {
             event.stopPropagation();
 
             const imgSrc = img.getAttribute("src");
-            const imgAlt = img.getAttribute("alt");
-            const imgText = img.nextElementSibling?.textContent || "No additional info available."; // Get text from HTML
+            const imgDescription = img.getAttribute("data-description") || "No additional info available."; // Get description
 
             // Set the overlay content
             overlayImage.src = imgSrc;
-            overlayText.textContent = imgText; // Display text from the HTML
+            overlayText.textContent = imgDescription; // Show description in overlay only
 
             // Show the overlay
             overlay.classList.add("active");
