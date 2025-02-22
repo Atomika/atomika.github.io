@@ -1754,6 +1754,7 @@ footer {
 .work-gallery img {
     transition: transform 0.5s ease, filter 0.5s ease, opacity 0.3s ease; /* Smooth transition for filter and transform */
     filter: brightness(85%) grayscale(0%); /* Darker and black & white initially */
+	border-radius: 5px; /* Optional: Slight rounding for a smoother look */
     position: relative; /* Needed for proper stacking */
     z-index: 1; /* Default stacking order */
 }
