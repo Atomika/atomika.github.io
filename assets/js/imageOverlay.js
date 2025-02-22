@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show the overlay
             overlay.classList.add("active");
 
-            // Disable site's default Escape navigation while overlay is open
+            // Add Escape key event listener with highest priority
             document.addEventListener("keydown", closeOnEscape, { capture: true });
         });
     });
@@ -43,14 +43,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to close the overlay
     function closeOverlay() {
         overlay.classList.remove("active");
-        document.removeEventListener("keydown", closeOnEscape, { capture: true }); // Ensure Escape key is re-enabled for navigation
+        document.removeEventListener("keydown", closeOnEscape, { capture: true });
     }
 
-    // Function to close overlay with Escape key without affecting article navigation
+    // Function to close overlay with Escape key while blocking site navigation
     function closeOnEscape(event) {
         if (event.key === "Escape") {
-            event.stopPropagation(); // Stops Escape from reaching site navigation
-            event.preventDefault(); // Prevents default Escape behavior
+            event.stopImmediatePropagation(); // Fully block other event listeners
+            event.preventDefault(); // Prevent default Escape behavior
             closeOverlay();
         }
     }
