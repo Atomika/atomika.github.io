@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Create overlay elements
     const overlay = document.createElement("div");
     overlay.classList.add("image-overlay");
 
@@ -18,12 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 
+    let originalEscapeHandler = null; // Store site's Escape key listener
+
     // Select all images inside work gallery
     const images = document.querySelectorAll(".work-gallery img");
 
     images.forEach(img => {
         img.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevent unwanted event bubbling
+            event.stopPropagation();
 
             const imgSrc = img.getAttribute("src");
             const imgAlt = img.getAttribute("alt");
@@ -35,28 +36,24 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show the overlay
             overlay.classList.add("active");
 
-            // Disable site's Escape key navigation
-            disableEscapeNavigation();
-
-            // Add Escape key event listener to close overlay
-            document.addEventListener("keydown", closeOnEscape, { capture: true });
+            // Temporarily remove the site's Escape key event listener
+            blockSiteEscape();
         });
     });
 
     // Function to close the overlay
     function closeOverlay() {
         overlay.classList.remove("active");
-        document.removeEventListener("keydown", closeOnEscape, { capture: true });
 
-        // Re-enable site's Escape key navigation after closing overlay
-        enableEscapeNavigation();
+        // Restore the original Escape key behavior
+        restoreSiteEscape();
     }
 
-    // Function to close overlay with Escape key while blocking site navigation
+    // Function to close overlay with Escape key
     function closeOnEscape(event) {
         if (event.key === "Escape") {
-            event.stopImmediatePropagation(); // Fully blocks other Escape event listeners
-            event.preventDefault(); // Prevents default Escape behavior
+            event.stopPropagation();
+            event.preventDefault();
             closeOverlay();
         }
     }
@@ -70,23 +67,29 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Function to disable site's Escape key navigation
-    function disableEscapeNavigation() {
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                event.stopImmediatePropagation(); // Block any Escape event from reaching the site's navigation
-                event.preventDefault();
-            }
-        }, { capture: true });
+    // Function to temporarily remove the site's Escape key listener
+    function blockSiteEscape() {
+        // Get all event listeners on the document
+        const listeners = getEventListeners(document);
+        if (listeners.keydown) {
+            listeners.keydown.forEach(listener => {
+                if (listener.listener.toString().includes("Escape")) {
+                    originalEscapeHandler = listener.listener;
+                    document.removeEventListener("keydown", listener.listener, listener.options);
+                }
+            });
+        }
+
+        // Add our custom Escape key listener
+        document.addEventListener("keydown", closeOnEscape, true);
     }
 
-    // Function to re-enable site's Escape key navigation when overlay is closed
-    function enableEscapeNavigation() {
-        document.removeEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                event.stopImmediatePropagation();
-                event.preventDefault();
-            }
-        }, { capture: true });
+    // Function to restore the site's Escape key listener
+    function restoreSiteEscape() {
+        if (originalEscapeHandler) {
+            document.addEventListener("keydown", originalEscapeHandler, true);
+            originalEscapeHandler = null;
+        }
+        document.removeEventListener("keydown", closeOnEscape, true);
     }
 });
