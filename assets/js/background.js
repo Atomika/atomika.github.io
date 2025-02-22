@@ -35,15 +35,17 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedBg = backgrounds[randomIndex];
 
             // Start by fading in the background immediately with a slow start and fast end
-            bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1)"; // Slow start, fast end
+            bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease"; // Smooth opacity and filter transition
             bgElement.style.opacity = "0"; // Start with opacity 0
+            bgElement.style.filter = "blur(0.2rem)"; // Start with a slight blur
 
             setTimeout(() => {
                 // Change the background image after a small delay
                 bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
 
-                // Apply opacity transition immediately
+                // Apply opacity and remove blur smoothly
                 bgElement.style.opacity = "1"; // Fade the background in
+                bgElement.style.filter = "blur(0)"; // Remove the blur effect
 
                 console.log("Background set to:", selectedBg.src);
 
@@ -59,6 +61,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Initial background change on page load
         changeBackground();
+
+        // Monitor article visibility for blur effect
+        const body = document.body;
+
+        // Add event listener for article visibility
+        const observer = new MutationObserver(function (mutationsList) {
+            for (const mutation of mutationsList) {
+                if (mutation.type === "attributes") {
+                    if (body.classList.contains("is-article-visible")) {
+                        // Apply background blur when article is visible
+                        bgElement.style.transition = "filter 0.5s ease";
+                        bgElement.style.filter = "blur(0.2rem)";
+                    } else {
+                        // Remove the background blur when article is not visible
+                        bgElement.style.transition = "filter 0.5s ease";
+                        bgElement.style.filter = "none";
+                    }
+                }
+            }
+        });
+
+        // Configure the observer to monitor the class changes on the body
+        observer.observe(body, { attributes: true });
+
     } else {
         console.log("Error: #bg element not found!");
     }
