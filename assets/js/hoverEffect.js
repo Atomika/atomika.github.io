@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     const images = document.querySelectorAll('.work-gallery img'); // Select all images in the gallery
     let timeout;
-    let firstHoverDone = false; // Flag to track if the user has hovered for the first time
+    let firstHoverDone = false; // Flag to track if the first hover has been done
     let isArticleVisible = false; // Flag to track if the article is visible
 
     images.forEach(img => {
-        // On hover, blur all other images after a delay
+        // On hover, blur all other images after a delay only for the first hover
         img.addEventListener('mouseenter', function () {
             if (!firstHoverDone && isArticleVisible) {
-                // Apply delay only the first time the hover effect is triggered
+                // Apply delay only on the first hover
                 timeout = setTimeout(function () {
                     // Apply blur to non-hovered images
                     images.forEach(otherImg => {
@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     img.style.filter = "brightness(100%) grayscale(0%)"; // Full color and brightness
                     img.style.transform = "scale(1.1)"; // Slight zoom effect
                     img.style.zIndex = "2"; // Ensure hovered image is above others
+
+                    // After the first hover, set the flag to true
+                    firstHoverDone = true;
                 }, 1000); // 1000ms delay before applying hover effect
             } else if (isArticleVisible) {
                 // Apply immediate hover effect after the first hover
