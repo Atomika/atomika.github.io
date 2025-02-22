@@ -5,9 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (bgElement) {
         const backgrounds = [
             { src: "images/bg.jpg", description: "Guardians of the Galaxy (2014)" },
-            // { src: "images/bg2.jpg", description: "A peaceful forest pathway in autumn." },
-            // { src: "images/pic02.jpg", description: "A misty lake surrounded by tall trees." },
-            // { src: "images/pic05.jpg", description: "Rolling hills under a golden sunset." },
             { src: "images/pic06.jpg", description: "Loki, Season 2 - Glorious Purpose (2023)" },
             { src: "images/pic07.jpg", description: "Dark Crystal: Age of Resistance (2019)" },
             { src: "images/pic08.jpg", description: "Guardians of the Galaxy 3 (2023)" },
@@ -21,21 +18,21 @@ document.addEventListener("DOMContentLoaded", function () {
             { src: "images/pic04.jpg", description: "Venom (2018)" }
         ];
 
-        // Store the last used background in session storage to avoid repetition
-        let lastBackgroundIndex = sessionStorage.getItem("lastBgIndex");
+        // Retrieve the last three backgrounds from sessionStorage (or initialize an empty array)
+        let lastBackgrounds = JSON.parse(sessionStorage.getItem("lastBgIndexes")) || [];
 
         function changeBackground() {
             let randomIndex;
-
-            // Ensure a different background from last time
+            
+            // Ensure the new background is NOT in the last 3 used
             do {
                 randomIndex = Math.floor(Math.random() * backgrounds.length);
-            } while (randomIndex == lastBackgroundIndex);
+            } while (lastBackgrounds.includes(randomIndex) && backgrounds.length > 3);
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Start by fading in the background immediately with a slow start and fast end
-            bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease"; // Smooth opacity and filter transition
+            // Start by fading in the background immediately with a smooth transition
+            bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
             bgElement.style.opacity = "0"; // Start with opacity 0
             bgElement.style.filter = "blur(0.2rem)"; // Start with a slight blur
 
@@ -44,8 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
 
                 // Apply opacity and remove blur smoothly
-                bgElement.style.opacity = "1"; // Fade the background in
-                bgElement.style.filter = "blur(0)"; // Remove the blur effect
+                bgElement.style.opacity = "1";
+                bgElement.style.filter = "blur(0)";
 
                 console.log("Background set to:", selectedBg.src);
 
@@ -54,8 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     footerText.textContent = selectedBg.description;
                 }
 
-                // Save the new background index to session storage
-                sessionStorage.setItem("lastBgIndex", randomIndex);
+                // Store the new background index in sessionStorage
+                lastBackgrounds.push(randomIndex);
+                if (lastBackgrounds.length > 3) {
+                    lastBackgrounds.shift(); // Keep only the last 3 backgrounds
+                }
+                sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
+
             }, 500); // Small delay before the background is changed
         }
 
