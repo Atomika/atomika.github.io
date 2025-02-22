@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Store the new background index in sessionStorage
                 lastBackgrounds.push(randomIndex);
                 if (lastBackgrounds.length > 5) {
-                    lastBackgrounds.shift(); // Keep only the last 5 backgrounds
+                    lastBackgrounds.shift(); // Keep only the last 3 backgrounds
                 }
                 sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
 
