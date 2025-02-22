@@ -6,10 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayContent = document.createElement("div");
     overlayContent.classList.add("overlay-content");
 
-    const closeButton = document.createElement("button");
-    closeButton.innerHTML = "&times;"; // 'X' Close icon
-    closeButton.classList.add("close-overlay");
-
     const overlayImage = document.createElement("img");
     overlayImage.style.maxWidth = "100%";
     overlayImage.style.borderRadius = "5px";
@@ -17,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayText = document.createElement("p");
 
     // Append elements to overlay
-    overlayContent.appendChild(closeButton);
     overlayContent.appendChild(overlayImage);
     overlayContent.appendChild(overlayText);
     overlay.appendChild(overlayContent);
@@ -40,36 +35,33 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show the overlay
             overlay.classList.add("active");
 
-            // Prevent default navigation behavior (if any)
-            event.preventDefault();
+            // Disable Escape key navigation while overlay is open
+            document.addEventListener("keydown", closeOnEscape);
         });
     });
 
     // Function to close the overlay
     function closeOverlay() {
         overlay.classList.remove("active");
+        document.removeEventListener("keydown", closeOnEscape); // Re-enable normal Escape behavior
     }
 
-    // Close overlay when clicking the close button
-    closeButton.addEventListener("click", function (event) {
-        event.stopPropagation();
-        closeOverlay();
-    });
+    // Function to close overlay with Escape key
+    function closeOnEscape(event) {
+        if (event.key === "Escape") {
+            event.stopPropagation(); // Stop from affecting main navigation
+            event.preventDefault(); // Prevent default Escape behavior
+            closeOverlay();
+        }
+    }
 
-    // Close overlay when clicking outside the modal, but prevent navigation reset
+    // Close overlay when clicking outside of the modal
     overlay.addEventListener("click", function (event) {
         if (event.target === overlay) {
             event.stopPropagation(); // Stops any event from propagating to the body
             closeOverlay();
             event.preventDefault();
             return false;
-        }
-    });
-
-    // Close overlay on Escape key press
-    document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-            closeOverlay();
         }
     });
 });

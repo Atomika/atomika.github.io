@@ -1807,22 +1807,3 @@ footer {
     color: white;
 }
 
-/* Close button - matches site theme */
-.close-overlay {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 28px;
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s ease, color 0.2s ease;
-}
-
-/* Hover effect to match site's navigation */
-.close-overlay:hover {
-    transform: scale(1.2);
-    color: #f39c12; /* Adjust to match site theme */
-}
