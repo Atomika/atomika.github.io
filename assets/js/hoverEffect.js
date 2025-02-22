@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // After the first hover, set the flag to true
                     firstHoverDone = true;
-                }, 650); // 1000ms delay before applying hover effect
+                }, 825); // 1000ms delay before applying hover effect
             } else if (isArticleVisible) {
                 // Apply immediate hover effect after the first hover
                 images.forEach(otherImg => {
