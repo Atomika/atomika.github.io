@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const images = document.querySelectorAll(".work-gallery img");
 
     images.forEach(img => {
-        img.addEventListener("click", function () {
+        img.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevent other event listeners from firing
+
             const imgSrc = img.getAttribute("src");
             const imgAlt = img.getAttribute("alt");
 
@@ -40,15 +42,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Prevent click inside the modal from closing it
+    overlayContent.addEventListener("click", function (event) {
+        event.stopPropagation(); // Stops click from affecting parent elements
+    });
+
     // Close overlay when clicking the close button
-    closeButton.addEventListener("click", function () {
+    closeButton.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent unwanted navigation
         overlay.classList.remove("active");
     });
 
-    // Close overlay when clicking outside of the modal
-    overlay.addEventListener("click", function (event) {
-        if (event.target === overlay) {
-            overlay.classList.remove("active");
-        }
+    // Close overlay when clicking outside the modal, but stay on the same page
+    overlay.addEventListener("click", function () {
+        overlay.classList.remove("active");
     });
 });
