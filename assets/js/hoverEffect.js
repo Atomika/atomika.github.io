@@ -1,12 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     const images = document.querySelectorAll('.work-gallery img'); // Select all images in the gallery
     let timeout;
+    let firstHoverDone = false; // Flag to track if the user has hovered for the first time
     let isArticleVisible = false; // Flag to track if the article is visible
 
     images.forEach(img => {
         // On hover, blur all other images after a delay
         img.addEventListener('mouseenter', function () {
-            if (isArticleVisible) { // Only delay hover effect if article is visible
+            if (!firstHoverDone && isArticleVisible) {
+                // Apply delay only the first time the hover effect is triggered
                 timeout = setTimeout(function () {
                     // Apply blur to non-hovered images
                     images.forEach(otherImg => {
@@ -19,6 +21,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     img.style.transform = "scale(1.1)"; // Slight zoom effect
                     img.style.zIndex = "2"; // Ensure hovered image is above others
                 }, 1000); // 1000ms delay before applying hover effect
+            } else if (isArticleVisible) {
+                // Apply immediate hover effect after the first hover
+                images.forEach(otherImg => {
+                    if (otherImg !== img) {
+                        otherImg.style.filter = "brightness(65%) grayscale(75%) blur(2px)"; // Apply blur to non-hovered images
+                    }
+                });
+                // Ensure hovered image has full brightness and saturation
+                img.style.filter = "brightness(100%) grayscale(0%)"; // Full color and brightness
+                img.style.transform = "scale(1.1)"; // Slight zoom effect
+                img.style.zIndex = "2"; // Ensure hovered image is above others
             }
         });
 
@@ -43,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (body.classList.contains("is-article-visible")) {
                     // Article is visible, apply the delay effect
                     isArticleVisible = true;
+                    firstHoverDone = false; // Reset firstHoverDone flag when returning to the article
                 } else {
                     // Article is not visible, reset the effect
                     isArticleVisible = false;
