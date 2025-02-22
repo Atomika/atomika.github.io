@@ -1747,6 +1747,7 @@ footer {
     flex-wrap: wrap; /* Allows wrapping to new rows */
     justify-content: center; /* Centers items */
     gap: 10px; /* Adds space between images */
+	padding-bottom: 5px; /* Adjust the value as needed */
 }
 
 /* Work gallery images - start desaturated and darker */
