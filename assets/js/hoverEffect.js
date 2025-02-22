@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 // Ensure hovered image has full brightness and saturation
                 img.style.filter = "brightness(100%) grayscale(0%)"; // Full color and brightness
-                img.style.transform = "scale(1.1)"; // Slight zoom effect
+                img.style.transform = "scale(1.35)"; // Slight zoom effect
                 img.style.zIndex = "2"; // Ensure hovered image is above others
             }
         });
