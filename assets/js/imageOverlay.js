@@ -35,10 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show the overlay
             overlay.classList.add("active");
 
-            // Disable site's Escape key navigation
-            disableEscapeNavigation();
-
-            // Add Escape key event listener to close overlay
+            // Add Escape key event listener with highest priority
             document.addEventListener("keydown", closeOnEscape, { capture: true });
         });
     });
@@ -47,16 +44,13 @@ document.addEventListener("DOMContentLoaded", function () {
     function closeOverlay() {
         overlay.classList.remove("active");
         document.removeEventListener("keydown", closeOnEscape, { capture: true });
-
-        // Re-enable site's Escape key navigation after closing overlay
-        enableEscapeNavigation();
     }
 
     // Function to close overlay with Escape key while blocking site navigation
     function closeOnEscape(event) {
         if (event.key === "Escape") {
-            event.stopImmediatePropagation(); // Fully blocks other Escape event listeners
-            event.preventDefault(); // Prevents default Escape behavior
+            event.stopImmediatePropagation(); // Fully block other event listeners
+            event.preventDefault(); // Prevent default Escape behavior
             closeOverlay();
         }
     }
@@ -64,29 +58,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Close overlay when clicking outside of the modal
     overlay.addEventListener("click", function (event) {
         if (event.target === overlay) {
-            event.stopPropagation();
+            event.stopPropagation(); // Stops any event from propagating to the body
             closeOverlay();
             event.preventDefault();
+            return false;
         }
     });
-
-    // Function to disable site's Escape key navigation
-    function disableEscapeNavigation() {
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                event.stopImmediatePropagation(); // Block any Escape event from reaching the site's navigation
-                event.preventDefault();
-            }
-        }, { capture: true });
-    }
-
-    // Function to re-enable site's Escape key navigation when overlay is closed
-    function enableEscapeNavigation() {
-        document.removeEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                event.stopImmediatePropagation();
-                event.preventDefault();
-            }
-        }, { capture: true });
-    }
 });
