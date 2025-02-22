@@ -35,22 +35,22 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show the overlay
             overlay.classList.add("active");
 
-            // Disable Escape key navigation while overlay is open
-            document.addEventListener("keydown", closeOnEscape);
+            // Disable site's default Escape navigation while overlay is open
+            document.addEventListener("keydown", closeOnEscape, true);
         });
     });
 
     // Function to close the overlay
     function closeOverlay() {
         overlay.classList.remove("active");
-        document.removeEventListener("keydown", closeOnEscape); // Re-enable normal Escape behavior
+        document.removeEventListener("keydown", closeOnEscape, true); // Re-enable normal Escape behavior
     }
 
-    // Function to close overlay with Escape key
+    // Function to close overlay with Escape key without affecting article navigation
     function closeOnEscape(event) {
         if (event.key === "Escape") {
-            event.stopPropagation(); // Stop from affecting main navigation
-            event.preventDefault(); // Prevent default Escape behavior
+            event.stopPropagation(); // Stops Escape from reaching site navigation
+            event.preventDefault(); // Prevents default Escape behavior
             closeOverlay();
         }
     }
