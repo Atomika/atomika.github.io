@@ -1118,10 +1118,6 @@ input, select, textarea {
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-
-    /* Apply fade-in effect smoothly */
-    opacity: 0;
-    animation: fadeIn 4s ease-in-out forwards;
 }
 
 /* Background overlay */
@@ -1139,10 +1135,6 @@ input, select, textarea {
     background-position: center, center;
     background-repeat: no-repeat, repeat;
     z-index: 2;
-
-    /* Smooth fade-in effect for background image */
-    opacity: 0;
-    animation: fadeIn 4s ease-in-out forwards;
 }
 
 /* Apply scaling to the background */
@@ -1153,7 +1145,7 @@ input, select, textarea {
     left: 0;
     width: 100%;
     height: 100%;
-    
+
     -moz-transform: scale(1.125);
     -webkit-transform: scale(1.125);
     -ms-transform: scale(1.125);
@@ -1167,28 +1159,11 @@ input, select, textarea {
     z-index: 1;
 }
 
-/* Blur effect when transitioning into articles */
-body.is-article-visible #bg:after {
-    -moz-transform: scale(1.0825);
-    -webkit-transform: scale(1.0825);
-    -ms-transform: scale(1.0825);
-    transform: scale(1.0825);
-    -moz-filter: blur(0.2rem);
-    -webkit-filter: blur(0.2rem);
-    -ms-filter: blur(0.2rem);
-    filter: blur(0.2rem);
-}
-
 /* Preload background effect */
 body.is-preload #bg:before {
     background-color: #000000;
 }
 
-/* Fade-in animation */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
 
 
 /* Wrapper */
