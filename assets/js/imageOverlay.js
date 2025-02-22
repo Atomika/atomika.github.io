@@ -45,24 +45,31 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Prevent clicks inside the modal from closing it
-    overlayContent.addEventListener("click", function (event) {
-        event.stopPropagation();
-    });
+    // Function to close the overlay
+    function closeOverlay() {
+        overlay.classList.remove("active");
+    }
 
     // Close overlay when clicking the close button
     closeButton.addEventListener("click", function (event) {
         event.stopPropagation();
-        overlay.classList.remove("active");
+        closeOverlay();
     });
 
     // Close overlay when clicking outside the modal, but prevent navigation reset
     overlay.addEventListener("click", function (event) {
-        event.stopPropagation(); // Stops any event from propagating to the body
-        overlay.classList.remove("active");
+        if (event.target === overlay) {
+            event.stopPropagation(); // Stops any event from propagating to the body
+            closeOverlay();
+            event.preventDefault();
+            return false;
+        }
+    });
 
-        // Prevent main navigation from triggering if the site is listening for body clicks
-        event.preventDefault();
-        return false;
+    // Close overlay on Escape key press
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeOverlay();
+        }
     });
 });
