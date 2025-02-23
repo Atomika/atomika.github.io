@@ -311,22 +311,17 @@
 			$window.on('keyup', function(event) {
 				const overlay = document.querySelector(".image-overlay.active");
 			
-				// If overlay is active, prevent Escape from closing the article
-				if (overlay && event.key === "Escape") {
-					event.stopImmediatePropagation();
-					event.preventDefault();
-					overlay.classList.remove("active");
-					return; // Exit function early so main.js doesn't process Escape further
+				// Block Escape from affecting articles if overlay is active
+				if (overlay) {
+					event.stopImmediatePropagation(); // Fully block event from main.js
+					event.preventDefault(); // Prevent any unintended behavior
+					overlay.classList.remove("active"); // Close only the overlay
+					return; // Exit function early so main.js does NOT process Escape
 				}
 			
-				switch (event.keyCode) {
-					case 27: // Escape key
-						// Article visible? Hide (but only if overlay is NOT active)
-						if ($body.hasClass('is-article-visible'))
-							$main._hide(true);
-						break;
-					default:
-						break;
+				// If no overlay is open, handle Escape as normal
+				if (event.keyCode === 27 && $body.hasClass('is-article-visible')) {
+					$main._hide(true);
 				}
 			});
 			
