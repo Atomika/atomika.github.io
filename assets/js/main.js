@@ -1,383 +1,414 @@
 (function($) {
 
-    var $window = $(window),
-        $body = $('body'),
-        $wrapper = $('#wrapper'),
-        $header = $('#header'),
-        $footer = $('#footer'),
-        $main = $('#main'),
-        $main_articles = $main.children('article'),
-        $overlay = $('.image-overlay');  // Reference to the overlay.
-
-    // Breakpoints.
-    breakpoints({
-        xlarge: [ '1281px',  '1680px' ],
-        large: [ '981px', '1280px' ],
-        medium: [ '737px', '980px' ],
-        small: [ '481px', '736px' ],
-        xsmall: [ '361px', '480px' ],
-        xxsmall: [ null, '360px' ]
-    });
-
-    // Play initial animations on page load.
-    $window.on('load', function() {
-        window.setTimeout(function() {
-            $body.removeClass('is-preload');
-        }, 100);
-    });
-
-    // Fix: Flexbox min-height bug on IE.
-    if (browser.name == 'ie') {
-        var flexboxFixTimeoutId;
-        $window.on('resize.flexbox-fix', function() {
-            clearTimeout(flexboxFixTimeoutId);
-            flexboxFixTimeoutId = setTimeout(function() {
-                if ($wrapper.prop('scrollHeight') > $window.height())
-                    $wrapper.css('height', 'auto');
-                else
-                    $wrapper.css('height', '100vh');
-            }, 250);
-        }).triggerHandler('resize.flexbox-fix');
-    }
-
-    // Main.
-    var delay = 325,
-        locked = false;
-
-    // Methods.
-    $main._show = function(id, initial) {
-
-        var $article = $main_articles.filter('#' + id);
-        
-        // If the overlay is triggered, treat it as an article.
-        if (id === 'overlay') {
-            $article = $overlay;
-        }
-
-        // No such article or overlay? Bail.
-        if ($article.length == 0)
-            return;
-
-        // Handle lock.
-        if (locked || (typeof initial != 'undefined' && initial === true)) {
-
-            // Mark as switching.
-            $body.addClass('is-switching');
-
-            // Mark as visible.
-            $body.addClass('is-article-visible');
-
-            // Deactivate all articles (just in case one's already active).
-            $main_articles.removeClass('active');
-            $overlay.removeClass('active');  // Remove active from overlay if previously active.
+	var	$window = $(window),
+		$body = $('body'),
+		$wrapper = $('#wrapper'),
+		$header = $('#header'),
+		$footer = $('#footer'),
+		$main = $('#main'),
+		$main_articles = $main.children('article');
 
-            // Hide header, footer.
-            $header.hide();
-            $footer.hide();
+	// Breakpoints.
+		breakpoints({
+			xlarge:   [ '1281px',  '1680px' ],
+			large:    [ '981px',   '1280px' ],
+			medium:   [ '737px',   '980px'  ],
+			small:    [ '481px',   '736px'  ],
+			xsmall:   [ '361px',   '480px'  ],
+			xxsmall:  [ null,      '360px'  ]
+		});
 
-            // Show main, article/overlay.
-            $main.show();
-            $article.show();
+	// Play initial animations on page load.
+		$window.on('load', function() {
+			window.setTimeout(function() {
+				$body.removeClass('is-preload');
+			}, 100);
+		});
 
-            // Activate article.
-            $article.addClass('active');
+	// Fix: Flexbox min-height bug on IE.
+		if (browser.name == 'ie') {
 
-            // Unlock.
-            locked = false;
+			var flexboxFixTimeoutId;
 
-            // Unmark as switching.
-            setTimeout(function() {
-                $body.removeClass('is-switching');
-            }, (initial ? 1000 : 0));
+			$window.on('resize.flexbox-fix', function() {
 
-            return;
+				clearTimeout(flexboxFixTimeoutId);
 
-        }
+				flexboxFixTimeoutId = setTimeout(function() {
 
-        // Lock.
-        locked = true;
+					if ($wrapper.prop('scrollHeight') > $window.height())
+						$wrapper.css('height', 'auto');
+					else
+						$wrapper.css('height', '100vh');
 
-        // Article or overlay already visible? Just swap.
-        if ($body.hasClass('is-article-visible')) {
+				}, 250);
 
-            // Deactivate current article/overlay.
-            var $current = $main_articles.filter('.active').add($overlay.filter('.active'));
-            $current.removeClass('active');
+			}).triggerHandler('resize.flexbox-fix');
 
-            // Show the new article/overlay.
-            setTimeout(function() {
+		}
 
-                // Hide current article/overlay.
-                $current.hide();
+	// Nav.
+		var $nav = $header.children('nav'),
+			$nav_li = $nav.find('li');
 
-                // Show new article/overlay.
-                $article.show();
+		// Add "middle" alignment classes if we're dealing with an even number of items.
+			if ($nav_li.length % 2 == 0) {
 
-                // Activate new article/overlay.
-                setTimeout(function() {
+				$nav.addClass('use-middle');
+				$nav_li.eq( ($nav_li.length / 2) ).addClass('is-middle');
 
-                    $article.addClass('active');
+			}
 
-                    // Window stuff.
-                    $window
-                        .scrollTop(0)
-                        .triggerHandler('resize.flexbox-fix');
+	// Main.
+		var	delay = 325,
+			locked = false;
 
-                    // Unlock.
-                    setTimeout(function() {
-                        locked = false;
-                    }, delay);
+		// Methods.
+			$main._show = function(id, initial) {
 
-                }, 25);
+				var $article = $main_articles.filter('#' + id);
 
-            }, delay);
+				// No such article? Bail.
+					if ($article.length == 0)
+						return;
 
-        }
+				// Handle lock.
 
-        // Otherwise, handle as normal.
-        else {
+					// Already locked? Speed through "show" steps w/o delays.
+						if (locked || (typeof initial != 'undefined' && initial === true)) {
 
-            // Mark as visible.
-            $body.addClass('is-article-visible');
+							// Mark as switching.
+								$body.addClass('is-switching');
 
-            // Show article/overlay.
-            setTimeout(function() {
+							// Mark as visible.
+								$body.addClass('is-article-visible');
 
-                // Hide header, footer.
-                $header.hide();
-                $footer.hide();
+							// Deactivate all articles (just in case one's already active).
+								$main_articles.removeClass('active');
 
-                // Show main, article/overlay.
-                $main.show();
-                $article.show();
+							// Hide header, footer.
+								$header.hide();
+								$footer.hide();
 
-                // Activate article/overlay.
-                setTimeout(function() {
+							// Show main, article.
+								$main.show();
+								$article.show();
 
-                    $article.addClass('active');
+							// Activate article.
+								$article.addClass('active');
 
-                    // Window stuff.
-                    $window
-                        .scrollTop(0)
-                        .triggerHandler('resize.flexbox-fix');
+							// Unlock.
+								locked = false;
 
-                    // Unlock.
-                    setTimeout(function() {
-                        locked = false;
-                    }, delay);
+							// Unmark as switching.
+								setTimeout(function() {
+									$body.removeClass('is-switching');
+								}, (initial ? 1000 : 0));
 
-                }, 25);
+							return;
 
-            }, delay);
+						}
 
-        }
+					// Lock.
+						locked = true;
 
-    };
+				// Article already visible? Just swap articles.
+					if ($body.hasClass('is-article-visible')) {
 
-    $main._hide = function(addState) {
+						// Deactivate current article.
+							var $currentArticle = $main_articles.filter('.active');
 
-        var $article = $main_articles.filter('.active');
-        var $activeOverlay = $overlay.filter('.active');  // Check for active overlay
+							$currentArticle.removeClass('active');
 
-        // Article or overlay not visible? Bail.
-        if (!$body.hasClass('is-article-visible'))
-            return;
+						// Show article.
+							setTimeout(function() {
 
-        // Add state?
-        if (typeof addState != 'undefined' && addState === true)
-            history.pushState(null, null, '#');
+								// Hide current article.
+									$currentArticle.hide();
 
-        // Handle lock.
-        if (locked) {
+								// Show article.
+									$article.show();
 
-            // Mark as switching.
-            $body.addClass('is-switching');
+								// Activate article.
+									setTimeout(function() {
 
-            // Deactivate article/overlay.
-            $article.removeClass('active');
-            $activeOverlay.removeClass('active');
+										$article.addClass('active');
 
-            // Hide article/overlay, main.
-            $article.hide();
-            $activeOverlay.hide();
-            $main.hide();
+										// Window stuff.
+											$window
+												.scrollTop(0)
+												.triggerHandler('resize.flexbox-fix');
 
-            // Show footer, header.
-            $footer.show();
-            $header.show();
+										// Unlock.
+											setTimeout(function() {
+												locked = false;
+											}, delay);
 
-            // Unmark as visible.
-            $body.removeClass('is-article-visible');
+									}, 25);
 
-            // Unlock.
-            locked = false;
+							}, delay);
 
-            // Unmark as switching.
-            $body.removeClass('is-switching');
+					}
 
-            // Window stuff.
-            $window
-                .scrollTop(0)
-                .triggerHandler('resize.flexbox-fix');
+				// Otherwise, handle as normal.
+					else {
 
-            return;
+						// Mark as visible.
+							$body
+								.addClass('is-article-visible');
 
-        }
+						// Show article.
+							setTimeout(function() {
 
-        // Lock.
-        locked = true;
+								// Hide header, footer.
+									$header.hide();
+									$footer.hide();
 
-        // Deactivate article/overlay.
-        $article.removeClass('active');
-        $activeOverlay.removeClass('active');
+								// Show main, article.
+									$main.show();
+									$article.show();
 
-        // Hide article/overlay.
-        setTimeout(function() {
+								// Activate article.
+									setTimeout(function() {
 
-            // Hide article/overlay, main.
-            $article.hide();
-            $activeOverlay.hide();
-            $main.hide();
+										$article.addClass('active');
 
-            // Show footer, header.
-            $footer.show();
-            $header.show();
+										// Window stuff.
+											$window
+												.scrollTop(0)
+												.triggerHandler('resize.flexbox-fix');
 
-            // Unmark as visible.
-            setTimeout(function() {
+										// Unlock.
+											setTimeout(function() {
+												locked = false;
+											}, delay);
 
-                $body.removeClass('is-article-visible');
+									}, 25);
 
-                // Window stuff.
-                $window
-                    .scrollTop(0)
-                    .triggerHandler('resize.flexbox-fix');
+							}, delay);
 
-                // Unlock.
-                setTimeout(function() {
-                    locked = false;
-                }, delay);
+					}
 
-            }, 25);
+			};
 
-        }, delay);
+			$main._hide = function(addState) {
 
-    };
+				var $article = $main_articles.filter('.active');
 
-    // Articles and overlay.
-    $main_articles.each(function() {
+				// Article not visible? Bail.
+					if (!$body.hasClass('is-article-visible'))
+						return;
 
-        var $this = $(this);
+				// Add state?
+					if (typeof addState != 'undefined'
+					&&	addState === true)
+						history.pushState(null, null, '#');
 
-        // Close button.
-        $('<div class="close">Close</div>')
-            .appendTo($this)
-            .on('click', function() {
-                location.hash = '';
-            });
+				// Handle lock.
 
-        // Prevent clicks from inside article from bubbling.
-        $this.on('click', function(event) {
-            event.stopPropagation();
-        });
+					// Already locked? Speed through "hide" steps w/o delays.
+						if (locked) {
 
-    });
+							// Mark as switching.
+								$body.addClass('is-switching');
 
-    // **Handle Escape Key for Both Article & Overlay**
-    $window.on('keyup', function(event) {
+							// Deactivate article.
+								$article.removeClass('active');
 
-        const overlay = document.querySelector(".image-overlay.active");
+							// Hide article, main.
+								$article.hide();
+								$main.hide();
 
-        // If the overlay is active and Escape is pressed, close the overlay.
-        if (overlay && event.key === "Escape") {
-            console.log("ESCAPE PRESSED - Closing Overlay");
+							// Show footer, header.
+								$footer.show();
+								$header.show();
 
-            // Stop propagation and prevent the default action
-            event.stopImmediatePropagation();
-            event.preventDefault();
+							// Unmark as visible.
+								$body.removeClass('is-article-visible');
 
-            // Close the overlay
-            $overlay.removeClass('active');
+							// Unlock.
+								locked = false;
 
-            // Return false to guarantee no other action will occur
-            return false;
-        }
+							// Unmark as switching.
+								$body.removeClass('is-switching');
 
-        // If the overlay is NOT active, handle the article Escape functionality.
-        if (!$body.hasClass('is-article-visible') && !overlay && event.key === "Escape") {
-            console.log("ESCAPE PRESSED - Closing Article");
+							// Window stuff.
+								$window
+									.scrollTop(0)
+									.triggerHandler('resize.flexbox-fix');
 
-            // Stop the event propagation and prevent any default actions
-            event.stopImmediatePropagation();
-            event.preventDefault();
+							return;
 
-            // Close the article
-            $main._hide(true);
+						}
 
-            return false;
-        }
+					// Lock.
+						locked = true;
 
-    });
+				// Deactivate article.
+					$article.removeClass('active');
 
-    $window.on('hashchange', function(event) {
+				// Hide article.
+					setTimeout(function() {
 
-        // Empty hash?
-        if (location.hash == '' || location.hash == '#') {
+						// Hide article, main.
+							$article.hide();
+							$main.hide();
 
-            // Prevent default.
-            event.preventDefault();
-            event.stopPropagation();
+						// Show footer, header.
+							$footer.show();
+							$header.show();
 
-            // Hide.
-            $main._hide();
+						// Unmark as visible.
+							setTimeout(function() {
 
-        }
+								$body.removeClass('is-article-visible');
 
-        // Otherwise, check for a matching article.
-        else if ($main_articles.filter(location.hash).length > 0) {
+								// Window stuff.
+									$window
+										.scrollTop(0)
+										.triggerHandler('resize.flexbox-fix');
 
-            // Prevent default.
-            event.preventDefault();
-            event.stopPropagation();
+								// Unlock.
+									setTimeout(function() {
+										locked = false;
+									}, delay);
 
-            // Show article.
-            $main._show(location.hash.substr(1));
+							}, 25);
 
-        } else if (location.hash === '#overlay') {
+					}, delay);
 
-            // Show overlay if hash matches.
-            event.preventDefault();
-            event.stopPropagation();
-            $main._show('overlay');
 
-        }
+			};
 
-    });
+		// Articles.
+			$main_articles.each(function() {
 
-    // Scroll restoration.
-    if ('scrollRestoration' in history)
-        history.scrollRestoration = 'manual';
-    else {
+				var $this = $(this);
 
-        var oldScrollPos = 0,
-            scrollPos = 0,
-            $htmlbody = $('html,body');
+				// Close.
+					$('<div class="close">Close</div>')
+						.appendTo($this)
+						.on('click', function() {
+							location.hash = '';
+						});
 
-        $window
-            .on('scroll', function() {
+				// Prevent clicks from inside article from bubbling.
+					$this.on('click', function(event) {
+						event.stopPropagation();
+					});
 
-                oldScrollPos = scrollPos;
-                scrollPos = $htmlbody.scrollTop();
+			});
 
-            })
-            .on('hashchange', function() {
-                $window.scrollTop(oldScrollPos);
-            });
+		// Events.
+			$body.on('click', function(event) {
 
-    }
+				// Article visible? Hide.
+					if ($body.hasClass('is-article-visible'))
+						$main._hide(true);
 
-    // Initialize.
-    $main.hide();
-    $overlay.hide();  // Hide overlay initially.
+			});
+
+			$window.on('keyup', function(event) {
+				const overlay = document.querySelector(".image-overlay.active");
+			
+				// If the overlay is active and Escape is pressed
+				if (overlay && event.key === "Escape") {
+					console.log("ESCAPE BLOCKED - Overlay is active");
+			
+					// Stop any further propagation and prevent the default action
+					event.stopImmediatePropagation(); // Ensures no further listeners will handle this event
+					event.preventDefault(); // Prevents any default browser actions from occurring
+			
+					// Close the overlay aggressively
+					overlay.classList.remove("active");
+			
+					// Return false to guarantee no other action will occur
+					return false;
+				}
+			
+				// If there's no overlay, allow the escape key to hide the article (only if an article is visible)
+				if (event.keyCode === 27 && $body.hasClass('is-article-visible')) {
+					console.log("ESCAPE PRESSED - Closing Article");
+			
+					// Stop the event propagation and prevent any default actions
+					event.stopImmediatePropagation();
+					event.preventDefault();
+			
+					// Close the article
+					$main._hide(true);
+			
+					// Ensure no other keyup events are triggered
+					return false;
+				}
+			});
+			
+			
+			
+
+
+			$window.on('hashchange', function(event) {
+
+				// Empty hash?
+					if (location.hash == ''
+					||	location.hash == '#') {
+
+						// Prevent default.
+							event.preventDefault();
+							event.stopPropagation();
+
+						// Hide.
+							$main._hide();
+
+					}
+
+				// Otherwise, check for a matching article.
+					else if ($main_articles.filter(location.hash).length > 0) {
+
+						// Prevent default.
+							event.preventDefault();
+							event.stopPropagation();
+
+						// Show article.
+							$main._show(location.hash.substr(1));
+
+					}
+
+			});
+
+		// Scroll restoration.
+		// This prevents the page from scrolling back to the top on a hashchange.
+			if ('scrollRestoration' in history)
+				history.scrollRestoration = 'manual';
+			else {
+
+				var	oldScrollPos = 0,
+					scrollPos = 0,
+					$htmlbody = $('html,body');
+
+				$window
+					.on('scroll', function() {
+
+						oldScrollPos = scrollPos;
+						scrollPos = $htmlbody.scrollTop();
+
+					})
+					.on('hashchange', function() {
+						$window.scrollTop(oldScrollPos);
+					});
+
+			}
+
+		// Initialize.
+
+			// Hide main, articles.
+				$main.hide();
+				$main_articles.hide();
+
+			// Initial article.
+				if (location.hash != ''
+				&&	location.hash != '#')
+					$window.on('load', function() {
+						$main._show(location.hash.substr(1), true);
+					});
 
 })(jQuery);
