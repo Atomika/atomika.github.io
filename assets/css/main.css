@@ -1756,7 +1756,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 90%;
+    max-width: 100%;
 }
 
 /* Ensure the gallery images are properly aligned */
