@@ -1930,27 +1930,27 @@ footer {
     justify-content: center;
     border: none;
     border-radius: 50%;
-    background: transparent; /* Fully transparent by default */
+    background: transparent; /* Fully transparent until hovered */
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
-    transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    opacity: 0.6; /* Slightly visible "X" */
-    outline: none; /* Prevents focus ring */
+    transition: background 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    opacity: 0.6; /* Subtle by default */
+    outline: none !important; /* Force remove focus outline */
 }
 
-/* Properly center the 'X' */
+/* Properly style the 'X' */
 .overlay-close-button::before {
-    content: "×"; /* Unicode times character */
-    font-size: 24px;
-    font-weight: bold;
+    content: "×"; /* Unicode character for a clean X */
+    font-size: 20px; /* Matches other close buttons */
+    font-weight: normal; /* Ensures correct thickness */
     line-height: 1;
     text-align: center;
 }
 
-/* Hover effect for close button */
+/* Match the hover effect to the site default */
 .overlay-close-button:hover {
-    background: rgba(255, 255, 255, 0.8); /* Appears on hover */
-    color: black; /* Ensures contrast on hover */
-    opacity: 1; /* Fully visible */
+    background: rgba(255, 255, 255, 0.4); /* Softer white background */
+    color: white; /* Keeps the 'X' white instead of switching to black */
+    opacity: 0.8; /* Slightly more visible but not too bright */
 }
