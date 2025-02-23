@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // --- Existing overlay setup code ---
     const overlay = document.createElement("div");
     overlay.classList.add("image-overlay");
 
@@ -54,58 +53,23 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show the overlay
             overlay.classList.add("active");
 
-            // Remove previous Escape event to avoid duplicates
-            document.removeEventListener("keydown", closeOnEscape);
-
-            // Add new Escape key event listener
-            document.addEventListener("keydown", closeOnEscape);
+            // Add Escape key event listener
+            document.addEventListener("keydown", closeOnEscape, { capture: true });
         });
     });
 
-    // --- Escape key handling logic ---
+    // Function to close the overlay
     function closeOverlay() {
         overlay.classList.remove("active");
-
-        // Remove Escape key listener when overlay is closed
-        document.removeEventListener("keydown", closeOnEscape);
+        document.removeEventListener("keydown", closeOnEscape, { capture: true });
     }
 
-    // Function to close overlay with Escape key (blocks main.js)
+    // Function to close overlay with Escape key
     function closeOnEscape(event) {
-        const isOverlayActive = overlay.classList.contains("active");
-        const isArticleVisible = document.body.classList.contains("is-article-visible");
-
-        if (isOverlayActive && event.key === "Escape") {
-            console.log("ESCAPE PRESSED - Closing overlay only");
-            event.stopImmediatePropagation(); // Fully blocks Escape from reaching main.js
-            event.preventDefault(); // Prevents any default Escape action
-            closeOverlay();
-        }
-        else if (isArticleVisible && event.key === "Escape") {
-            console.log("ESCAPE PRESSED - Closing article");
-            event.stopImmediatePropagation(); // Prevents the default action for the Escape key
+        if (event.key === "Escape") {
+            event.stopImmediatePropagation();
             event.preventDefault();
-
-            // Close the article (using the _hide method)
-            const $main = $('#main');
-            const $main_articles = $main.children('article');
-            const $body = $('body');
-            const delay = 325; // Assuming the same delay value as in your main.js
-
-            // Handle closing of main article (similar to the behavior in the main.js file)
-            $body.removeClass('is-article-visible');
-            $main_articles.removeClass('active');
-            $main_articles.hide();
-            $main.hide();
-
-            // Show header and footer again
-            $('#header').show();
-            $('#footer').show();
-
-            // Allow the page to scroll again and re-enable interactions
-            setTimeout(function () {
-                $('html, body').scrollTop(0);
-            }, delay);
+            closeOverlay();
         }
     }
 
@@ -121,5 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Prevent clicking anywhere inside the overlay (including around the image & text) from closing it
     overlayContent.addEventListener("click", function (event) {
         event.stopPropagation();
+        event.preventDefault();
     });
 });
+
+
