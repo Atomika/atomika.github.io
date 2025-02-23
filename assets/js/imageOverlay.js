@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Set the overlay content
             overlayImage.src = imgSrc;
             overlayImageCaption.textContent = imgAlt; // Show alt text under the image
-            overlayText.textContent = imgDescription; // Show description in side panel
+            overlayText.innerHTML = imgDescription; // Use innerHTML to render formatted description
 
             // Show the overlay
             overlay.classList.add("active");
@@ -88,5 +88,3 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
     });
 });
-
-
