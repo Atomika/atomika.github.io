@@ -1988,7 +1988,3 @@ footer {
         background-size: 14px 14px;
     }
 }
-
-.overlay-close-button {
-    isolation: isolate;
-}
