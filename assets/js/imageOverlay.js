@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayContent.classList.add("overlay-content");
 
     // Create close button
-    const closeButton = document.createElement("button");
+    const closeButton = document.createElement("div");
     closeButton.classList.add("overlay-close-button");
 
     // Close overlay when button is clicked
