@@ -308,9 +308,6 @@
 
 			});
 
-
-			
-
 			$window.on('keydown', function(event) {
 				const overlay = document.querySelector(".image-overlay.active");
 				const video = document.querySelector("video"); // Capture the video element if present
@@ -396,11 +393,6 @@
 				}
 			};
 
-			
-
-
-			
-			
 		$window.on('hashchange', function(event) {
 
 			// Empty hash?
