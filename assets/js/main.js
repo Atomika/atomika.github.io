@@ -308,16 +308,17 @@
 
 			});
 
-			// Using keydown instead of keyup to handle escape key press
+
+			
+
 			$window.on('keydown', function(event) {
 				const overlay = document.querySelector(".image-overlay.active");
 				const video = document.querySelector("video"); // Capture the video element if present
 			
-				// Check for the Escape key
-				if (event.keyCode === 27) {
+				if (event.keyCode === 27) { // Escape key
 					// If the overlay is open, close ONLY the overlay
 					if (overlay) {
-						event.stopImmediatePropagation(); // Stop event from reaching other listeners
+						event.stopImmediatePropagation(); // Prevent event propagation
 						event.preventDefault();
 						overlay.classList.remove("active");
 						return; // Exit the function early
@@ -326,7 +327,6 @@
 					// If a video is playing, pause it before closing the article
 					if (video && !video.paused) {
 						video.pause(); // Pause the video
-						return; // Prevent further action
 					}
 			
 					// Otherwise, close the article
@@ -335,6 +335,70 @@
 					}
 				}
 			});
+			
+			// Pause video when the article is hidden or the overlay is closed
+			$main._hide = function(addState) {
+				const $article = $main_articles.filter('.active');
+				const video = $article.find('video')[0]; // Find the video element within the article
+			
+				// Article not visible? Bail.
+				if (!$body.hasClass('is-article-visible')) return;
+			
+				// Add state?
+				if (typeof addState != 'undefined' && addState === true)
+					history.pushState(null, null, '#');
+			
+				// Handle lock.
+				if (locked) {
+					$body.addClass('is-switching');
+					$article.removeClass('active');
+					$article.hide();
+					$main.hide();
+					$footer.show();
+					$header.show();
+					$body.removeClass('is-article-visible');
+					locked = false;
+					$body.removeClass('is-switching');
+					$window.scrollTop(0).triggerHandler('resize.flexbox-fix');
+			
+					// Pause the video if it's playing when hiding the article
+					if (video && !video.paused) {
+						video.pause();
+					}
+			
+					return;
+				}
+			
+				// Lock.
+				locked = true;
+			
+				// Deactivate article.
+				$article.removeClass('active');
+			
+				// Hide article and main content.
+				setTimeout(function() {
+					$article.hide();
+					$main.hide();
+					$footer.show();
+					$header.show();
+			
+					// Unmark as visible.
+					setTimeout(function() {
+						$body.removeClass('is-article-visible');
+						$window.scrollTop(0).triggerHandler('resize.flexbox-fix');
+						locked = false;
+					}, 25);
+				}, delay);
+			
+				// Pause video if it's playing when hiding the article
+				if (video && !video.paused) {
+					video.pause();
+				}
+			};
+
+			
+
+
 			
 			
 		$window.on('hashchange', function(event) {
