@@ -315,31 +315,33 @@
 				if (overlay && event.key === "Escape") {
 					console.log("ESCAPE BLOCKED - Overlay is active");
 			
-					// Stop immediate propagation and prevent default behavior right away
-					event.stopImmediatePropagation();
-					event.preventDefault();
+					// Stop any further propagation and prevent the default action
+					event.stopImmediatePropagation(); // Ensures no further listeners will handle this event
+					event.preventDefault(); // Prevents any default browser actions from occurring
 			
 					// Close the overlay aggressively
 					overlay.classList.remove("active");
 			
-					// Completely halt any further processing for this keypress
+					// Return false to guarantee no other action will occur
 					return false;
 				}
 			
-				// If no overlay is active and Escape is pressed, close the article
+				// If there's no overlay, allow the escape key to hide the article (only if an article is visible)
 				if (event.keyCode === 27 && $body.hasClass('is-article-visible')) {
 					console.log("ESCAPE PRESSED - Closing Article");
 			
-					// Stop immediate propagation and prevent default behavior
+					// Stop the event propagation and prevent any default actions
 					event.stopImmediatePropagation();
 					event.preventDefault();
 			
-					// Close the article without letting other listeners handle the event
+					// Close the article
 					$main._hide(true);
-					
+			
+					// Ensure no other keyup events are triggered
 					return false;
 				}
 			});
+			
 			
 			
 
