@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Apply footer text styles to the caption
     overlayImageCaption.style.letterSpacing = "0.2rem";
-    overlayImageCaption.style.fontSize = "0.8rem";
+    overlayImageCaption.style.fontSize = "0.7rem";
     overlayImageCaption.style.opacity = "0.75";
     overlayImageCaption.style.marginBottom = "2px"; // Reduced margin-bottom
     overlayImageCaption.style.textTransform = "uppercase";
