@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayImageCaption.classList.add("overlay-image-caption");
 
     imageContainer.appendChild(overlayImage);
-    imageContainer.appendChild(overlayImageCaption); // Add alt text under image
+    imageContainer.appendChild(overlayImageCaption);
 
     // Create text container (side panel)
     const textContainer = document.createElement("div");
@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault(); // Prevent navigation issues
 
             const imgSrc = img.getAttribute("src");
-            const imgAlt = img.getAttribute("alt") || "No title available"; // Alt text stays under the image
-            const imgDescription = img.getAttribute("data-description") || "No additional info available."; // Text for side panel
+            const imgAlt = img.getAttribute("alt") || "No title available";
+            const imgDescription = img.getAttribute("data-description") || "No additional info available.";
 
             // Set the overlay content
             overlayImage.src = imgSrc;
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Close overlay when clicking outside of the modal, but NOT when clicking the image
+    // Close overlay when clicking outside of the overlay content (but NOT the overlay itself)
     overlay.addEventListener("click", function (event) {
         if (event.target === overlay) {
             event.stopPropagation();
@@ -82,8 +82,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Prevent clicking the image from closing the overlay
-    overlayImage.addEventListener("click", function (event) {
+    // Prevent clicking anywhere inside the overlay (including around the image & text) from closing it
+    overlayContent.addEventListener("click", function (event) {
         event.stopPropagation();
         event.preventDefault();
     });
