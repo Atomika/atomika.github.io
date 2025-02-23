@@ -1918,7 +1918,6 @@ footer {
 
 
 
-
 /* Close button for overlay */
 .overlay-close-button {
     position: absolute;
@@ -1926,22 +1925,32 @@ footer {
     right: 15px;
     width: 40px;
     height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     border-radius: 50%;
     background: transparent; /* Fully transparent by default */
     color: white;
     font-size: 24px;
-    line-height: 40px;
-    text-align: center;
     cursor: pointer;
     transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
     opacity: 0.6; /* Slightly visible "X" */
+    outline: none; /* Prevents focus ring */
+}
+
+/* Properly center the 'X' */
+.overlay-close-button::before {
+    content: "×"; /* Unicode times character */
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
 }
 
 /* Hover effect for close button */
 .overlay-close-button:hover {
     background: rgba(255, 255, 255, 0.8); /* Appears on hover */
+    color: black; /* Ensures contrast on hover */
     opacity: 1; /* Fully visible */
 }
-
-

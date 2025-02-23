@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Create close button
     const closeButton = document.createElement("button");
     closeButton.classList.add("overlay-close-button");
-    closeButton.innerHTML = "&times;"; // "×" symbol
 
     // Close overlay when button is clicked
     closeButton.addEventListener("click", function () {
