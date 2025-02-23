@@ -53,24 +53,25 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show the overlay
             overlay.classList.add("active");
 
-            // Add Escape key event listener (only if not already added)
-            document.addEventListener("keydown", closeOnEscape, { once: true, capture: true });
+            // Add Escape key event listener (only if overlay is active)
+            document.addEventListener("keydown", closeOnEscape, { capture: true });
         });
     });
 
     // Function to close the overlay
     function closeOverlay() {
         overlay.classList.remove("active");
+        document.removeEventListener("keydown", closeOnEscape, { capture: true });
     }
 
-    // Function to close overlay with Escape key (blocks site navigation)
+    // Function to close overlay with Escape key (blocks main.js)
     function closeOnEscape(event) {
-        const isOverlayActive = overlay.classList.contains("active");
-
-        if (isOverlayActive && event.key === "Escape") {
-            event.stopImmediatePropagation(); // Blocks event from reaching `main.js`
-            event.preventDefault();
-            closeOverlay();
+        if (event.key === "Escape") {
+            if (overlay.classList.contains("active")) {
+                event.stopImmediatePropagation(); // Fully blocks Escape from reaching main.js
+                event.preventDefault(); // Prevents any default Escape action
+                closeOverlay();
+            }
         }
     }
 
