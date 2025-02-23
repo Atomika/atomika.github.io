@@ -1701,7 +1701,7 @@ body.is-preload #bg:before {
 #about p, #about h1, #about h2, #about h3 {
     letter-spacing: 0.2rem;
     font-size: 0.8rem; /* Slightly larger than footer text */
-    opacity: 0.75;
+    opacity: 0.85;
 
 }
 
@@ -1718,7 +1718,7 @@ body.is-preload #bg:before {
 #showreel p, #showreel h1, #showreel h2, #showreel h3 {
     letter-spacing: 0.2rem;
     font-size: 0.8rem; /* Slightly larger than footer text */
-    opacity: 0.75;
+    opacity: 0.85;
 
 }
 
