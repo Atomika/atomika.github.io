@@ -309,42 +309,10 @@
 			});
 
 			$window.on('keyup', function(event) {
-				const overlay = document.querySelector(".image-overlay.active");
-			
-				// If the overlay is active and Escape is pressed
-				if (overlay && event.key === "Escape") {
-					console.log("ESCAPE BLOCKED - Overlay is active");
-			
-					// Stop any further propagation and prevent the default action
-					event.stopImmediatePropagation(); // Ensures no further listeners will handle this event
-					event.preventDefault(); // Prevents any default browser actions from occurring
-			
-					// Close the overlay aggressively
-					overlay.classList.remove("active");
-			
-					// Return false to guarantee no other action will occur
-					return false;
-				}
-			
-				// If there's no overlay, allow the escape key to hide the article (only if an article is visible)
-				if (event.keyCode === 27 && $body.hasClass('is-article-visible')) {
-					console.log("ESCAPE PRESSED - Closing Article");
-			
-					// Stop the event propagation and prevent any default actions
-					event.stopImmediatePropagation();
-					event.preventDefault();
-			
-					// Close the article
-					$main._hide(true);
-			
-					// Ensure no other keyup events are triggered
-					return false;
-				}
+				// Disable escape key navigation entirely by stopping the event
+				event.stopImmediatePropagation();
+				event.preventDefault();
 			});
-			
-			
-			
-
 
 			$window.on('hashchange', function(event) {
 
