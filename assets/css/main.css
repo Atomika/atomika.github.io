@@ -1678,7 +1678,7 @@ body.is-preload #bg:before {
 
 /* Adjust the panel size for the Work page */
 #work {
-    width: 75% !important;
+    width: 90% !important;
     max-width: 100% !important;
     height: auto !important;
 
