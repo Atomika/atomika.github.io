@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Set the overlay content
             overlayImage.src = imgSrc;
-            overlayText.textContent = imgAlt || "Image description unavailable";
             overlayText.textContent = imgDescription; // Show description in overlay only
 
             // Show the overlay
