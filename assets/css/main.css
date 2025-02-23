@@ -1694,12 +1694,15 @@ body.is-preload #bg:before {
     max-width: 100% !important;
     height: auto !important;
     padding: 2rem !important;
-	background-color: rgba(0, 0, 0, 0.4) !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
 }
 
-article#about {
-    width: 60rem% !important;
-    padding: 2rem !important;
+/* Ensure text inside the about section matches footer styling */
+#about p, #about h1, #about h2, #about h3 {
+    letter-spacing: 0.2rem;
+    font-size: 0.8rem; /* Slightly larger than footer text */
+    opacity: 0.75;
+    text-transform: uppercase;
 }
 
 /* Adjust the panel size for the showreel page */
@@ -1708,8 +1711,20 @@ article#about {
     max-width: 100% !important;
     height: auto !important;
     padding: 2rem !important;
-	background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
 }
+
+/* Ensure text inside the showreel section matches footer styling */
+#showreel p, #showreel h1, #showreel h2, #showreel h3 {
+    letter-spacing: 0.2rem;
+    font-size: 0.8rem; /* Slightly larger than footer text */
+    opacity: 0.75;
+    text-transform: uppercase;
+}
+
+
+
+
 
 	
 p{ margin: 0; }
