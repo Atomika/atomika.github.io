@@ -53,25 +53,31 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show the overlay
             overlay.classList.add("active");
 
-            // Add Escape key event listener (only if overlay is active)
-            document.addEventListener("keydown", closeOnEscape, { capture: true });
+            // Remove previous Escape event to avoid duplicates
+            document.removeEventListener("keydown", closeOnEscape);
+
+            // Add new Escape key event listener
+            document.addEventListener("keydown", closeOnEscape);
         });
     });
 
     // Function to close the overlay
     function closeOverlay() {
         overlay.classList.remove("active");
-        document.removeEventListener("keydown", closeOnEscape, { capture: true });
+
+        // Remove Escape key listener when overlay is closed
+        document.removeEventListener("keydown", closeOnEscape);
     }
 
     // Function to close overlay with Escape key (blocks main.js)
     function closeOnEscape(event) {
-        if (event.key === "Escape") {
-            if (overlay.classList.contains("active")) {
-                event.stopImmediatePropagation(); // Fully blocks Escape from reaching main.js
-                event.preventDefault(); // Prevents any default Escape action
-                closeOverlay();
-            }
+        const isOverlayActive = overlay.classList.contains("active");
+
+        if (isOverlayActive && event.key === "Escape") {
+            console.log("ESCAPE PRESSED - Closing overlay only");
+            event.stopImmediatePropagation(); // Fully blocks Escape from reaching main.js
+            event.preventDefault(); // Prevents any default Escape action
+            closeOverlay();
         }
     }
 
@@ -87,6 +93,5 @@ document.addEventListener("DOMContentLoaded", function () {
     // Prevent clicking anywhere inside the overlay (including around the image & text) from closing it
     overlayContent.addEventListener("click", function (event) {
         event.stopPropagation();
-        event.preventDefault();
     });
 });

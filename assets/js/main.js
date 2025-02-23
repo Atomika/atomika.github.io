@@ -311,19 +311,23 @@
 			$window.on('keyup', function(event) {
 				const overlay = document.querySelector(".image-overlay.active");
 			
-				// Block Escape from affecting articles if overlay is active
-				if (overlay) {
-					event.stopImmediatePropagation(); // Fully block event from main.js
-					event.preventDefault(); // Prevent any unintended behavior
-					overlay.classList.remove("active"); // Close only the overlay
-					return; // Exit function early so main.js does NOT process Escape
+				// 🚨 COMPLETELY BLOCK Escape key when overlay is active
+				if (overlay && event.key === "Escape") {
+					console.log("ESCAPE BLOCKED - Overlay is active");
+					event.stopImmediatePropagation(); // Blocks Escape from going further
+					event.preventDefault(); // Prevents any default behavior
+					overlay.classList.remove("active"); // Closes the overlay
+					return false; // Ensures event goes NO further
 				}
 			
-				// If no overlay is open, handle Escape as normal
+				// 🚨 If no overlay is open, allow Escape to close articles
 				if (event.keyCode === 27 && $body.hasClass('is-article-visible')) {
+					console.log("ESCAPE PRESSED - Closing Article");
+					event.stopImmediatePropagation(); // Just in case, prevent further propagation
 					$main._hide(true);
 				}
 			});
+			
 			
 
 
