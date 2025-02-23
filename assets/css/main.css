@@ -1919,7 +1919,7 @@ footer {
 
 
 
-//* Close button for overlay */
+/* Close button for overlay */
 .overlay-close-button {
     display: block;
     position: absolute;
@@ -1936,7 +1936,7 @@ footer {
     -moz-appearance: none;
     appearance: none;
     overflow: hidden; /* Ensures no overflow from pseudo-element */
-    box-shadow: none !important; /* Explicitly remove any shadow */
+    box-shadow: none !important; /* Remove outline */
 }
 
 /* Visual appearance with SVG icon */
@@ -1972,7 +1972,6 @@ footer {
 /* Remove focus outline */
 .overlay-close-button:focus {
     outline: none !important; /* Ensure no outline on focus */
-    box-shadow: none !important; /* Remove any focus-related shadow */
 }
 
 /* Responsive adjustments */
@@ -1988,8 +1987,4 @@ footer {
         height: 2.25rem;
         background-size: 14px 14px;
     }
-}
-
-.overlay-close-button {
-    z-index: 9999;
 }
