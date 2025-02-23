@@ -15,6 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayImageCaption = document.createElement("p");
     overlayImageCaption.classList.add("overlay-image-caption");
 
+    // Apply footer text styles to the caption
+    overlayImageCaption.style.letterSpacing = "0.2rem";
+    overlayImageCaption.style.fontSize = "0.6rem";
+    overlayImageCaption.style.opacity = "0.75";
+    overlayImageCaption.style.marginBottom = "0";
+    overlayImageCaption.style.textTransform = "uppercase";
+
     imageContainer.appendChild(overlayImage);
     imageContainer.appendChild(overlayImageCaption);
 
@@ -48,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Set the overlay content
             overlayImage.src = imgSrc;
             overlayImageCaption.textContent = imgAlt; // Show alt text under the image
-            overlayText.innerHTML = imgDescription; // Use innerHTML to render formatted description
+            overlayText.innerHTML = imgDescription; // Show description in side panel
 
             // Show the overlay
             overlay.classList.add("active");
