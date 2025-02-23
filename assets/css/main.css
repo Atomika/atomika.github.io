@@ -1917,6 +1917,8 @@ footer {
 
 
 
+
+
 /* Close button for overlay */
 .overlay-close-button {
     display: block;
@@ -1934,9 +1936,10 @@ footer {
     -moz-appearance: none;
     appearance: none;
     overflow: hidden; /* Ensures no overflow from pseudo-element */
+    box-shadow: none !important; /* Explicitly remove any shadow */
 }
 
-/* Visual appearance with SVG icon, no default background */
+/* Visual appearance with SVG icon */
 .overlay-close-button:before {
     -moz-transition: background-color 0.2s ease-in-out;
     -webkit-transition: background-color 0.2s ease-in-out;
@@ -1954,9 +1957,6 @@ footer {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff; stroke-width: 1; %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
     background-size: 20px 20px;
     background-repeat: no-repeat;
-    background-color: transparent; /* Explicitly transparent by default */
-    border: none; /* Ensure no border */
-    box-shadow: none; /* Remove any potential shadow */
 }
 
 /* Hover effect */
@@ -1972,6 +1972,7 @@ footer {
 /* Remove focus outline */
 .overlay-close-button:focus {
     outline: none !important; /* Ensure no outline on focus */
+    box-shadow: none !important; /* Remove any focus-related shadow */
 }
 
 /* Responsive adjustments */
