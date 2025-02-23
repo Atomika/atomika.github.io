@@ -1928,21 +1928,22 @@ footer {
     height: 40px;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2); /* Transparent by default */
+    background: transparent; /* Fully transparent by default */
     color: white;
     font-size: 24px;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
-    transition: background 0.3s ease, opacity 0.3s ease;
-    opacity: 0.6;
+    transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0.6; /* Slightly visible "X" */
 }
 
 /* Hover effect for close button */
 .overlay-close-button:hover {
-    background: rgba(255, 255, 255, 0.8); /* Becomes opaque */
-    opacity: 1;
+    background: rgba(255, 255, 255, 0.8); /* Appears on hover */
+    opacity: 1; /* Fully visible */
 }
+
 
 /* Positioning the overlay content relative to ensure the button is inside */
 .image-overlay {

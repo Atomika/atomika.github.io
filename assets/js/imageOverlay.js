@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     textContainer.appendChild(overlayText);
 
     // Append elements to overlay
-    overlayContent.appendChild(closeButton); // Add close button
+    overlayContent.appendChild(closeButton); // Add close button at top right
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
     overlay.appendChild(overlayContent);
