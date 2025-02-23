@@ -282,10 +282,12 @@
 
     });
 
+    // **Handle Escape Key for Both Overlay & Article Navigation**
     $window.on('keyup', function(event) {
+
         const overlay = document.querySelector(".image-overlay.active");
 
-        // If the overlay is active and Escape is pressed
+        // If the overlay is active and Escape is pressed, close the overlay.
         if (overlay && event.key === "Escape") {
             console.log("ESCAPE BLOCKED - Overlay is active");
 
@@ -300,8 +302,8 @@
             return false;
         }
 
-        // If there's no overlay, allow the escape key to hide the article (only if an article is visible)
-        if (event.keyCode === 27 && $body.hasClass('is-article-visible')) {
+        // If the overlay is NOT active, allow article Escape functionality
+        if (event.keyCode === 27 && !$body.hasClass('is-article-visible') && !overlay) {
             console.log("ESCAPE PRESSED - Closing Article");
 
             // Stop the event propagation and prevent any default actions
