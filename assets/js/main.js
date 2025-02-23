@@ -367,4 +367,28 @@
 
     // Scroll restoration.
     if ('scrollRestoration' in history)
-        history.scrollRest
+        history.scrollRestoration = 'manual';
+    else {
+
+        var oldScrollPos = 0,
+            scrollPos = 0,
+            $htmlbody = $('html,body');
+
+        $window
+            .on('scroll', function() {
+
+                oldScrollPos = scrollPos;
+                scrollPos = $htmlbody.scrollTop();
+
+            })
+            .on('hashchange', function() {
+                $window.scrollTop(oldScrollPos);
+            });
+
+    }
+
+    // Initialize.
+    $main.hide();
+    $overlay.hide();  // Hide overlay initially.
+
+})(jQuery);
