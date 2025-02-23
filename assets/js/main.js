@@ -303,7 +303,7 @@
         }
 
         // If the overlay is NOT active, allow article Escape functionality
-        if (event.keyCode === 27 && !$body.hasClass('is-article-visible') && !overlay) {
+        if (!$body.hasClass('is-article-visible') && !overlay && event.key === "Escape") {
             console.log("ESCAPE PRESSED - Closing Article");
 
             // Stop the event propagation and prevent any default actions
