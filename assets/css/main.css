@@ -1918,7 +1918,6 @@ footer {
 
 
 
-
 /* Close button for overlay */
 .overlay-close-button {
     display: block;
@@ -1929,14 +1928,13 @@ footer {
     height: 4rem;
     cursor: pointer;
     background: transparent; /* Matches original's transparent default */
-    border: none; /* No border */
-    border-radius: 100%; /* Circular clickable area */
+    border: none;/* No border */
+    border-radius: 100%; /* Makes the clickable area circular */
     outline: none !important; /* Remove outline */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     overflow: hidden; /* Ensures no overflow from pseudo-element */
-    box-shadow: none !important; /* Remove outline */
 }
 
 /* Visual appearance with SVG icon */
@@ -1952,9 +1950,9 @@ footer {
     left: 0.75rem;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 100%;
+    border-radius: 100%; /* Already circular, kept for consistency */
     background-position: center;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff; stroke-width: 1; %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3E%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
     background-size: 20px 20px;
     background-repeat: no-repeat;
 }
