@@ -311,26 +311,31 @@
 			// Using keydown instead of keyup to handle escape key press
 			$window.on('keydown', function(event) {
 				const overlay = document.querySelector(".image-overlay.active");
-
-				switch (event.keyCode) {
-					case 27: // Escape key
-						// If the image overlay is open, close ONLY the overlay
-						if (overlay) {
-							event.stopImmediatePropagation(); // Stop event from reaching other listeners
-							event.preventDefault();
-							overlay.classList.remove("active");
-							return; // Exit the function early
-						}
-
-						// Otherwise, close the article as normal
-						if ($body.hasClass('is-article-visible'))
-							$main._hide(true);
-						
-						break;
-					default:
-						break;
+				const video = document.querySelector("video"); // Capture the video element if present
+			
+				// Check for the Escape key
+				if (event.keyCode === 27) {
+					// If the overlay is open, close ONLY the overlay
+					if (overlay) {
+						event.stopImmediatePropagation(); // Stop event from reaching other listeners
+						event.preventDefault();
+						overlay.classList.remove("active");
+						return; // Exit the function early
+					}
+			
+					// If a video is playing, pause it before closing the article
+					if (video && !video.paused) {
+						video.pause(); // Pause the video
+						return; // Prevent further action
+					}
+			
+					// Otherwise, close the article
+					if ($body.hasClass('is-article-visible')) {
+						$main._hide(true);
+					}
 				}
 			});
+			
 			
 		$window.on('hashchange', function(event) {
 
