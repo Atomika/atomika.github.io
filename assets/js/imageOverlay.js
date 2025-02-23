@@ -12,7 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayImage = document.createElement("img");
     overlayImage.classList.add("overlay-image");
 
+    const overlayImageCaption = document.createElement("p");
+    overlayImageCaption.classList.add("overlay-image-caption");
+
     imageContainer.appendChild(overlayImage);
+    imageContainer.appendChild(overlayImageCaption); // Add alt text under image
 
     // Create text container (side panel)
     const textContainer = document.createElement("div");
@@ -35,13 +39,16 @@ document.addEventListener("DOMContentLoaded", function () {
     images.forEach(img => {
         img.addEventListener("click", function (event) {
             event.stopPropagation();
+            event.preventDefault(); // Prevent navigation issues
 
             const imgSrc = img.getAttribute("src");
-            const imgDescription = img.getAttribute("data-description") || "No additional info available."; // Get description
+            const imgAlt = img.getAttribute("alt") || "No title available"; // Alt text stays under the image
+            const imgDescription = img.getAttribute("data-description") || "No additional info available."; // Text for side panel
 
             // Set the overlay content
             overlayImage.src = imgSrc;
-            overlayText.textContent = imgDescription; // Show description in overlay only
+            overlayImageCaption.textContent = imgAlt; // Show alt text under the image
+            overlayText.textContent = imgDescription; // Show description in side panel
 
             // Show the overlay
             overlay.classList.add("active");
@@ -66,12 +73,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Close overlay when clicking outside of the modal
+    // Close overlay when clicking outside of the modal, but NOT when clicking the image
     overlay.addEventListener("click", function (event) {
         if (event.target === overlay) {
             event.stopPropagation();
             closeOverlay();
             event.preventDefault();
         }
+    });
+
+    // Prevent clicking the image from closing the overlay
+    overlayImage.addEventListener("click", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
     });
 });

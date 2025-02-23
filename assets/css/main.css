@@ -1840,7 +1840,7 @@ footer {
     padding: 20px;
     border-radius: 10px;
     text-align: left;
-    max-width: 900px; /* Increased max width */
+    max-width: 900px;
     width: 90%;
     position: relative;
     color: white;
@@ -1852,15 +1852,24 @@ footer {
     max-width: 55%; /* Increased size by 15% */
     padding-right: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 /* Make the image 15% larger */
 .overlay-image {
-    width: 115%; /* 15% larger than normal */
+    width: 115%;
     max-width: 100%;
     border-radius: 5px;
+}
+
+/* Image caption (alt text) */
+.overlay-image-caption {
+    font-size: 14px;
+    color: #bbb;
+    text-align: center;
+    margin-top: 10px;
 }
 
 /* Text container */
@@ -1873,3 +1882,4 @@ footer {
     text-align: left;
     font-size: 18px;
 }
+
