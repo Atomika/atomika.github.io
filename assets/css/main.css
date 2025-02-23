@@ -1916,45 +1916,60 @@ footer {
 }
 
 
-
 /* Close button for overlay */
 .overlay-close-button {
+    display: block;
     position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 50%;
-    background: transparent; /* Fully transparent until hover */
-    color: white;
-    font-size: 22px; /* Adjusted to match site */
-    font-weight: 300; /* Ensure it matches the thin style */
+    top: 0;
+    right: 0;
+    width: 4rem;
+    height: 4rem;
     cursor: pointer;
-    transition: background 0.2s ease-in-out, opacity 0.2s ease-in-out;
-    opacity: 0.6; /* Default opacity */
-    outline: none !important; /* Remove any outline */
+    text-indent: 4rem;
+    overflow: hidden;
+    white-space: nowrap;
+    background: transparent; /* Matches original's transparent default */
+    border: none; /* No border, as in original */
+    outline: none !important; /* Matches your removal of outline */
 }
 
-/* Properly center and style the 'X' */
-.overlay-close-button::before {
-    content: "×"; /* Unicode for a clean X */
-    font-size: 24px; /* Increased for better balance */
-    font-weight: 200; /* Match the thinner look */
-    line-height: 1;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+/* Visual appearance with SVG icon */
+.overlay-close-button:before {
+    -moz-transition: background-color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 100%;
+    background-position: center;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3E%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
 }
 
-/* Hover effect (corrected brightness & opacity) */
-.overlay-close-button:hover {
-    background: rgba(255, 255, 255, 0.3); /* Softer and no harsh glow */
-    opacity: 0.8;
+/* Hover effect */
+.overlay-close-button:hover:before {
+    background-color: rgba(255, 255, 255, 0.075);
+}
+
+/* Active effect */
+.overlay-close-button:active:before {
+    background-color: rgba(255, 255, 255, 0.175);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 736px) {
+    .overlay-close-button:before {
+        top: 0.875rem;
+        left: 0.875rem;
+        width: 2.25rem;
+        height: 2.25rem;
+        background-size: 14px 14px;
+    }
 }
