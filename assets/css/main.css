@@ -1678,11 +1678,11 @@ body.is-preload #bg:before {
 
 /* Adjust the panel size for the Work page */
 #work {
-    width: 90% !important;
+    width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
 	width: auto !important;
-    padding: .5rem !important;
+    padding: 1rem !important;
 	background-color: rgba(0, 0, 0, 0.2) !important;
 }
 
@@ -1756,7 +1756,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 90%;
 }
 
 /* Ensure the gallery images are properly aligned */
