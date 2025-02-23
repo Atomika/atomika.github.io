@@ -19,8 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayImageCaption.style.letterSpacing = "0.2rem";
     overlayImageCaption.style.fontSize = "0.6rem";
     overlayImageCaption.style.opacity = "0.75";
-    overlayImageCaption.style.marginBottom = "0";
+    overlayImageCaption.style.marginBottom = "10px"; // Add margin to space it from the image
     overlayImageCaption.style.textTransform = "uppercase";
+    overlayImageCaption.style.paddingBottom = "10px"; // Add padding between image and caption
 
     imageContainer.appendChild(overlayImage);
     imageContainer.appendChild(overlayImageCaption);
@@ -31,6 +32,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const overlayText = document.createElement("p");
     overlayText.classList.add("overlay-description");
+
+    // Apply styles to the description text (matching footer text style, larger font)
+    overlayText.style.letterSpacing = "0.2rem";
+    overlayText.style.fontSize = "0.8rem"; // Slightly larger font size for description
+    overlayText.style.opacity = "0.75";
+    overlayText.style.marginBottom = "0";
+    overlayText.style.textTransform = "uppercase";
 
     textContainer.appendChild(overlayText);
 
