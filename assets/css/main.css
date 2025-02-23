@@ -1833,49 +1833,43 @@ footer {
     visibility: visible;
 }
 
-/* Overlay content */
+
+
+/* Increase the overall overlay size */
 .overlay-content {
     display: flex;
     background: rgba(20, 20, 20, 0.9);
-    padding: 20px;
+    padding: 30px; /* Increased padding for a bigger layout */
     border-radius: 10px;
     text-align: left;
-    max-width: 900px;
-    width: 90%;
+    max-width: 1100px; /* Increased max width */
+    width: 95%; /* Make use of available space */
     position: relative;
     color: white;
 }
 
-/* Image container */
+/* Image container (bigger to accommodate the larger image) */
 .overlay-image-container {
     flex: 1;
-    max-width: 80; /* Increased size by 15% */
-    padding-right: 20px;
+    max-width: 65%; /* Increased size to allow a larger poster */
+    padding-right: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-/* Make the image 15% larger */
+/* Make the image 45% larger than the original */
 .overlay-image {
-    width: 130%;
+    width: 145%; /* 45% larger now */
     max-width: 100%;
     border-radius: 5px;
 }
 
-/* Image caption (alt text) */
-.overlay-image-caption {
-    font-size: 14px;
-    color: #bbb;
-    text-align: center;
-    margin-top: 10px;
-}
-
-/* Text container */
+/* Text container (adjusted for new layout) */
 .overlay-text-container {
     flex: 1;
-    max-width: 45%;
+    max-width: 35%; /* Adjusted to balance with larger image */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1883,3 +1877,25 @@ footer {
     font-size: 18px;
 }
 
+/* Responsive adjustments */
+@media (max-width: 800px) {
+    .overlay-content {
+        flex-direction: column;
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    .overlay-image-container {
+        max-width: 100%;
+        padding-right: 0;
+    }
+
+    .overlay-text-container {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .overlay-image {
+        width: 100%; /* Prevents overflow on small screens */
+    }
+}
