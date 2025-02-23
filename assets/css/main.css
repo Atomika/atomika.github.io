@@ -1919,7 +1919,7 @@ footer {
 
 
 
-/* Close button for overlay */
+//* Close button for overlay */
 .overlay-close-button {
     display: block;
     position: absolute;
@@ -1988,4 +1988,8 @@ footer {
         height: 2.25rem;
         background-size: 14px 14px;
     }
+}
+
+.overlay-close-button {
+    z-index: 9999;
 }
