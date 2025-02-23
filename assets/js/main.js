@@ -316,6 +316,7 @@
             // Ensure no other keyup events are triggered
             return false;
         }
+
     });
 
     $window.on('hashchange', function(event) {
