@@ -283,8 +283,8 @@
 
     });
 
-    // Handle Escape Key for Both Article & Overlay
-    $window.on('keyup', function(event) {
+    // Handle Keydown for Both Article & Overlay
+    $window.on('keydown', function(event) {
 
         const overlay = document.querySelector(".image-overlay.active");
         const isOverlayActive = overlay !== null;  // Check if the overlay is active.
