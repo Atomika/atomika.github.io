@@ -45,8 +45,7 @@
         locked = false;
 
     // Methods.
-    $main._show = function(id, initial) {
-
+    function showArticleOrOverlay(id, initial) {
         var $article = $main_articles.filter('#' + id);
         
         // If the overlay is triggered, treat it as an article.
@@ -174,7 +173,7 @@
 
     };
 
-    $main._hide = function(addState) {
+    function hideArticleOrOverlay(addState) {
 
         var $article = $main_articles.filter('.active');
         var $activeOverlay = $overlay.filter('.active');  // Check for active overlay
@@ -264,25 +263,6 @@
 
     };
 
-    // Articles and overlay.
-    $main_articles.each(function() {
-
-        var $this = $(this);
-
-        // Close button.
-        $('<div class="close">Close</div>')
-            .appendTo($this)
-            .on('click', function() {
-                location.hash = '';
-            });
-
-        // Prevent clicks from inside article from bubbling.
-        $this.on('click', function(event) {
-            event.stopPropagation();
-        });
-
-    });
-
     // Handle Escape Key for Both Article & Overlay
     $window.on('keyup', function(event) {
 
@@ -313,23 +293,24 @@
             event.preventDefault();
 
             // Close the article
-            $main._hide(true);
+            hideArticleOrOverlay(true);
 
             return false;
         }
 
     });
 
-    // Clicking outside the article to close it.
+    // Clicking outside the article or overlay to close them.
     $body.on('click', function(event) {
 
         // If the overlay is not visible, clicking outside of the article will close it.
         if ($body.hasClass('is-article-visible') && !$(event.target).closest('article').length && !$(event.target).closest('.image-overlay').length) {
-            $main._hide(true);
+            hideArticleOrOverlay(true);
         }
 
     });
 
+    // Hashchange event.
     $window.on('hashchange', function(event) {
 
         // Empty hash?
@@ -340,7 +321,7 @@
             event.stopPropagation();
 
             // Hide.
-            $main._hide();
+            hideArticleOrOverlay();
 
         }
 
@@ -352,14 +333,14 @@
             event.stopPropagation();
 
             // Show article.
-            $main._show(location.hash.substr(1));
+            showArticleOrOverlay(location.hash.substr(1));
 
         } else if (location.hash === '#overlay') {
 
             // Show overlay if hash matches.
             event.preventDefault();
             event.stopPropagation();
-            $main._show('overlay');
+            showArticleOrOverlay('overlay');
 
         }
 
