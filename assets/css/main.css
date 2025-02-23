@@ -1916,6 +1916,9 @@ footer {
 }
 
 
+
+
+
 /* Close button for overlay */
 .overlay-close-button {
     display: block;
@@ -1930,7 +1933,10 @@ footer {
     white-space: nowrap;
     background: transparent; /* Matches original's transparent default */
     border: none; /* No border, as in original */
-    outline: none !important; /* Matches your removal of outline */
+    outline: none !important; /* Explicitly remove outline */
+    -webkit-appearance: none; /* Remove any browser-specific styling */
+    -moz-appearance: none; /* Remove any browser-specific styling */
+    appearance: none; /* Remove any browser-specific styling */
 }
 
 /* Visual appearance with SVG icon */
@@ -1961,6 +1967,11 @@ footer {
 /* Active effect */
 .overlay-close-button:active:before {
     background-color: rgba(255, 255, 255, 0.175);
+}
+
+/* Remove focus outline */
+.overlay-close-button:focus {
+    outline: none !important; /* Ensure no outline on focus */
 }
 
 /* Responsive adjustments */
