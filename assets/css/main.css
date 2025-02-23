@@ -1918,25 +1918,23 @@ footer {
 
 
 
-
 /* Close button for overlay */
 .overlay-close-button {
     display: block;
     position: absolute;
     top: 0;
     right: 0;
-    width: 4rem;
+    width: 4rem; /* Defines the clickable area */
     height: 4rem;
     cursor: pointer;
-    text-indent: 4rem;
-    overflow: hidden;
-    white-space: nowrap;
     background: transparent; /* Matches original's transparent default */
-    border: none; /* No border, as in original */
-    outline: none !important; /* Explicitly remove outline */
-    -webkit-appearance: none; /* Remove any browser-specific styling */
-    -moz-appearance: none; /* Remove any browser-specific styling */
-    appearance: none; /* Remove any browser-specific styling */
+    border: none !important;/* No border */
+    border-radius: 100%; /* Makes the clickable area circular */
+    outline: none !important; /* Remove outline */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    overflow: hidden; /* Ensures no overflow from pseudo-element */
 }
 
 /* Visual appearance with SVG icon */
@@ -1952,7 +1950,7 @@ footer {
     left: 0.75rem;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 100%;
+    border-radius: 100%; /* Already circular, kept for consistency */
     background-position: center;
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3E%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
     background-size: 20px 20px;
@@ -1976,6 +1974,10 @@ footer {
 
 /* Responsive adjustments */
 @media screen and (max-width: 736px) {
+    .overlay-close-button {
+        width: 3.5rem; /* Slightly smaller clickable area */
+        height: 3.5rem;
+    }
     .overlay-close-button:before {
         top: 0.875rem;
         left: 0.875rem;
