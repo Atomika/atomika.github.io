@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // --- Existing overlay setup code ---
     const overlay = document.createElement("div");
     overlay.classList.add("image-overlay");
 
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Function to close the overlay
+    // --- Escape key handling logic ---
     function closeOverlay() {
         overlay.classList.remove("active");
 
@@ -72,12 +73,39 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to close overlay with Escape key (blocks main.js)
     function closeOnEscape(event) {
         const isOverlayActive = overlay.classList.contains("active");
+        const isArticleVisible = document.body.classList.contains("is-article-visible");
 
         if (isOverlayActive && event.key === "Escape") {
             console.log("ESCAPE PRESSED - Closing overlay only");
             event.stopImmediatePropagation(); // Fully blocks Escape from reaching main.js
             event.preventDefault(); // Prevents any default Escape action
             closeOverlay();
+        }
+        else if (isArticleVisible && event.key === "Escape") {
+            console.log("ESCAPE PRESSED - Closing article");
+            event.stopImmediatePropagation(); // Prevents the default action for the Escape key
+            event.preventDefault();
+
+            // Close the article (using the _hide method)
+            const $main = $('#main');
+            const $main_articles = $main.children('article');
+            const $body = $('body');
+            const delay = 325; // Assuming the same delay value as in your main.js
+
+            // Handle closing of main article (similar to the behavior in the main.js file)
+            $body.removeClass('is-article-visible');
+            $main_articles.removeClass('active');
+            $main_articles.hide();
+            $main.hide();
+
+            // Show header and footer again
+            $('#header').show();
+            $('#footer').show();
+
+            // Allow the page to scroll again and re-enable interactions
+            setTimeout(function () {
+                $('html, body').scrollTop(0);
+            }, delay);
         }
     }
 
