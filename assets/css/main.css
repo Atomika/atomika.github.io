@@ -1934,6 +1934,7 @@ footer {
     -moz-appearance: none;
     appearance: none;
     overflow: hidden; /* Ensures no overflow from pseudo-element */
+    isolation: isolate; /* Prevent blending with parent layers */
 }
 
 /* Visual appearance with SVG icon */
@@ -1966,10 +1967,9 @@ footer {
     background-color: rgba(255, 255, 255, 0.175);
 }
 
-/* Remove focus outline and any default effects */
+/* Remove focus outline */
 .overlay-close-button:focus {
     outline: none !important; /* Ensure no outline on focus */
-    border: none !important; /* Reinforce no border */
 }
 
 /* Responsive adjustments */
