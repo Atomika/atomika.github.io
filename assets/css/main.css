@@ -1702,7 +1702,7 @@ body.is-preload #bg:before {
     letter-spacing: 0.2rem;
     font-size: 0.8rem; /* Slightly larger than footer text */
     opacity: 0.75;
-    text-transform: uppercase;
+
 }
 
 /* Adjust the panel size for the showreel page */
@@ -1719,7 +1719,7 @@ body.is-preload #bg:before {
     letter-spacing: 0.2rem;
     font-size: 0.8rem; /* Slightly larger than footer text */
     opacity: 0.75;
-    text-transform: uppercase;
+
 }
 
 
