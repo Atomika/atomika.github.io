@@ -309,15 +309,12 @@
 			});
 
 
-
-
-
 			
+
 			$window.on('keydown', function(event) {
 				const overlay = document.querySelector(".image-overlay.active");
-				const vimeoPlayer = document.querySelector("iframe[src*='vimeo.com']");
+				const video = document.querySelector("video"); // Capture the video element if present
 			
-				// Handle escape key
 				if (event.keyCode === 27) { // Escape key
 					// If the overlay is open, close ONLY the overlay
 					if (overlay) {
@@ -327,15 +324,9 @@
 						return; // Exit the function early
 					}
 			
-					// If there's a Vimeo video playing, pause it before closing the article
-					if (vimeoPlayer) {
-						const iframe = $(vimeoPlayer)[0];
-						const player = new Vimeo.Player(iframe);
-			
-						// Pause the video using the Vimeo API
-						player.pause().catch(function(error) {
-							console.error("Error pausing the video: ", error);
-						});
+					// If a video is playing, pause it before closing the article
+					if (video && !video.paused) {
+						video.pause(); // Pause the video
 					}
 			
 					// Otherwise, close the article
@@ -345,10 +336,10 @@
 				}
 			});
 			
-			// Pause Vimeo video when the article is hidden or the overlay is closed
+			// Pause video when the article is hidden or the overlay is closed
 			$main._hide = function(addState) {
 				const $article = $main_articles.filter('.active');
-				const vimeoPlayer = $article.find("iframe[src*='vimeo.com']")[0]; // Find the Vimeo iframe
+				const video = $article.find('video')[0]; // Find the video element within the article
 			
 				// Article not visible? Bail.
 				if (!$body.hasClass('is-article-visible')) return;
@@ -370,15 +361,9 @@
 					$body.removeClass('is-switching');
 					$window.scrollTop(0).triggerHandler('resize.flexbox-fix');
 			
-					// Pause the Vimeo video if it's playing when hiding the article
-					if (vimeoPlayer) {
-						const iframe = $(vimeoPlayer)[0];
-						const player = new Vimeo.Player(iframe);
-			
-						// Pause the video using the Vimeo API
-						player.pause().catch(function(error) {
-							console.error("Error pausing the video: ", error);
-						});
+					// Pause the video if it's playing when hiding the article
+					if (video && !video.paused) {
+						video.pause();
 					}
 			
 					return;
@@ -405,18 +390,12 @@
 					}, 25);
 				}, delay);
 			
-				// Pause the Vimeo video if it's playing when hiding the article
-				if (vimeoPlayer) {
-					const iframe = $(vimeoPlayer)[0];
-					const player = new Vimeo.Player(iframe);
-			
-					// Pause the video using the Vimeo API
-					player.pause().catch(function(error) {
-						console.error("Error pausing the video: ", error);
-					});
+				// Pause video if it's playing when hiding the article
+				if (video && !video.paused) {
+					video.pause();
 				}
 			};
-			
+
 			
 
 
