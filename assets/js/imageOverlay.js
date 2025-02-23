@@ -5,6 +5,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayContent = document.createElement("div");
     overlayContent.classList.add("overlay-content");
 
+    // Create close button
+    const closeButton = document.createElement("button");
+    closeButton.classList.add("overlay-close-button");
+    closeButton.innerHTML = "&times;"; // "×" symbol
+
+    // Close overlay when button is clicked
+    closeButton.addEventListener("click", function () {
+        closeOverlay();
+    });
+
     // Create image container
     const imageContainer = document.createElement("div");
     imageContainer.classList.add("overlay-image-container");
@@ -43,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     textContainer.appendChild(overlayText);
 
     // Append elements to overlay
+    overlayContent.appendChild(closeButton); // Add close button
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
     overlay.appendChild(overlayContent);
