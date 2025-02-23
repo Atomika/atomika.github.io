@@ -19,8 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayImageCaption.style.letterSpacing = "0.2rem";
     overlayImageCaption.style.fontSize = "0.6rem";
     overlayImageCaption.style.opacity = "0.75";
+    overlayImageCaption.style.marginBottom = "2px"; // Reduced margin-bottom
     overlayImageCaption.style.textTransform = "uppercase";
-    overlayImageCaption.style.marginTop = "10px"; // Add margin above the caption
+    overlayImageCaption.style.marginTop = "10px"; // Keep the same margin-top for spacing above
 
     imageContainer.appendChild(overlayImage);
     imageContainer.appendChild(overlayImageCaption);
