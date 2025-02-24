@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     isArticleVisible = true;
                     hoverEffectEnabled = false; // Reset hover effect flag
 
-                    // Apply the delay before enabling hover effects
+                    // Apply the delay before enabling instant hover effects
                     setTimeout(() => {
                         hoverEffectEnabled = true; // Enable hover effects after 625ms
                     }, 625);
@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Article is not visible, reset the effect
                     isArticleVisible = false;
                     hoverEffectEnabled = false;
+                    clearTimeout(firstHoverTimeout);
+                    firstHoverTimeout = null;
                     images.forEach(img => {
                         img.style.filter = "brightness(85%) grayscale(0%)"; // Reset filter
                         img.style.transform = "scale(1)"; // Reset zoom
@@ -43,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
     images.forEach(img => {
         img.addEventListener("mouseenter", function () {
             if (isArticleVisible) {
-                if (!hasMouseMoved && !hoverEffectEnabled) {
-                    // Special case: User hasn’t moved mouse yet, apply first-hover delay
+                if (!hasMouseMoved && !firstHoverTimeout) {
+                    // Special case: First hover (including stationary mouse), apply delay
                     firstHoverTimeout = setTimeout(() => {
                         applyHoverEffect(img);
                         hoverEffectEnabled = true; // Enable instant hovers after this
@@ -58,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         img.addEventListener("mouseleave", function () {
             clearTimeout(firstHoverTimeout); // Clear timeout if mouse leaves early
+            firstHoverTimeout = null;
             images.forEach(otherImg => {
                 otherImg.style.filter = "brightness(85%) grayscale(0%)"; // Restore default
                 otherImg.style.transform = "scale(1)"; // Reset zoom
