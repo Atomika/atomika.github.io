@@ -1823,6 +1823,7 @@ footer {
     width: 90%;
     position: relative;
     color: white;
+	transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
 
