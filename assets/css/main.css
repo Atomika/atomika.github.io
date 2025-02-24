@@ -1827,21 +1827,6 @@ footer {
 
 
 
-
-
-/* Increase the overall overlay size */
-.overlay-content {
-    display: flex;
-    background: rgba(20, 20, 20, 0.9);
-    padding: 30px; /* Increased padding for a bigger layout */
-    border-radius: 10px;
-    text-align: left;
-    max-width: 1100px; /* Increased max width */
-    width: 95%; /* Make use of available space */
-    position: relative;
-    color: white;
-}
-
 /* Image container (bigger to accommodate the larger image) */
 .overlay-image-container {
     flex: 1;
@@ -1893,11 +1878,6 @@ footer {
         width: 100%; /* Prevents overflow on small screens */
     }
 }
-
-
-
-
-
 
 
 
