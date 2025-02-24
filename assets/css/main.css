@@ -1788,6 +1788,10 @@ footer {
 }
 
 
+
+
+
+
 /* Full-screen overlay */
 .image-overlay {
     position: fixed;
@@ -1799,20 +1803,32 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0; /* Start invisible for fade-in */
-    visibility: hidden; /* Hidden by default */
-    transition: opacity 0.3s ease, visibility 0s linear 0.3s; /* Fade-in/out with visibility delay */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s; /* Modified for fade-in/out */
     z-index: 1000; /* Ensure it's above everything */
 }
 
 /* Active state (show overlay) */
 .image-overlay.active {
-    opacity: 1; /* Fade to fully visible */
-    visibility: visible; /* Show overlay */
-    transition: opacity 0.3s ease; /* Fade-in without delay */
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease; /* Added for fade-in */
 }
 
-/* Increase the overall overlay size (merged from duplicates) */
+/* Modal content */
+.overlay-content {
+    background: rgba(20, 20, 20, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    color: white;
+}
+
+/* Increase the overall overlay size */
 .overlay-content {
     display: flex;
     background: rgba(20, 20, 20, 0.9);
@@ -1852,6 +1868,29 @@ footer {
     justify-content: center;
     text-align: left;
     font-size: 18px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+    .overlay-content {
+        flex-direction: column;
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    .overlay-image-container {
+        max-width: 100%;
+        padding-right: 0;
+    }
+
+    .overlay-text-container {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .overlay-image {
+        width: 100%; /* Prevents overflow on small screens */
+    }
 }
 
 /* Close button for overlay */
@@ -1909,28 +1948,6 @@ footer {
 }
 
 /* Responsive adjustments */
-@media (max-width: 800px) {
-    .overlay-content {
-        flex-direction: column;
-        max-width: 90%;
-        padding: 20px;
-    }
-
-    .overlay-image-container {
-        max-width: 100%;
-        padding-right: 0;
-    }
-
-    .overlay-text-container {
-        max-width: 100%;
-        text-align: center;
-    }
-
-    .overlay-image {
-        width: 100%; /* Prevents overflow on small screens */
-    }
-}
-
 @media screen and (max-width: 736px) {
     .overlay-close-button {
         width: 3.5rem; /* Slightly smaller clickable area */
