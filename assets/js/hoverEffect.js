@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const images = document.querySelectorAll('.work-gallery img'); // Select all images in the gallery
     let isArticleVisible = false; // Flag to track if the article is visible
     let hoverEffectEnabled = false; // Flag to control when hover effects activate
-    let firstHoverTimeout; // Timeout for the stationary mouse case
+    let firstHoverTimeout; // Timeout for the stationary or first hover case
 
     // Monitor visibility of the article
     const body = document.body;
@@ -14,22 +14,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     hoverEffectEnabled = false; // Reset hover effect flag
 
                     // Check for an existing hover state when article becomes visible
-                    let initialHoveredImg = null;
                     images.forEach(img => {
                         if (isElementUnderMouse(img) && !firstHoverTimeout) {
-                            initialHoveredImg = img;
+                            // Stationary mouse case: Apply 825ms delay immediately
+                            firstHoverTimeout = setTimeout(() => {
+                                applyHoverEffect(img);
+                                hoverEffectEnabled = true; // Enable instant hovers after this
+                                firstHoverTimeout = null;
+                            }, 825);
                         }
                     });
 
-                    if (initialHoveredImg) {
-                        // Stationary mouse case: Apply 825ms delay once
-                        firstHoverTimeout = setTimeout(() => {
-                            applyHoverEffect(initialHoveredImg);
-                            hoverEffectEnabled = true; // Enable instant hovers after this
-                            firstHoverTimeout = null; // Clear timeout reference
-                        }, 825);
-                    } else {
-                        // Normal case: Enable hover effects after 625ms
+                    // Enable hover effects after 625ms for non-stationary case
+                    if (!firstHoverTimeout) {
                         setTimeout(() => {
                             hoverEffectEnabled = true; // Enable hover effects after 625ms
                         }, 625);
@@ -55,14 +52,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     images.forEach(img => {
         img.addEventListener("mouseenter", function () {
-            if (isArticleVisible && hoverEffectEnabled) {
-                // Apply hover effect immediately once enabled
-                applyHoverEffect(img);
+            if (isArticleVisible) {
+                if (!hoverEffectEnabled && !firstHoverTimeout) {
+                    // First hover case (if not stationary): Apply 825ms delay
+                    firstHoverTimeout = setTimeout(() => {
+                        applyHoverEffect(img);
+                        hoverEffectEnabled = true; // Enable instant hovers after this
+                        firstHoverTimeout = null;
+                    }, 825);
+                } else if (hoverEffectEnabled) {
+                    // Normal case: Apply hover effect immediately
+                    applyHoverEffect(img);
+                }
             }
         });
 
         img.addEventListener("mouseleave", function () {
-            // Only reset styles, don’t clear firstHoverTimeout here
+            // Reset styles without clearing firstHoverTimeout
             images.forEach(otherImg => {
                 otherImg.style.filter = "brightness(85%) grayscale(0%)"; // Restore default
                 otherImg.style.transform = "scale(1)"; // Reset zoom
