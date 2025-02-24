@@ -1827,28 +1827,44 @@ footer {
 
 
 
+/* Base overlay styling */
+.image-overlay {
+    position: fixed; /* Added to ensure overlay covers full screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9); /* Moved background here for full coverage */
+    display: none; /* Hidden by default */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    z-index: 1000; /* Ensure it’s on top */
+}
 
-
-
-
+.image-overlay.active {
+    display: flex; /* Flex to center content */
+    justify-content: center;
+    align-items: center;
+}
 
 /* Increase the overall overlay size */
 .overlay-content {
     display: flex;
     background: rgba(20, 20, 20, 0.9);
-    padding: 30px; /* Increased padding for a bigger layout */
+    padding: 30px;
     border-radius: 10px;
     text-align: left;
-    max-width: 1100px; /* Increased max width */
-    width: 95%; /* Make use of available space */
+    max-width: 1100px;
+    width: 95%;
     position: relative;
     color: white;
+    max-height: 90vh; /* Added to constrain height on mobile */
+    overflow-y: auto; /* Enable scrolling within content if needed */
 }
 
-/* Image container (bigger to accommodate the larger image) */
+/* Image container */
 .overlay-image-container {
     flex: 1;
-    max-width: 65%; /* Increased size to allow a larger poster */
+    max-width: 65%;
     padding-right: 30px;
     display: flex;
     flex-direction: column;
@@ -1858,20 +1874,35 @@ footer {
 
 /* Make the image 45% larger than the original */
 .overlay-image {
-    width: 145%; /* 45% larger now */
-    max-width: 100%;
+    width: 145%;
+    max-width: 100%; /* Keep this to prevent overflow */
+    height: auto; /* Added for proper scaling */
     border-radius: 5px;
 }
 
-/* Text container (adjusted for new layout) */
+/* Text container */
 .overlay-text-container {
     flex: 1;
-    max-width: 35%; /* Adjusted to balance with larger image */
+    max-width: 35%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: left;
     font-size: 18px;
+    overflow-y: auto; /* Enable scrolling for long text */
+}
+
+/* Close button (assuming you’ll style this further) */
+.overlay-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    text-align: center;
 }
 
 /* Responsive adjustments */
@@ -1880,22 +1911,29 @@ footer {
         flex-direction: column;
         max-width: 90%;
         padding: 20px;
+        max-height: 95vh; /* Slightly more room on mobile */
     }
 
     .overlay-image-container {
         max-width: 100%;
         padding-right: 0;
+        padding-bottom: 20px; /* Add spacing below image */
     }
 
     .overlay-text-container {
         max-width: 100%;
         text-align: center;
+        max-height: 40vh; /* Limit text area height */
+        overflow-y: auto; /* Ensure text can scroll */
     }
 
     .overlay-image {
-        width: 100%; /* Prevents overflow on small screens */
+        width: 100%; /* Override the 145% for mobile */
+        max-height: 50vh; /* Limit image height */
+        object-fit: contain; /* Maintain aspect ratio */
     }
 }
+
 
 
 
