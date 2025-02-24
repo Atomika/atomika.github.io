@@ -1788,6 +1788,45 @@ footer {
 }
 
 
+
+
+/* Full-screen overlay */
+.image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85); /* Dark semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000; /* Ensure it's above everything */
+}
+
+/* Active state (show overlay) */
+.image-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal content */
+.overlay-content {
+    background: rgba(20, 20, 20, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    color: white;
+}
+
+
+
 /* Full-screen overlay */
 .image-overlay {
     position: fixed;
@@ -1858,7 +1897,7 @@ footer {
     overflow-y: auto; /* Enable scrolling for long text */
 }
 
-/* Close button for overlay */
+/* Close button for overlay (reverted to your original) */
 .overlay-close-button {
     display: block;
     position: absolute;
@@ -1877,7 +1916,7 @@ footer {
     overflow: hidden; /* Ensures no overflow from pseudo-element */
 }
 
-/* Visual appearance with SVG icon */
+/* Visual appearance with SVG icon (reverted to your original) */
 .overlay-close-button:before {
     -moz-transition: background-color 0.2s ease-in-out;
     -webkit-transition: background-color 0.2s ease-in-out;
@@ -1890,24 +1929,24 @@ footer {
     left: 0.75rem;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 100%;
+    border-radius: 100%; /* Already circular, kept for consistency */
     background-position: center;
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
     background-size: 20px 20px;
     background-repeat: no-repeat;
 }
 
-/* Hover effect */
+/* Hover effect (reverted to your original) */
 .overlay-close-button:hover:before {
     background-color: rgba(255, 255, 255, 0.075);
 }
 
-/* Active effect */
+/* Active effect (reverted to your original) */
 .overlay-close-button:active:before {
     background-color: rgba(255, 255, 255, 0.175);
 }
 
-/* Remove focus outline */
+/* Remove focus outline (reverted to your original) */
 .overlay-close-button:focus {
     outline: none !important; /* Ensure no outline on focus */
 }
