@@ -1,91 +1,63 @@
+
 document.addEventListener("DOMContentLoaded", function () {
-    const images = document.querySelectorAll('.work-gallery img');
-    let isArticleVisible = false;
-    let hoverEffectEnabled = false;
-    let initialTimeout;
-    
-    // Track initial mouse position
-    let lastKnownElement = null;
-    let mouseHasMoved = false;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseHasMoved = true;
-        lastKnownElement = document.elementFromPoint(e.clientX, e.clientY);
-    });
+    const images = document.querySelectorAll('.work-gallery img'); // Select all images in the gallery
+    let isArticleVisible = false; // Flag to track if the article is visible
+    let hoverEffectEnabled = false; // Flag to control when hover effects activate
 
-    // Function to apply hover effect to an image
-    function applyHoverEffect(img) {
-        if (isArticleVisible) {
-            images.forEach(otherImg => {
-                if (otherImg !== img) {
-                    otherImg.style.filter = "brightness(65%) grayscale(75%) blur(2px)";
-                }
-            });
-            img.style.filter = "brightness(100%) grayscale(0%)";
-            img.style.transform = "scale(1.1)";
-            img.style.zIndex = "2";
-        }
-    }
-
-    // Function to reset all images
-    function resetImages() {
-        clearTimeout(initialTimeout);
-        images.forEach(img => {
-            img.style.filter = "brightness(85%) grayscale(0%)";
-            img.style.transform = "scale(1)";
-            img.style.zIndex = "1";
-        });
-    }
-
+    // Monitor visibility of the article to apply the initial delay
     const body = document.body;
     const observer = new MutationObserver(function (mutationsList) {
         for (const mutation of mutationsList) {
             if (mutation.type === "attributes") {
                 if (body.classList.contains("is-article-visible")) {
                     isArticleVisible = true;
-                    hoverEffectEnabled = false;
-                    mouseHasMoved = false;
-                    resetImages();
+                    hoverEffectEnabled = false; // Reset hover effect flag
 
-                    // Check for unmoved mouse over an image
-                    if (!mouseHasMoved) {
-                        const element = document.elementFromPoint(
-                            event?.clientX || 0,
-                            event?.clientY || 0
-                        );
-                        if (element && element.matches('.work-gallery img')) {
-                            initialTimeout = setTimeout(() => {
-                                applyHoverEffect(element);
-                            }, 825);
-                        }
-                    }
-
-                    // Regular hover effect enablement
+                    // Apply the delay before enabling hover effects
                     setTimeout(() => {
-                        hoverEffectEnabled = true;
+                        hoverEffectEnabled = true; // Enable hover effects after 825ms
                     }, 625);
                 } else {
+                    // Article is not visible, reset the effect
                     isArticleVisible = false;
                     hoverEffectEnabled = false;
-                    resetImages();
+                    images.forEach(img => {
+                        img.style.filter = "brightness(85%) grayscale(0%)"; // Reset filter when article is not visible
+                        img.style.transform = "scale(1)"; // Reset zoom effect
+                        img.style.zIndex = "1"; // Reset stacking order
+                    });
                 }
             }
         }
     });
 
+    // Observe changes in the class list of the body to track visibility
     observer.observe(body, { attributes: true });
 
-    // Standard hover behavior
     images.forEach(img => {
         img.addEventListener("mouseenter", function () {
             if (hoverEffectEnabled && isArticleVisible) {
-                clearTimeout(initialTimeout); // Clear any pending static hover
-                applyHoverEffect(img);
+                // Apply blur to non-hovered images
+                images.forEach(otherImg => {
+                    if (otherImg !== img) {
+                        otherImg.style.filter = "brightness(65%) grayscale(75%) blur(2px)"; // Apply blur to non-hovered images
+                    }
+                });
+                // Ensure hovered image has full brightness and saturation
+                img.style.filter = "brightness(100%) grayscale(0%)"; // Full color and brightness
+                img.style.transform = "scale(1.1)"; // Slight zoom effect
+                img.style.zIndex = "2"; // Ensure hovered image is above others
             }
         });
 
+        // On mouse leave, reset all images
         img.addEventListener("mouseleave", function () {
-            resetImages();
+            images.forEach(otherImg => {
+                otherImg.style.filter = "brightness(85%) grayscale(0%)"; // Restore default brightness and grayscale
+                otherImg.style.transform = "scale(1)"; // Reset zoom effect
+                otherImg.style.zIndex = "1"; // Reset stacking order
+            });
         });
     });
 });
+
