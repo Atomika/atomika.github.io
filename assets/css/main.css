@@ -1828,28 +1828,7 @@ footer {
 
 
 
-/* Fullscreen overlay */
-.image-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    z-index: 1000;
-}
 
-/* Active state */
-.image-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
 
 
 
