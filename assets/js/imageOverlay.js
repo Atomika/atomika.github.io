@@ -28,9 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayImageCaption.style.letterSpacing = "0.2rem";
     overlayImageCaption.style.fontSize = "0.7rem";
     overlayImageCaption.style.opacity = "0.75";
-    overlayImageCaption.style.marginBottom = "2px";
+    overlayImageCaption.style.marginBottom = "2px"; // Reduced margin-bottom
     overlayImageCaption.style.textTransform = "uppercase";
-    overlayImageCaption.style.marginTop = "10px";
+    overlayImageCaption.style.marginTop = "10px"; // Keep the same margin-top for spacing above
 
     imageContainer.appendChild(overlayImage);
     imageContainer.appendChild(overlayImageCaption);
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Apply styles to the description text (matching footer text style, larger font)
     overlayText.style.letterSpacing = "0.2rem";
-    overlayText.style.fontSize = "0.8rem";
+    overlayText.style.fontSize = "0.8rem"; // Slightly larger font size for description
     overlayText.style.opacity = "0.75";
     overlayText.style.marginBottom = "0";
     overlayText.style.textTransform = "uppercase";
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     textContainer.appendChild(overlayText);
 
     // Append elements to overlay
-    overlayContent.appendChild(closeButton);
+    overlayContent.appendChild(closeButton); // Add close button at top right
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
     overlay.appendChild(overlayContent);
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     images.forEach(img => {
         img.addEventListener("click", function (event) {
             event.stopPropagation();
-            event.preventDefault();
+            event.preventDefault(); // Prevent navigation issues
 
             const imgSrc = img.getAttribute("src");
             const imgAlt = img.getAttribute("alt") || "No title available";
@@ -72,11 +72,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Set the overlay content
             overlayImage.src = imgSrc;
-            overlayImageCaption.textContent = imgAlt;
-            overlayText.innerHTML = imgDescription;
+            overlayImageCaption.textContent = imgAlt; // Show alt text under the image
+            overlayText.innerHTML = imgDescription; // Show description in side panel
 
-            // Apply blur to the background and show the overlay
-            document.body.style.filter = "blur(5px)"; // Blur the entire page
+            // Show the overlay
             overlay.classList.add("active");
 
             // Add Escape key event listener
@@ -87,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to close the overlay
     function closeOverlay() {
         overlay.classList.remove("active");
-        document.body.style.filter = "none"; // Remove blur when closing
         document.removeEventListener("keydown", closeOnEscape, { capture: true });
     }
 
@@ -100,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Close overlay when clicking outside of the overlay content
+    // Close overlay when clicking outside of the overlay content (but NOT the overlay itself)
     overlay.addEventListener("click", function (event) {
         if (event.target === overlay) {
             event.stopPropagation();
@@ -109,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Prevent clicking anywhere inside the overlay from closing it
+    // Prevent clicking anywhere inside the overlay (including around the image & text) from closing it
     overlayContent.addEventListener("click", function (event) {
         event.stopPropagation();
         event.preventDefault();
