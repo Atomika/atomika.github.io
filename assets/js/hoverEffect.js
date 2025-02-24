@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // Apply the delay before enabling hover effects
                     setTimeout(() => {
-                        hoverEffectEnabled = true; // Enable hover effects after 825ms
+                        hoverEffectEnabled = true; // Enable hover effects after 625ms
+                        applyHoverEffectIfNeeded(); // Check if cursor is on an image
                     }, 625);
                 } else {
                     // Article is not visible, reset the effect
@@ -32,6 +33,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Observe changes in the class list of the body to track visibility
     observer.observe(body, { attributes: true });
+
+    // Function to check if cursor is already on an image and apply the effect
+    function applyHoverEffectIfNeeded() {
+        if (hoverEffectEnabled) {
+            images.forEach(img => {
+                const rect = img.getBoundingClientRect();
+                const isCursorOnImage =
+                    event.clientX >= rect.left &&
+                    event.clientX <= rect.right &&
+                    event.clientY >= rect.top &&
+                    event.clientY <= rect.bottom;
+
+                if (isCursorOnImage) {
+                    // Trigger hover effect
+                    img.style.filter = "brightness(100%) grayscale(0%)";
+                    img.style.transform = "scale(1.1)";
+                    img.style.zIndex = "2";
+
+                    // Blur all other images
+                    images.forEach(otherImg => {
+                        if (otherImg !== img) {
+                            otherImg.style.filter = "brightness(65%) grayscale(75%) blur(2px)";
+                        }
+                    });
+                }
+            });
+        }
+    }
 
     images.forEach(img => {
         img.addEventListener("mouseenter", function () {
