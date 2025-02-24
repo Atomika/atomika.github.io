@@ -18,12 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     images.forEach(img => {
                         if (isElementUnderMouse(img) && !firstHoverTimeout) {
                             initialHoveredImg = img; // Store the stationary image
-                            // Stationary mouse case: Apply 825ms delay immediately
+                            // Stationary mouse case: Apply 825ms delay
                             firstHoverTimeout = setTimeout(() => {
-                                if (isElementUnderMouse(initialHoveredImg)) {
-                                    // Only apply if mouse is still on the initial image
-                                    applyHoverEffect(initialHoveredImg);
-                                }
+                                applyHoverEffect(initialHoveredImg);
                                 hoverEffectEnabled = true; // Enable instant hovers after this
                                 firstHoverTimeout = null;
                                 initialHoveredImg = null; // Clear reference
@@ -62,10 +59,12 @@ document.addEventListener("DOMContentLoaded", function () {
             if (isArticleVisible) {
                 if (!hoverEffectEnabled && !firstHoverTimeout) {
                     // First hover case (if not stationary): Apply 825ms delay
+                    initialHoveredImg = img; // Set the new initial image
                     firstHoverTimeout = setTimeout(() => {
                         applyHoverEffect(img);
                         hoverEffectEnabled = true; // Enable instant hovers after this
                         firstHoverTimeout = null;
+                        initialHoveredImg = null;
                     }, 825);
                 } else if (hoverEffectEnabled) {
                     // Normal case: Apply hover effect immediately
@@ -75,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         img.addEventListener("mouseleave", function () {
-            // If the mouse leaves the initial stationary image, cancel the timeout
+            // Cancel the timeout if the mouse leaves the initial image before it triggers
             if (img === initialHoveredImg && firstHoverTimeout) {
                 clearTimeout(firstHoverTimeout);
                 firstHoverTimeout = null;
