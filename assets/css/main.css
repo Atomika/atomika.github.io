@@ -1827,31 +1827,9 @@ footer {
 
 
 
-/* Full-screen overlay */
-.image-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.85); /* Dark semi-transparent background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0s linear 0.3s; /* Fade-in/out with visibility delay */
-    z-index: 1000; /* Ensure it's above everything */
-    overflow-y: auto; /* Enable scrolling if content overflows */
-}
 
-.image-overlay.active {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s ease; /* Fade-in without delay */
-}
 
-/* Modal content (merged from duplicates) */
+/* Increase the overall overlay size */
 .overlay-content {
     display: flex;
     background: rgba(20, 20, 20, 0.9);
@@ -1862,11 +1840,9 @@ footer {
     width: 95%; /* Make use of available space */
     position: relative;
     color: white;
-    max-height: 90vh; /* Added to constrain height */
-    overflow-y: auto; /* Enable scrolling within content */
 }
 
-/* Image container */
+/* Image container (bigger to accommodate the larger image) */
 .overlay-image-container {
     flex: 1;
     max-width: 65%; /* Increased size to allow a larger poster */
@@ -1881,11 +1857,10 @@ footer {
 .overlay-image {
     width: 145%; /* 45% larger now */
     max-width: 100%;
-    height: auto; /* Added for proper scaling */
     border-radius: 5px;
 }
 
-/* Text container */
+/* Text container (adjusted for new layout) */
 .overlay-text-container {
     flex: 1;
     max-width: 35%; /* Adjusted to balance with larger image */
@@ -1894,10 +1869,40 @@ footer {
     justify-content: center;
     text-align: left;
     font-size: 18px;
-    overflow-y: auto; /* Enable scrolling for long text */
 }
 
-/* Close button for overlay (reverted to your original) */
+/* Responsive adjustments */
+@media (max-width: 800px) {
+    .overlay-content {
+        flex-direction: column;
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    .overlay-image-container {
+        max-width: 100%;
+        padding-right: 0;
+    }
+
+    .overlay-text-container {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .overlay-image {
+        width: 100%; /* Prevents overflow on small screens */
+    }
+}
+
+
+
+
+
+
+
+
+
+/* Close button for overlay */
 .overlay-close-button {
     display: block;
     position: absolute;
@@ -1916,7 +1921,7 @@ footer {
     overflow: hidden; /* Ensures no overflow from pseudo-element */
 }
 
-/* Visual appearance with SVG icon (reverted to your original) */
+/* Visual appearance with SVG icon */
 .overlay-close-button:before {
     -moz-transition: background-color 0.2s ease-in-out;
     -webkit-transition: background-color 0.2s ease-in-out;
@@ -1931,67 +1936,31 @@ footer {
     height: 2.5rem;
     border-radius: 100%; /* Already circular, kept for consistency */
     background-position: center;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3E%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
     background-size: 20px 20px;
     background-repeat: no-repeat;
 }
 
-/* Hover effect (reverted to your original) */
+/* Hover effect */
 .overlay-close-button:hover:before {
     background-color: rgba(255, 255, 255, 0.075);
 }
 
-/* Active effect (reverted to your original) */
+/* Active effect */
 .overlay-close-button:active:before {
     background-color: rgba(255, 255, 255, 0.175);
 }
 
-/* Remove focus outline (reverted to your original) */
+/* Remove focus outline */
 .overlay-close-button:focus {
     outline: none !important; /* Ensure no outline on focus */
 }
 
 /* Responsive adjustments */
-@media (max-width: 800px) {
-    .overlay-content {
-        flex-direction: column;
-        max-width: 90%;
-        padding: 20px;
-        max-height: 95vh; /* Slightly more room on mobile */
-    }
-
-    .overlay-image-container {
-        max-width: 100%;
-        padding-right: 0;
-        padding-bottom: 20px; /* Add spacing below image */
-    }
-
-    .overlay-text-container {
-        max-width: 100%;
-        text-align: center;
-        max-height: 40vh; /* Limit text area height */
-        overflow-y: auto; /* Ensure text can scroll */
-    }
-
-    .overlay-image {
-        width: 100%; /* Prevents overflow on small screens */
-        max-height: 50vh; /* Limit image height */
-        object-fit: contain; /* Maintain aspect ratio */
-    }
-
-    /* Adjust close button positioning only for mobile */
-    .overlay-close-button {
-        top: 10px; /* Moved down slightly for mobile */
-        right: 10px; /* Adjusted for better spacing */
-    }
-}
-
 @media screen and (max-width: 736px) {
     .overlay-close-button {
         width: 3.5rem; /* Slightly smaller clickable area */
         height: 3.5rem;
-        top: 10px; /* Consistent with mobile adjustment */
-        right: 10px; /* Consistent with mobile adjustment */
     }
     .overlay-close-button:before {
         top: 0.875rem;
