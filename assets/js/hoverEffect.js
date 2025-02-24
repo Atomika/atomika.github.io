@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let isArticleVisible = false; // Flag to track if the article is visible
     let hoverEffectEnabled = false; // Flag to control when hover effects activate
     let firstHoverTimeout; // Timeout for the stationary or first hover case
+    let initialHoveredImg = null; // Track the initial stationary image
 
     // Monitor visibility of the article
     const body = document.body;
@@ -16,11 +17,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Check for an existing hover state when article becomes visible
                     images.forEach(img => {
                         if (isElementUnderMouse(img) && !firstHoverTimeout) {
+                            initialHoveredImg = img; // Store the stationary image
                             // Stationary mouse case: Apply 825ms delay immediately
                             firstHoverTimeout = setTimeout(() => {
-                                applyHoverEffect(img);
+                                if (isElementUnderMouse(initialHoveredImg)) {
+                                    // Only apply if mouse is still on the initial image
+                                    applyHoverEffect(initialHoveredImg);
+                                }
                                 hoverEffectEnabled = true; // Enable instant hovers after this
                                 firstHoverTimeout = null;
+                                initialHoveredImg = null; // Clear reference
                             }, 825);
                         }
                     });
@@ -37,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     hoverEffectEnabled = false;
                     clearTimeout(firstHoverTimeout);
                     firstHoverTimeout = null;
+                    initialHoveredImg = null; // Reset stationary image reference
                     images.forEach(img => {
                         img.style.filter = "brightness(85%) grayscale(0%)"; // Reset filter
                         img.style.transform = "scale(1)"; // Reset zoom
@@ -68,7 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         img.addEventListener("mouseleave", function () {
-            // Reset styles without clearing firstHoverTimeout
+            // If the mouse leaves the initial stationary image, cancel the timeout
+            if (img === initialHoveredImg && firstHoverTimeout) {
+                clearTimeout(firstHoverTimeout);
+                firstHoverTimeout = null;
+                initialHoveredImg = null; // Clear reference
+            }
+            // Reset styles
             images.forEach(otherImg => {
                 otherImg.style.filter = "brightness(85%) grayscale(0%)"; // Restore default
                 otherImg.style.transform = "scale(1)"; // Reset zoom
