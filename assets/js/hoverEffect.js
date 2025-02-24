@@ -2,13 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const images = document.querySelectorAll('.work-gallery img'); // Select all images in the gallery
     let isArticleVisible = false; // Flag to track if the article is visible
     let hoverEffectEnabled = false; // Flag to control when hover effects activate
-    let hasMouseMoved = false; // Flag to track if the user has moved the mouse
-    let firstHoverTimeout; // Timeout for the conditional first-hover delay
-
-    // Detect if the user has moved the mouse at all
-    document.addEventListener("mousemove", function () {
-        hasMouseMoved = true; // Set flag on first mouse movement
-    }, { once: true }); // Only listen once to avoid overhead
+    let firstHoverDone = false; // Flag to track if the first hover has occurred
+    let firstHoverTimeout; // Timeout for the first-hover delay
 
     // Monitor visibility of the article
     const body = document.body;
@@ -18,15 +13,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (body.classList.contains("is-article-visible")) {
                     isArticleVisible = true;
                     hoverEffectEnabled = false; // Reset hover effect flag
+                    firstHoverDone = false; // Reset first hover flag
 
                     // Apply the delay before enabling instant hover effects
                     setTimeout(() => {
                         hoverEffectEnabled = true; // Enable hover effects after 625ms
                     }, 625);
+
+                    // Check for an existing hover state when article becomes visible
+                    images.forEach(img => {
+                        if (isElementUnderMouse(img) && !firstHoverDone) {
+                            firstHoverTimeout = setTimeout(() => {
+                                applyHoverEffect(img);
+                                firstHoverDone = true;
+                                hoverEffectEnabled = true; // Enable instant hovers after this
+                            }, 825);
+                        }
+                    });
                 } else {
                     // Article is not visible, reset the effect
                     isArticleVisible = false;
                     hoverEffectEnabled = false;
+                    firstHoverDone = false;
                     clearTimeout(firstHoverTimeout);
                     firstHoverTimeout = null;
                     images.forEach(img => {
@@ -45,10 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
     images.forEach(img => {
         img.addEventListener("mouseenter", function () {
             if (isArticleVisible) {
-                if (!hasMouseMoved && !firstHoverTimeout) {
-                    // Special case: First hover (including stationary mouse), apply delay
+                if (!firstHoverDone) {
+                    // First hover (including stationary mouse), apply delay
                     firstHoverTimeout = setTimeout(() => {
                         applyHoverEffect(img);
+                        firstHoverDone = true;
                         hoverEffectEnabled = true; // Enable instant hovers after this
                     }, 825); // 825ms delay like the first implementation
                 } else if (hoverEffectEnabled) {
@@ -80,4 +89,23 @@ document.addEventListener("DOMContentLoaded", function () {
         hoveredImg.style.transform = "scale(1.1)"; // Slight zoom
         hoveredImg.style.zIndex = "2"; // Ensure hovered image is above others
     }
+
+    // Helper function to check if an element is under the mouse
+    function isElementUnderMouse(element) {
+        const rect = element.getBoundingClientRect();
+        const mouseX = window.lastMouseX || 0;
+        const mouseY = window.lastMouseY || 0;
+        return (
+            mouseX >= rect.left &&
+            mouseX <= rect.right &&
+            mouseY >= rect.top &&
+            mouseY <= rect.bottom
+        );
+    }
+
+    // Track mouse position for stationary check
+    document.addEventListener("mousemove", function (e) {
+        window.lastMouseX = e.clientX;
+        window.lastMouseY = e.clientY;
+    });
 });
