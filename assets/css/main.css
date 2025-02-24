@@ -1722,7 +1722,10 @@ body.is-preload #bg:before {
 
 }
 
-
+/* Adjust opacity of contact page */
+#about {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
 
 
 
