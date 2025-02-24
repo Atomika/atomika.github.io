@@ -1788,8 +1788,6 @@ footer {
 }
 
 
-
-
 /* Full-screen overlay */
 .image-overlay {
     position: fixed;
@@ -1803,68 +1801,36 @@ footer {
     align-items: center;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s; /* Fade-in/out with visibility delay */
     z-index: 1000; /* Ensure it's above everything */
+    overflow-y: auto; /* Enable scrolling if content overflows */
 }
 
-/* Active state (show overlay) */
 .image-overlay.active {
     opacity: 1;
     visibility: visible;
+    transition: opacity 0.3s ease; /* Fade-in without delay */
 }
 
-/* Modal content */
-.overlay-content {
-    background: rgba(20, 20, 20, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    max-width: 600px;
-    width: 90%;
-    position: relative;
-    color: white;
-}
-
-
-
-/* Base overlay styling */
-.image-overlay {
-    position: fixed; /* Added to ensure overlay covers full screen */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9); /* Moved background here for full coverage */
-    display: none; /* Hidden by default */
-    overflow-y: auto; /* Enable scrolling if content overflows */
-    z-index: 1000; /* Ensure it’s on top */
-}
-
-.image-overlay.active {
-    display: flex; /* Flex to center content */
-    justify-content: center;
-    align-items: center;
-}
-
-/* Increase the overall overlay size */
+/* Modal content (merged from duplicates) */
 .overlay-content {
     display: flex;
     background: rgba(20, 20, 20, 0.9);
-    padding: 30px;
+    padding: 30px; /* Increased padding for a bigger layout */
     border-radius: 10px;
     text-align: left;
-    max-width: 1100px;
-    width: 95%;
+    max-width: 1100px; /* Increased max width */
+    width: 95%; /* Make use of available space */
     position: relative;
     color: white;
-    max-height: 90vh; /* Added to constrain height on mobile */
-    overflow-y: auto; /* Enable scrolling within content if needed */
+    max-height: 90vh; /* Added to constrain height */
+    overflow-y: auto; /* Enable scrolling within content */
 }
 
 /* Image container */
 .overlay-image-container {
     flex: 1;
-    max-width: 65%;
+    max-width: 65%; /* Increased size to allow a larger poster */
     padding-right: 30px;
     display: flex;
     flex-direction: column;
@@ -1874,8 +1840,8 @@ footer {
 
 /* Make the image 45% larger than the original */
 .overlay-image {
-    width: 145%;
-    max-width: 100%; /* Keep this to prevent overflow */
+    width: 145%; /* 45% larger now */
+    max-width: 100%;
     height: auto; /* Added for proper scaling */
     border-radius: 5px;
 }
@@ -1883,7 +1849,7 @@ footer {
 /* Text container */
 .overlay-text-container {
     flex: 1;
-    max-width: 35%;
+    max-width: 35%; /* Adjusted to balance with larger image */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1891,52 +1857,6 @@ footer {
     font-size: 18px;
     overflow-y: auto; /* Enable scrolling for long text */
 }
-
-/* Close button (assuming you’ll style this further) */
-.overlay-close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    color: white;
-    font-size: 24px;
-    text-align: center;
-}
-
-/* Responsive adjustments */
-@media (max-width: 800px) {
-    .overlay-content {
-        flex-direction: column;
-        max-width: 90%;
-        padding: 20px;
-        max-height: 95vh; /* Slightly more room on mobile */
-    }
-
-    .overlay-image-container {
-        max-width: 100%;
-        padding-right: 0;
-        padding-bottom: 20px; /* Add spacing below image */
-    }
-
-    .overlay-text-container {
-        max-width: 100%;
-        text-align: center;
-        max-height: 40vh; /* Limit text area height */
-        overflow-y: auto; /* Ensure text can scroll */
-    }
-
-    .overlay-image {
-        width: 100%; /* Override the 145% for mobile */
-        max-height: 50vh; /* Limit image height */
-        object-fit: contain; /* Maintain aspect ratio */
-    }
-}
-
-
-
-
 
 /* Close button for overlay */
 .overlay-close-button {
@@ -1970,9 +1890,9 @@ footer {
     left: 0.75rem;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 100%; /* Already circular, kept for consistency */
+    border-radius: 100%;
     background-position: center;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3E%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
     background-size: 20px 20px;
     background-repeat: no-repeat;
 }
@@ -1993,10 +1913,46 @@ footer {
 }
 
 /* Responsive adjustments */
+@media (max-width: 800px) {
+    .overlay-content {
+        flex-direction: column;
+        max-width: 90%;
+        padding: 20px;
+        max-height: 95vh; /* Slightly more room on mobile */
+    }
+
+    .overlay-image-container {
+        max-width: 100%;
+        padding-right: 0;
+        padding-bottom: 20px; /* Add spacing below image */
+    }
+
+    .overlay-text-container {
+        max-width: 100%;
+        text-align: center;
+        max-height: 40vh; /* Limit text area height */
+        overflow-y: auto; /* Ensure text can scroll */
+    }
+
+    .overlay-image {
+        width: 100%; /* Prevents overflow on small screens */
+        max-height: 50vh; /* Limit image height */
+        object-fit: contain; /* Maintain aspect ratio */
+    }
+
+    /* Adjust close button positioning only for mobile */
+    .overlay-close-button {
+        top: 10px; /* Moved down slightly for mobile */
+        right: 10px; /* Adjusted for better spacing */
+    }
+}
+
 @media screen and (max-width: 736px) {
     .overlay-close-button {
         width: 3.5rem; /* Slightly smaller clickable area */
         height: 3.5rem;
+        top: 10px; /* Consistent with mobile adjustment */
+        right: 10px; /* Consistent with mobile adjustment */
     }
     .overlay-close-button:before {
         top: 0.875rem;
