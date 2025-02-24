@@ -1790,8 +1790,6 @@ footer {
 
 
 
-
-
 /* Full-screen overlay */
 .image-overlay {
     position: fixed;
@@ -1805,7 +1803,7 @@ footer {
     align-items: center;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0s linear 0.3s; /* Modified for fade-in/out */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 1000; /* Ensure it's above everything */
 }
 
@@ -1813,7 +1811,6 @@ footer {
 .image-overlay.active {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s ease; /* Added for fade-in */
 }
 
 /* Modal content */
@@ -1827,6 +1824,10 @@ footer {
     position: relative;
     color: white;
 }
+
+
+
+
 
 /* Increase the overall overlay size */
 .overlay-content {
@@ -1893,6 +1894,14 @@ footer {
     }
 }
 
+
+
+
+
+
+
+
+
 /* Close button for overlay */
 .overlay-close-button {
     display: block;
@@ -1927,7 +1936,7 @@ footer {
     height: 2.5rem;
     border-radius: 100%; /* Already circular, kept for consistency */
     background-position: center;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20px' height='20px' viewBox='0 0 20 20' zoomAndPan='disable'%3E%3Cstyle%3Eline %7B stroke: %23ffffff%3B stroke-width: 1%3B %7D%3C/style%3E%3Cline x1='2' y1='2' x2='18' y2='18' /%3E%3Cline x1='18' y1='2' x2='2' y2='18' /%3E%3C/svg%3E");
     background-size: 20px 20px;
     background-repeat: no-repeat;
 }
