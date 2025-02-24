@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const images = document.querySelectorAll('.work-gallery img');
     let isArticleVisible = false;
     let hoverEffectEnabled = false;
-    let initialHoveredImage = null;  // Store the initially hovered image
+    let initialHoveredImage = null;
     
     // Function to apply hover effect to an image
     function applyHoverEffect(targetImg) {
-        if (hoverEffectEnabled && isArticleVisible) {
+        if (isArticleVisible) {
             images.forEach(otherImg => {
                 if (otherImg !== targetImg) {
                     otherImg.style.filter = "brightness(65%) grayscale(75%) blur(2px)";
@@ -28,23 +28,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Function to check if mouse is over an image
-    function checkInitialHover() {
-        const mouseX = event.clientX;
-        const mouseY = event.clientY;
-        
-        images.forEach(img => {
-            const rect = img.getBoundingClientRect();
-            if (
-                mouseX >= rect.left &&
-                mouseX <= rect.right &&
-                mouseY >= rect.top &&
-                mouseY <= rect.bottom
-            ) {
-                initialHoveredImage = img;  // Store the hovered image
-                return;
-            }
-        });
+    function checkInitialHover(e) {
+        const element = document.elementFromPoint(e.clientX, e.clientY);
+        if (element && element.matches('.work-gallery img')) {
+            initialHoveredImage = element;
+            return true;
+        }
+        return false;
     }
+
+    // Track mouse position
+    let lastKnownMouseEvent = null;
+    document.addEventListener('mousemove', (e) => {
+        lastKnownMouseEvent = e;
+    });
 
     const body = document.body;
     const observer = new MutationObserver(function (mutationsList) {
@@ -55,21 +52,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     hoverEffectEnabled = false;
                     resetImages();
                     
-                    // Check for initial hover immediately
-                    checkInitialHover();
-                    
-                    // Apply the delay before enabling hover effects
-                    setTimeout(() => {
-                        hoverEffectEnabled = true;
-                        // Apply hover effect to initially hovered image if exists
-                        if (initialHoveredImage) {
+                    // If we have a mouse position, check for hover immediately
+                    if (lastKnownMouseEvent) {
+                        if (checkInitialHover(lastKnownMouseEvent)) {
+                            // Apply initial effect immediately
                             applyHoverEffect(initialHoveredImage);
                         }
+                    }
+                    
+                    // Enable hover effects after delay
+                    setTimeout(() => {
+                        hoverEffectEnabled = true;
                     }, 625);
                 } else {
                     isArticleVisible = false;
                     hoverEffectEnabled = false;
-                    initialHoveredImage = null;  // Reset the stored image
+                    initialHoveredImage = null;
                     resetImages();
                 }
             }
@@ -80,15 +78,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     images.forEach(img => {
         img.addEventListener("mouseenter", function () {
-            if (hoverEffectEnabled) {  // Only apply new hovers after delay
-                initialHoveredImage = null;  // Clear stored image on new hover
+            if (hoverEffectEnabled) {
+                initialHoveredImage = null;
                 applyHoverEffect(img);
             }
         });
 
         img.addEventListener("mouseleave", function () {
-            if (hoverEffectEnabled) {  // Only handle mouse leave after delay
-                initialHoveredImage = null;  // Clear stored image
+            if (hoverEffectEnabled) {
+                initialHoveredImage = null;
                 resetImages();
             }
         });
