@@ -67,11 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             adjustImageSize();
 
-            // Lock scrolling without altering position
-            document.body.style.overflow = "hidden";
-            document.documentElement.style.overflow = "hidden";
-            document.body.addEventListener("touchmove", preventTouchScroll, { passive: false });
-
             overlay.classList.add("active");
             window.addEventListener("resize", adjustImageSize);
             document.addEventListener("keydown", closeOnEscape, { capture: true });
@@ -88,17 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.classList.remove("active");
         window.removeEventListener("resize", adjustImageSize);
         document.removeEventListener("keydown", closeOnEscape, { capture: true });
-
-        // Unlock scrolling without forcing repositioning
-        document.body.style.overflow = "";
-        document.documentElement.style.overflow = "";
-        document.body.removeEventListener("touchmove", preventTouchScroll, { passive: false });
-    }
-
-    function preventTouchScroll(event) {
-        if (!overlayContent.contains(event.target)) {
-            event.preventDefault();
-        }
     }
 
     function closeOnEscape(event) {
