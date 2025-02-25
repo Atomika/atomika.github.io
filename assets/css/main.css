@@ -1813,17 +1813,6 @@ footer {
     visibility: visible;
 }
 
-/* Modal content */
-.overlay-content {
-    background: rgba(20, 20, 20, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    max-width: 600px;
-    width: 90%;
-    position: relative;
-    color: white;
-}
 
 
 /* Increase the overall overlay size */
