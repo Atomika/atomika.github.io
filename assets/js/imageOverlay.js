@@ -95,19 +95,19 @@ document.addEventListener("DOMContentLoaded", function () {
         window.removeEventListener("resize", adjustImageSize);
         document.removeEventListener("keydown", closeOnEscape, { capture: true });
 
-        // Restore scroll position and unlock background
+        // Restore background without forcing a scroll event
         document.body.style.position = "";
         document.body.style.top = "";
         document.body.style.width = "";
         document.documentElement.style.overflow = "";
-        window.scrollTo(0, scrollPosition);
-
-        // Remove touchmove listener
         document.body.removeEventListener("touchmove", preventTouchScroll, { passive: false });
+
+        // Restore scroll position using scrollTop directly on html/body
+        document.documentElement.scrollTop = scrollPosition;
+        document.body.scrollTop = scrollPosition; // Fallback for some browsers
     }
 
     function preventTouchScroll(event) {
-        // Only prevent scrolling if the target is not within overlay-content
         if (!overlayContent.contains(event.target)) {
             event.preventDefault();
         }
