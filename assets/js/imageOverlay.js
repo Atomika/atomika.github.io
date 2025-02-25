@@ -67,6 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             adjustImageSize();
 
+            // Disable scrolling on the body
+            document.body.style.overflow = "hidden";
+
             overlay.classList.add("active");
             window.addEventListener("resize", adjustImageSize);
             document.addEventListener("keydown", closeOnEscape, { capture: true });
@@ -83,6 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.classList.remove("active");
         window.removeEventListener("resize", adjustImageSize);
         document.removeEventListener("keydown", closeOnEscape, { capture: true });
+        // Re-enable scrolling on the body
+        document.body.style.overflow = "";
     }
 
     function closeOnEscape(event) {
