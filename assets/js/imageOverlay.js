@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(overlay);
 
     const images = document.querySelectorAll(".work-gallery img");
-    let scrollPosition = 0;
 
     images.forEach(img => {
         img.addEventListener("click", function (event) {
@@ -68,14 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             adjustImageSize();
 
-            // Store scroll position and lock background
-            scrollPosition = window.scrollY || window.pageYOffset;
-            document.body.style.position = "fixed";
-            document.body.style.top = `-${scrollPosition}px`;
-            document.body.style.width = "100%";
+            // Lock scrolling without altering position
+            document.body.style.overflow = "hidden";
             document.documentElement.style.overflow = "hidden";
-
-            // Prevent touch scrolling on mobile
             document.body.addEventListener("touchmove", preventTouchScroll, { passive: false });
 
             overlay.classList.add("active");
@@ -95,16 +89,10 @@ document.addEventListener("DOMContentLoaded", function () {
         window.removeEventListener("resize", adjustImageSize);
         document.removeEventListener("keydown", closeOnEscape, { capture: true });
 
-        // Restore background without forcing a scroll event
-        document.body.style.position = "";
-        document.body.style.top = "";
-        document.body.style.width = "";
+        // Unlock scrolling without forcing repositioning
+        document.body.style.overflow = "";
         document.documentElement.style.overflow = "";
         document.body.removeEventListener("touchmove", preventTouchScroll, { passive: false });
-
-        // Restore scroll position using scrollTop directly on html/body
-        document.documentElement.scrollTop = scrollPosition;
-        document.body.scrollTop = scrollPosition; // Fallback for some browsers
     }
 
     function preventTouchScroll(event) {
