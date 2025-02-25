@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(overlay);
 
     const images = document.querySelectorAll(".work-gallery img");
+    let scrollPosition = 0; // To store the scroll position
 
     images.forEach(img => {
         img.addEventListener("click", function (event) {
@@ -67,8 +68,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             adjustImageSize();
 
-            // Disable scrolling on the body
-            document.body.style.overflow = "hidden";
+            // Store current scroll position and lock the background
+            scrollPosition = window.scrollY || window.pageYOffset;
+            document.body.style.position = "fixed";
+            document.body.style.top = `-${scrollPosition}px`;
+            document.body.style.width = "100%";
+            document.documentElement.style.overflow = "hidden"; // Lock <html> too
 
             overlay.classList.add("active");
             window.addEventListener("resize", adjustImageSize);
@@ -86,8 +91,13 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.classList.remove("active");
         window.removeEventListener("resize", adjustImageSize);
         document.removeEventListener("keydown", closeOnEscape, { capture: true });
-        // Re-enable scrolling on the body
-        document.body.style.overflow = "";
+
+        // Restore scroll position and unlock the background
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        document.documentElement.style.overflow = "";
+        window.scrollTo(0, scrollPosition); // Jump back to original position
     }
 
     function closeOnEscape(event) {
