@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(overlay);
 
     const images = document.querySelectorAll(".work-gallery img");
-    let scrollPosition = 0; // To store the scroll position
+    let scrollPosition = 0;
 
     images.forEach(img => {
         img.addEventListener("click", function (event) {
@@ -68,12 +68,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             adjustImageSize();
 
-            // Store current scroll position and lock the background
+            // Store scroll position and lock background
             scrollPosition = window.scrollY || window.pageYOffset;
             document.body.style.position = "fixed";
             document.body.style.top = `-${scrollPosition}px`;
             document.body.style.width = "100%";
-            document.documentElement.style.overflow = "hidden"; // Lock <html> too
+            document.documentElement.style.overflow = "hidden";
+
+            // Prevent touch scrolling on mobile
+            document.body.addEventListener("touchmove", preventTouchScroll, { passive: false });
 
             overlay.classList.add("active");
             window.addEventListener("resize", adjustImageSize);
@@ -92,12 +95,22 @@ document.addEventListener("DOMContentLoaded", function () {
         window.removeEventListener("resize", adjustImageSize);
         document.removeEventListener("keydown", closeOnEscape, { capture: true });
 
-        // Restore scroll position and unlock the background
+        // Restore scroll position and unlock background
         document.body.style.position = "";
         document.body.style.top = "";
         document.body.style.width = "";
         document.documentElement.style.overflow = "";
-        window.scrollTo(0, scrollPosition); // Jump back to original position
+        window.scrollTo(0, scrollPosition);
+
+        // Remove touchmove listener
+        document.body.removeEventListener("touchmove", preventTouchScroll, { passive: false });
+    }
+
+    function preventTouchScroll(event) {
+        // Only prevent scrolling if the target is not within overlay-content
+        if (!overlayContent.contains(event.target)) {
+            event.preventDefault();
+        }
     }
 
     function closeOnEscape(event) {
