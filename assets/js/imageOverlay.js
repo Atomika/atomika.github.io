@@ -75,8 +75,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function adjustImageSize() {
         const maxHeight = window.innerHeight * 0.8;
+        const maxWidth = window.innerWidth * 0.6;
         overlayImage.style.maxHeight = `${maxHeight}px`;
+        overlayImage.style.maxWidth = `${maxWidth}px`;
         overlayImage.style.width = "auto";
+        overlayImage.style.objectFit = "contain";
+
+        if (window.innerWidth < 600) {
+            overlayContent.style.flexDirection = "row";
+            overlayContent.style.alignItems = "center";
+            textContainer.style.position = "absolute";
+            textContainer.style.right = "10px";
+            textContainer.style.top = "50%";
+            textContainer.style.transform = "translateY(-50%)";
+            textContainer.style.background = "rgba(0, 0, 0, 0.6)";
+            textContainer.style.padding = "10px";
+            textContainer.style.borderRadius = "5px";
+        } else {
+            overlayContent.style.flexDirection = "column";
+            textContainer.style.position = "static";
+            textContainer.style.background = "none";
+            textContainer.style.padding = "0";
+        }
     }
 
     function closeOverlay() {
