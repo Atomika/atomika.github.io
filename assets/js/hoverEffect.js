@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 hoverEffectEnabled = true; // Enable instant hovers after this
                                 firstHoverTimeout = null;
                                 initialHoveredImg = null; // Clear reference
-                            }, 825);
+                            }, 625);
                         }
                     });
 
