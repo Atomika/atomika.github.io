@@ -1836,6 +1836,35 @@ footer {
 
 
 
+/* Custom scrollbar styling */
+.overlay-content::-webkit-scrollbar {
+    width: 8px; /* Adjust scrollbar width */
+}
+
+.overlay-content::-webkit-scrollbar-track {
+    background: rgba(20, 20, 20, 0.9); /* Dark background to match overlay */
+    border-radius: 10px;
+}
+
+.overlay-content::-webkit-scrollbar-thumb {
+    background: rgba(100, 100, 100, 0.6); /* Slightly lighter dark shade for contrast */
+    border-radius: 10px;
+}
+
+.overlay-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(150, 150, 150, 0.8); /* Slightly lighter on hover for better visibility */
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
