@@ -1852,7 +1852,7 @@ footer {
 
 /* Make the image 45% larger than the original */
 .overlay-image {
-    width: 145%; /* 45% larger now */
+    width: 125%; /* 45% larger now */
     max-width: 100%;
     border-radius: 5px;
 }
