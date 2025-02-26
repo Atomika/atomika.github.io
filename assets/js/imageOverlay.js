@@ -33,12 +33,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const prevButton = document.createElement("div");
     prevButton.classList.add("overlay-nav-button", "overlay-prev-button");
     prevButton.innerHTML = "&#10094;"; // Left arrow (❮)
-    prevButton.addEventListener("click", showPreviousImage);
+    prevButton.addEventListener("click", () => changeImage(-1));
 
     const nextButton = document.createElement("div");
     nextButton.classList.add("overlay-nav-button", "overlay-next-button");
     nextButton.innerHTML = "&#10095;"; // Right arrow (❯)
-    nextButton.addEventListener("click", showNextImage);
+    nextButton.addEventListener("click", () => changeImage(1));
 
     overlay.appendChild(prevButton);
     overlayContent.appendChild(closeButton);
@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const images = Array.from(document.querySelectorAll(".work-gallery img"));
     let currentIndex = 0;
+    let isTransitioning = false;
 
     images.forEach((img, index) => {
         img.addEventListener("click", function (event) {
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function openOverlay(index) {
         currentIndex = index;
-        updateOverlayContent();
+        updateOverlayContent(true);
         overlay.classList.add("active");
 
         window.addEventListener("resize", adjustImageSize);
@@ -74,13 +75,28 @@ document.addEventListener("DOMContentLoaded", function () {
         document.removeEventListener("keydown", handleKeyPress, { capture: true });
     }
 
-    function updateOverlayContent() {
-        const img = images[currentIndex];
-        overlayImage.src = img.getAttribute("src");
-        overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
-        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
+    function updateOverlayContent(skipTransition = false) {
+        if (isTransitioning) return;
 
-        adjustImageSize();
+        isTransitioning = true;
+        overlayImage.classList.add("fade-out");
+
+        setTimeout(() => {
+            const img = images[currentIndex];
+            overlayImage.src = img.getAttribute("src");
+            overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
+            overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
+
+            adjustImageSize();
+
+            overlayImage.classList.remove("fade-out");
+            overlayImage.classList.add("fade-in");
+
+            setTimeout(() => {
+                overlayImage.classList.remove("fade-in");
+                isTransitioning = false;
+            }, 300); // Matches CSS animation duration
+        }, skipTransition ? 0 : 300);
     }
 
     function adjustImageSize() {
@@ -89,16 +105,11 @@ document.addEventListener("DOMContentLoaded", function () {
         overlayImage.style.width = "auto";
     }
 
-    function showPreviousImage() {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateOverlayContent();
-        }
-    }
-
-    function showNextImage() {
-        if (currentIndex < images.length - 1) {
-            currentIndex++;
+    function changeImage(direction) {
+        if (isTransitioning) return;
+        const newIndex = currentIndex + direction;
+        if (newIndex >= 0 && newIndex < images.length) {
+            currentIndex = newIndex;
             updateOverlayContent();
         }
     }
@@ -107,9 +118,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.key === "Escape") {
             closeOverlay();
         } else if (event.key === "ArrowLeft") {
-            showPreviousImage();
+            changeImage(-1);
         } else if (event.key === "ArrowRight") {
-            showNextImage();
+            changeImage(1);
         }
     }
 
