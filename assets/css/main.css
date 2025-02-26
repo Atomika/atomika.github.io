@@ -1995,34 +1995,14 @@ footer {
 
 
 
-.overlay-nav-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 10px 15px;
-    font-size: 24px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s ease;
-    user-select: none;
-}
 
-.overlay-nav-button:hover {
-    background: rgba(0, 0, 0, 0.8);
-}
 
-.overlay-prev-button {
-    left: 10px;
-}
 
-.overlay-next-button {
-    right: 10px;
-}
 
-/* Smooth Image Transition */
-.overlay-image {
+/* Smooth fade transition */
+.overlay-image,
+.overlay-image-caption,
+.overlay-description {
     transition: opacity 0.15s ease-in-out;
 }
 
@@ -2034,22 +2014,31 @@ footer {
     opacity: 1;
 }
 
-
-
-/* Restore text styling inside the overlay */
-.overlay-image-caption,
-.overlay-description {
-    letter-spacing: 0.2rem;
-    font-size: 0.8rem;
-    opacity: 0.75;
-    text-transform: uppercase;
-    margin-top: 10px;
-    margin-bottom: 2px;
+/* Move navigation buttons down */
+.overlay-prev-div,
+.overlay-next-div {
+    position: absolute;
+    top: 65%; /* Move buttons down from original position */
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px 15px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    user-select: none;
 }
 
-/* Ensure text transitions smoothly like images */
-.overlay-image,
-.overlay-image-caption,
-.overlay-description {
-    transition: opacity 0.15s ease-in-out;
+.overlay-prev-div {
+    left: 20px;
+}
+
+.overlay-next-div {
+    right: 20px;
+}
+
+.overlay-prev-div:hover,
+.overlay-next-div:hover {
+    background: rgba(0, 0, 0, 0.8);
 }

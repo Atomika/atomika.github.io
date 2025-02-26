@@ -18,12 +18,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayImageCaption = document.createElement("p");
     overlayImageCaption.classList.add("overlay-image-caption");
 
-    overlayImageCaption.style.letterSpacing = "0.2rem";
-    overlayImageCaption.style.fontSize = "0.7rem";
-    overlayImageCaption.style.opacity = "0.75";
-    overlayImageCaption.style.marginBottom = "2px";
-    overlayImageCaption.style.textTransform = "uppercase";
-    overlayImageCaption.style.marginTop = "10px";
+    // Apply original text styles
+    Object.assign(overlayImageCaption.style, {
+        letterSpacing: "0.2rem",
+        fontSize: "0.7rem",
+        opacity: "0.75",
+        marginBottom: "2px",
+        textTransform: "uppercase",
+        marginTop: "10px"
+    });
 
     imageContainer.appendChild(overlayImage);
     imageContainer.appendChild(overlayImageCaption);
@@ -34,11 +37,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayText = document.createElement("p");
     overlayText.classList.add("overlay-description");
 
-    overlayText.style.letterSpacing = "0.2rem";
-    overlayText.style.fontSize = "0.8rem";
-    overlayText.style.opacity = "0.75";
-    overlayText.style.marginBottom = "0";
-    overlayText.style.textTransform = "uppercase";
+    Object.assign(overlayText.style, {
+        letterSpacing: "0.2rem",
+        fontSize: "0.8rem",
+        opacity: "0.75",
+        marginBottom: "0",
+        textTransform: "uppercase"
+    });
 
     textContainer.appendChild(overlayText);
 
@@ -63,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const images = Array.from(document.querySelectorAll(".work-gallery img"));
     let currentIndex = 0;
+    let isTransitioning = false;
 
     images.forEach((img, index) => {
         img.addEventListener("click", function (event) {
@@ -73,15 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function openOverlay(index) {
+        if (isTransitioning) return;
         currentIndex = index;
-        const img = images[currentIndex];
-        overlayImage.src = img.getAttribute("src");
-        overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
-        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
+        updateOverlayContent();
 
-        adjustImageSize();
         overlay.classList.add("active");
-
         window.addEventListener("resize", adjustImageSize);
         document.addEventListener("keydown", handleKeyPress, { capture: true });
     }
@@ -93,20 +95,49 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function adjustImageSize() {
-        const maxHeight = window.innerHeight * 0.8;
-        overlayImage.style.maxHeight = `${maxHeight}px`;
+        overlayImage.style.maxHeight = `${window.innerHeight * 0.8}px`;
         overlayImage.style.width = "auto";
+    }
+
+    function updateOverlayContent(skipTransition = false) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        // Add fade-out effect
+        [overlayImage, overlayImageCaption, overlayText].forEach(el => el.classList.add("fade-out"));
+
+        setTimeout(() => {
+            const img = images[currentIndex];
+            overlayImage.src = img.getAttribute("src");
+            overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
+            overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
+
+            adjustImageSize();
+
+            // Remove fade-out and add fade-in effect
+            [overlayImage, overlayImageCaption, overlayText].forEach(el => {
+                el.classList.remove("fade-out");
+                el.classList.add("fade-in");
+            });
+
+            setTimeout(() => {
+                [overlayImage, overlayImageCaption, overlayText].forEach(el => el.classList.remove("fade-in"));
+                isTransitioning = false;
+            }, 150);
+        }, skipTransition ? 0 : 150);
     }
 
     function showPreviousImage() {
         if (currentIndex > 0) {
-            openOverlay(currentIndex - 1);
+            currentIndex--;
+            updateOverlayContent();
         }
     }
 
     function showNextImage() {
         if (currentIndex < images.length - 1) {
-            openOverlay(currentIndex + 1);
+            currentIndex++;
+            updateOverlayContent();
         }
     }
 
