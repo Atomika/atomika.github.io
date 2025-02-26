@@ -18,6 +18,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayImageCaption = document.createElement("p");
     overlayImageCaption.classList.add("overlay-image-caption");
 
+    overlayImageCaption.style.letterSpacing = "0.2rem";
+    overlayImageCaption.style.fontSize = "0.7rem";
+    overlayImageCaption.style.opacity = "0.75";
+    overlayImageCaption.style.marginBottom = "2px";
+    overlayImageCaption.style.textTransform = "uppercase";
+    overlayImageCaption.style.marginTop = "10px";
+
     imageContainer.appendChild(overlayImage);
     imageContainer.appendChild(overlayImageCaption);
 
@@ -27,30 +34,35 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayText = document.createElement("p");
     overlayText.classList.add("overlay-description");
 
+    overlayText.style.letterSpacing = "0.2rem";
+    overlayText.style.fontSize = "0.8rem";
+    overlayText.style.opacity = "0.75";
+    overlayText.style.marginBottom = "0";
+    overlayText.style.textTransform = "uppercase";
+
     textContainer.appendChild(overlayText);
 
-    // Create navigation divs
+    // Create navigation buttons
     const prevButton = document.createElement("div");
-    prevButton.classList.add("overlay-nav-button", "overlay-prev-button");
-    prevButton.innerHTML = "&#10094;"; // Left arrow (❮)
-    prevButton.addEventListener("click", () => changeImage(-1));
+    prevButton.classList.add("overlay-prev-div");
+    prevButton.textContent = "❮";
+    prevButton.addEventListener("click", showPreviousImage);
 
     const nextButton = document.createElement("div");
-    nextButton.classList.add("overlay-nav-button", "overlay-next-button");
-    nextButton.innerHTML = "&#10095;"; // Right arrow (❯)
-    nextButton.addEventListener("click", () => changeImage(1));
+    nextButton.classList.add("overlay-next-div");
+    nextButton.textContent = "❯";
+    nextButton.addEventListener("click", showNextImage);
 
-    overlay.appendChild(prevButton);
     overlayContent.appendChild(closeButton);
+    overlayContent.appendChild(prevButton);
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
-    overlay.appendChild(nextButton);
+    overlayContent.appendChild(nextButton);
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 
     const images = Array.from(document.querySelectorAll(".work-gallery img"));
     let currentIndex = 0;
-    let isTransitioning = false;
 
     images.forEach((img, index) => {
         img.addEventListener("click", function (event) {
@@ -62,7 +74,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function openOverlay(index) {
         currentIndex = index;
-        updateOverlayContent(true);
+        const img = images[currentIndex];
+        overlayImage.src = img.getAttribute("src");
+        overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
+        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
+
+        adjustImageSize();
         overlay.classList.add("active");
 
         window.addEventListener("resize", adjustImageSize);
@@ -75,58 +92,21 @@ document.addEventListener("DOMContentLoaded", function () {
         document.removeEventListener("keydown", handleKeyPress, { capture: true });
     }
 
-
-
-
-function updateOverlayContent(skipTransition = false) {
-    if (isTransitioning) return;
-
-    isTransitioning = true;
-    overlayImage.classList.add("fade-out");
-    overlayImageCaption.classList.add("fade-out");
-    overlayText.classList.add("fade-out");
-
-    setTimeout(() => {
-        const img = images[currentIndex];
-        overlayImage.src = img.getAttribute("src");
-        overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
-        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
-
-        adjustImageSize();
-
-        overlayImage.classList.remove("fade-out");
-        overlayImageCaption.classList.remove("fade-out");
-        overlayText.classList.remove("fade-out");
-
-        overlayImage.classList.add("fade-in");
-        overlayImageCaption.classList.add("fade-in");
-        overlayText.classList.add("fade-in");
-
-        setTimeout(() => {
-            overlayImage.classList.remove("fade-in");
-            overlayImageCaption.classList.remove("fade-in");
-            overlayText.classList.remove("fade-in");
-            isTransitioning = false;
-        }, 150); // Faster transition (0.15s)
-    }, skipTransition ? 0 : 150);
-}
-
-
-
-
-
     function adjustImageSize() {
         const maxHeight = window.innerHeight * 0.8;
         overlayImage.style.maxHeight = `${maxHeight}px`;
         overlayImage.style.width = "auto";
     }
 
-    function changeImage(direction) {
-        if (isTransitioning) return;
-        const newIndex = currentIndex + direction;
-        if (newIndex >= 0 && newIndex < images.length) {
-            currentIndex = newIndex;
-            updateOverlayContent();
+    function showPreviousImage() {
+        if (currentIndex > 0) {
+            openOverlay(currentIndex - 1);
+        }
+    }
+
+    function showNextImage() {
+        if (currentIndex < images.length - 1) {
+            openOverlay(currentIndex + 1);
         }
     }
 
@@ -134,9 +114,9 @@ function updateOverlayContent(skipTransition = false) {
         if (event.key === "Escape") {
             closeOverlay();
         } else if (event.key === "ArrowLeft") {
-            changeImage(-1);
+            showPreviousImage();
         } else if (event.key === "ArrowRight") {
-            changeImage(1);
+            showNextImage();
         }
     }
 
