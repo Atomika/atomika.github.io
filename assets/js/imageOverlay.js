@@ -7,9 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const closeButton = document.createElement("div");
     closeButton.classList.add("overlay-close-button");
-    closeButton.addEventListener("click", function () {
-        closeOverlay();
-    });
+    closeButton.addEventListener("click", closeOverlay);
 
     const imageContainer = document.createElement("div");
     imageContainer.classList.add("overlay-image-container");
@@ -44,34 +42,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
     textContainer.appendChild(overlayText);
 
+    // Create navigation buttons
+    const prevButton = document.createElement("button");
+    prevButton.classList.add("overlay-prev-button");
+    prevButton.textContent = "❮";
+    prevButton.addEventListener("click", showPreviousImage);
+
+    const nextButton = document.createElement("button");
+    nextButton.classList.add("overlay-next-button");
+    nextButton.textContent = "❯";
+    nextButton.addEventListener("click", showNextImage);
+
     overlayContent.appendChild(closeButton);
+    overlayContent.appendChild(prevButton);
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
+    overlayContent.appendChild(nextButton);
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 
-    const images = document.querySelectorAll(".work-gallery img");
+    const images = Array.from(document.querySelectorAll(".work-gallery img"));
+    let currentIndex = 0;
 
-    images.forEach(img => {
+    images.forEach((img, index) => {
         img.addEventListener("click", function (event) {
             event.stopPropagation();
             event.preventDefault();
-
-            const imgSrc = img.getAttribute("src");
-            const imgAlt = img.getAttribute("alt") || "No title available";
-            const imgDescription = img.getAttribute("data-description") || "No additional info available.";
-
-            overlayImage.src = imgSrc;
-            overlayImageCaption.textContent = imgAlt;
-            overlayText.innerHTML = imgDescription;
-
-            adjustImageSize();
-
-            overlay.classList.add("active");
-            window.addEventListener("resize", adjustImageSize);
-            document.addEventListener("keydown", closeOnEscape, { capture: true });
+            openOverlay(index);
         });
     });
+
+    function openOverlay(index) {
+        currentIndex = index;
+        const img = images[currentIndex];
+        overlayImage.src = img.getAttribute("src");
+        overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
+        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
+
+        adjustImageSize();
+        overlay.classList.add("active");
+
+        window.addEventListener("resize", adjustImageSize);
+        document.addEventListener("keydown", handleKeyPress, { capture: true });
+    }
+
+    function closeOverlay() {
+        overlay.classList.remove("active");
+        window.removeEventListener("resize", adjustImageSize);
+        document.removeEventListener("keydown", handleKeyPress, { capture: true });
+    }
 
     function adjustImageSize() {
         const maxHeight = window.innerHeight * 0.8;
@@ -79,30 +98,35 @@ document.addEventListener("DOMContentLoaded", function () {
         overlayImage.style.width = "auto";
     }
 
-    function closeOverlay() {
-        overlay.classList.remove("active");
-        window.removeEventListener("resize", adjustImageSize);
-        document.removeEventListener("keydown", closeOnEscape, { capture: true });
+    function showPreviousImage() {
+        if (currentIndex > 0) {
+            openOverlay(currentIndex - 1);
+        }
     }
 
-    function closeOnEscape(event) {
+    function showNextImage() {
+        if (currentIndex < images.length - 1) {
+            openOverlay(currentIndex + 1);
+        }
+    }
+
+    function handleKeyPress(event) {
         if (event.key === "Escape") {
-            event.stopImmediatePropagation();
-            event.preventDefault();
             closeOverlay();
+        } else if (event.key === "ArrowLeft") {
+            showPreviousImage();
+        } else if (event.key === "ArrowRight") {
+            showNextImage();
         }
     }
 
     overlay.addEventListener("click", function (event) {
         if (event.target === overlay) {
-            event.stopPropagation();
             closeOverlay();
-            event.preventDefault();
         }
     });
 
     overlayContent.addEventListener("click", function (event) {
         event.stopPropagation();
-        event.preventDefault();
     });
 });
