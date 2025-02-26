@@ -18,13 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayImageCaption = document.createElement("p");
     overlayImageCaption.classList.add("overlay-image-caption");
 
-    overlayImageCaption.style.letterSpacing = "0.2rem";
-    overlayImageCaption.style.fontSize = "0.7rem";
-    overlayImageCaption.style.opacity = "0.75";
-    overlayImageCaption.style.marginBottom = "2px";
-    overlayImageCaption.style.textTransform = "uppercase";
-    overlayImageCaption.style.marginTop = "10px";
-
     imageContainer.appendChild(overlayImage);
     imageContainer.appendChild(overlayImageCaption);
 
@@ -34,30 +27,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayText = document.createElement("p");
     overlayText.classList.add("overlay-description");
 
-    overlayText.style.letterSpacing = "0.2rem";
-    overlayText.style.fontSize = "0.8rem";
-    overlayText.style.opacity = "0.75";
-    overlayText.style.marginBottom = "0";
-    overlayText.style.textTransform = "uppercase";
-
     textContainer.appendChild(overlayText);
 
-    // Create navigation buttons
-    const prevButton = document.createElement("button");
-    prevButton.classList.add("overlay-prev-button");
-    prevButton.textContent = "❮";
+    // Create navigation divs
+    const prevButton = document.createElement("div");
+    prevButton.classList.add("overlay-nav-button", "overlay-prev-button");
+    prevButton.innerHTML = "&#10094;"; // Left arrow (❮)
     prevButton.addEventListener("click", showPreviousImage);
 
-    const nextButton = document.createElement("button");
-    nextButton.classList.add("overlay-next-button");
-    nextButton.textContent = "❯";
+    const nextButton = document.createElement("div");
+    nextButton.classList.add("overlay-nav-button", "overlay-next-button");
+    nextButton.innerHTML = "&#10095;"; // Right arrow (❯)
     nextButton.addEventListener("click", showNextImage);
 
+    overlay.appendChild(prevButton);
     overlayContent.appendChild(closeButton);
-    overlayContent.appendChild(prevButton);
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
-    overlayContent.appendChild(nextButton);
+    overlay.appendChild(nextButton);
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 
@@ -74,12 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function openOverlay(index) {
         currentIndex = index;
-        const img = images[currentIndex];
-        overlayImage.src = img.getAttribute("src");
-        overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
-        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
-
-        adjustImageSize();
+        updateOverlayContent();
         overlay.classList.add("active");
 
         window.addEventListener("resize", adjustImageSize);
@@ -92,6 +74,15 @@ document.addEventListener("DOMContentLoaded", function () {
         document.removeEventListener("keydown", handleKeyPress, { capture: true });
     }
 
+    function updateOverlayContent() {
+        const img = images[currentIndex];
+        overlayImage.src = img.getAttribute("src");
+        overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
+        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
+
+        adjustImageSize();
+    }
+
     function adjustImageSize() {
         const maxHeight = window.innerHeight * 0.8;
         overlayImage.style.maxHeight = `${maxHeight}px`;
@@ -100,13 +91,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showPreviousImage() {
         if (currentIndex > 0) {
-            openOverlay(currentIndex - 1);
+            currentIndex--;
+            updateOverlayContent();
         }
     }
 
     function showNextImage() {
         if (currentIndex < images.length - 1) {
-            openOverlay(currentIndex + 1);
+            currentIndex++;
+            updateOverlayContent();
         }
     }
 
