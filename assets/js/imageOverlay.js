@@ -18,14 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayImageCaption = document.createElement("p");
     overlayImageCaption.classList.add("overlay-image-caption");
 
-    Object.assign(overlayImageCaption.style, {
-        letterSpacing: "0.2rem",
-        fontSize: "0.7rem",
-        opacity: "0.75",
-        marginBottom: "2px",
-        textTransform: "uppercase",
-        marginTop: "10px"
-    });
+    overlayImageCaption.style.letterSpacing = "0.2rem";
+    overlayImageCaption.style.fontSize = "0.7rem";
+    overlayImageCaption.style.opacity = "0.75";
+    overlayImageCaption.style.marginBottom = "2px";
+    overlayImageCaption.style.textTransform = "uppercase";
+    overlayImageCaption.style.marginTop = "10px";
 
     imageContainer.appendChild(overlayImage);
     imageContainer.appendChild(overlayImageCaption);
@@ -36,19 +34,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayText = document.createElement("p");
     overlayText.classList.add("overlay-description");
 
-    Object.assign(overlayText.style, {
-        letterSpacing: "0.2rem",
-        fontSize: "0.8rem",
-        opacity: "0.75",
-        marginBottom: "0",
-        textTransform: "uppercase"
-    });
+    overlayText.style.letterSpacing = "0.2rem";
+    overlayText.style.fontSize = "0.8rem";
+    overlayText.style.opacity = "0.75";
+    overlayText.style.marginBottom = "0";
+    overlayText.style.textTransform = "uppercase";
 
     textContainer.appendChild(overlayText);
 
-    // Navigation button container (both buttons together)
-    const navButtonsContainer = document.createElement("div");
-    navButtonsContainer.classList.add("overlay-nav-buttons");
+    // Create navigation buttons (bottom right)
+    const navContainer = document.createElement("div");
+    navContainer.classList.add("overlay-nav-container");
 
     const prevButton = document.createElement("div");
     prevButton.classList.add("overlay-prev-div");
@@ -60,19 +56,18 @@ document.addEventListener("DOMContentLoaded", function () {
     nextButton.textContent = "❯";
     nextButton.addEventListener("click", showNextImage);
 
-    navButtonsContainer.appendChild(prevButton);
-    navButtonsContainer.appendChild(nextButton);
+    navContainer.appendChild(prevButton);
+    navContainer.appendChild(nextButton);
 
     overlayContent.appendChild(closeButton);
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
-    overlayContent.appendChild(navButtonsContainer);
+    overlayContent.appendChild(navContainer);
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 
     const images = Array.from(document.querySelectorAll(".work-gallery img"));
     let currentIndex = 0;
-    let isTransitioning = false;
 
     images.forEach((img, index) => {
         img.addEventListener("click", function (event) {
@@ -83,11 +78,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function openOverlay(index) {
-        if (isTransitioning) return;
         currentIndex = index;
-        updateOverlayContent();
+        const img = images[currentIndex];
+        overlayImage.src = img.getAttribute("src");
+        overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
+        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
 
+        adjustImageSize();
         overlay.classList.add("active");
+
         window.addEventListener("resize", adjustImageSize);
         document.addEventListener("keydown", handleKeyPress, { capture: true });
     }
@@ -99,47 +98,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function adjustImageSize() {
-        overlayImage.style.maxHeight = `${window.innerHeight * 0.8}px`;
+        const maxHeight = window.innerHeight * 0.8;
+        overlayImage.style.maxHeight = `${maxHeight}px`;
         overlayImage.style.width = "auto";
-    }
-
-    function updateOverlayContent(skipTransition = false) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-
-        [overlayImage, overlayImageCaption, overlayText].forEach(el => el.classList.add("fade-out"));
-
-        setTimeout(() => {
-            const img = images[currentIndex];
-            overlayImage.src = img.getAttribute("src");
-            overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
-            overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
-
-            adjustImageSize();
-
-            [overlayImage, overlayImageCaption, overlayText].forEach(el => {
-                el.classList.remove("fade-out");
-                el.classList.add("fade-in");
-            });
-
-            setTimeout(() => {
-                [overlayImage, overlayImageCaption, overlayText].forEach(el => el.classList.remove("fade-in"));
-                isTransitioning = false;
-            }, 150);
-        }, skipTransition ? 0 : 150);
     }
 
     function showPreviousImage() {
         if (currentIndex > 0) {
-            currentIndex--;
-            updateOverlayContent();
+            openOverlay(currentIndex - 1);
         }
     }
 
     function showNextImage() {
         if (currentIndex < images.length - 1) {
-            currentIndex++;
-            updateOverlayContent();
+            openOverlay(currentIndex + 1);
         }
     }
 
@@ -162,4 +134,33 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayContent.addEventListener("click", function (event) {
         event.stopPropagation();
     });
+
+    // Apply styles for the navigation buttons in the bottom right
+    const style = document.createElement("style");
+    style.textContent = `
+        .overlay-nav-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .overlay-prev-div, .overlay-next-div {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .overlay-prev-div:hover, .overlay-next-div:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    `;
+    document.head.appendChild(style);
 });
