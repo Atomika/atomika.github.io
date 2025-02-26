@@ -75,29 +75,31 @@ document.addEventListener("DOMContentLoaded", function () {
         document.removeEventListener("keydown", handleKeyPress, { capture: true });
     }
 
+
     function updateOverlayContent(skipTransition = false) {
         if (isTransitioning) return;
-
+    
         isTransitioning = true;
         overlayImage.classList.add("fade-out");
-
+    
         setTimeout(() => {
             const img = images[currentIndex];
             overlayImage.src = img.getAttribute("src");
             overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
             overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
-
+    
             adjustImageSize();
-
+    
             overlayImage.classList.remove("fade-out");
             overlayImage.classList.add("fade-in");
-
+    
             setTimeout(() => {
                 overlayImage.classList.remove("fade-in");
                 isTransitioning = false;
-            }, 300); // Matches CSS animation duration
-        }, skipTransition ? 0 : 300);
+            }, 150); // Now 150ms instead of 300ms
+        }, skipTransition ? 0 : 150);
     }
+    
 
     function adjustImageSize() {
         const maxHeight = window.innerHeight * 0.8;
