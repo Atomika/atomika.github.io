@@ -1995,26 +1995,6 @@ footer {
 
 
 
-
-
-
-
-/* Apply the fade effect to images AND text */
-.overlay-image,
-.overlay-image-caption,
-.overlay-description {
-    transition: opacity 0.15s ease-in-out;
-}
-
-.fade-out {
-    opacity: 0;
-}
-
-.fade-in {
-    opacity: 1;
-}
-
-/* Make navigation buttons stay INSIDE the overlay */
 .overlay-nav-button {
     position: absolute;
     top: 50%;
@@ -2029,21 +2009,10 @@ footer {
     user-select: none;
 }
 
-/* Fix navigation button placement inside the overlay */
-.overlay-content {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: white;
-    padding: 20px;
-    max-width: 90%;
-    max-height: 90%;
-    overflow: hidden;
+.overlay-nav-button:hover {
+    background: rgba(0, 0, 0, 0.8);
 }
 
-/* Ensure buttons are positioned correctly within the overlay */
 .overlay-prev-button {
     left: 10px;
 }
@@ -2052,6 +2021,15 @@ footer {
     right: 10px;
 }
 
-.overlay-nav-button:hover {
-    background: rgba(0, 0, 0, 0.8);
+/* Smooth Image Transition */
+.overlay-image {
+    transition: opacity 0.15s ease-in-out;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+.fade-in {
+    opacity: 1;
 }
