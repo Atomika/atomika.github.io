@@ -1992,3 +1992,31 @@ footer {
         background-size: 14px 14px;
     }
 }
+
+
+
+.overlay-nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+    transition: background 0.3s;
+}
+
+.overlay-nav-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.overlay-prev-button {
+    left: 10px;
+}
+
+.overlay-next-button {
+    right: 10px;
+}
