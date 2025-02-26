@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlayImageCaption = document.createElement("p");
     overlayImageCaption.classList.add("overlay-image-caption");
 
-    // Apply original text styles
     Object.assign(overlayImageCaption.style, {
         letterSpacing: "0.2rem",
         fontSize: "0.7rem",
@@ -47,7 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     textContainer.appendChild(overlayText);
 
-    // Create navigation buttons
+    // Navigation button container (both buttons together)
+    const navButtonsContainer = document.createElement("div");
+    navButtonsContainer.classList.add("overlay-nav-buttons");
+
     const prevButton = document.createElement("div");
     prevButton.classList.add("overlay-prev-div");
     prevButton.textContent = "❮";
@@ -58,11 +60,13 @@ document.addEventListener("DOMContentLoaded", function () {
     nextButton.textContent = "❯";
     nextButton.addEventListener("click", showNextImage);
 
+    navButtonsContainer.appendChild(prevButton);
+    navButtonsContainer.appendChild(nextButton);
+
     overlayContent.appendChild(closeButton);
-    overlayContent.appendChild(prevButton);
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
-    overlayContent.appendChild(nextButton);
+    overlayContent.appendChild(navButtonsContainer);
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 
@@ -103,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isTransitioning) return;
         isTransitioning = true;
 
-        // Add fade-out effect
         [overlayImage, overlayImageCaption, overlayText].forEach(el => el.classList.add("fade-out"));
 
         setTimeout(() => {
@@ -114,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             adjustImageSize();
 
-            // Remove fade-out and add fade-in effect
             [overlayImage, overlayImageCaption, overlayText].forEach(el => {
                 el.classList.remove("fade-out");
                 el.classList.add("fade-in");
