@@ -76,30 +76,44 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    function updateOverlayContent(skipTransition = false) {
-        if (isTransitioning) return;
-    
-        isTransitioning = true;
-        overlayImage.classList.add("fade-out");
-    
+
+
+function updateOverlayContent(skipTransition = false) {
+    if (isTransitioning) return;
+
+    isTransitioning = true;
+    overlayImage.classList.add("fade-out");
+    overlayImageCaption.classList.add("fade-out");
+    overlayText.classList.add("fade-out");
+
+    setTimeout(() => {
+        const img = images[currentIndex];
+        overlayImage.src = img.getAttribute("src");
+        overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
+        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
+
+        adjustImageSize();
+
+        overlayImage.classList.remove("fade-out");
+        overlayImageCaption.classList.remove("fade-out");
+        overlayText.classList.remove("fade-out");
+
+        overlayImage.classList.add("fade-in");
+        overlayImageCaption.classList.add("fade-in");
+        overlayText.classList.add("fade-in");
+
         setTimeout(() => {
-            const img = images[currentIndex];
-            overlayImage.src = img.getAttribute("src");
-            overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
-            overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
-    
-            adjustImageSize();
-    
-            overlayImage.classList.remove("fade-out");
-            overlayImage.classList.add("fade-in");
-    
-            setTimeout(() => {
-                overlayImage.classList.remove("fade-in");
-                isTransitioning = false;
-            }, 150); // Now 150ms instead of 300ms
-        }, skipTransition ? 0 : 150);
-    }
-    
+            overlayImage.classList.remove("fade-in");
+            overlayImageCaption.classList.remove("fade-in");
+            overlayText.classList.remove("fade-in");
+            isTransitioning = false;
+        }, 150); // Faster transition (0.15s)
+    }, skipTransition ? 0 : 150);
+}
+
+
+
+
 
     function adjustImageSize() {
         const maxHeight = window.innerHeight * 0.8;
