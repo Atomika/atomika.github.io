@@ -2062,3 +2062,10 @@ footer {
 .overlay-nav-button:focus {
     outline: none !important;
 }
+
+/* Hide navigation buttons on mobile (≤ 768px) */
+@media only screen and (max-width: 768px) {
+    .overlay-nav-button {
+        display: none;
+    }
+}
