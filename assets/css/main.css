@@ -2042,7 +2042,7 @@ footer {
 
 /* Text content styling */
 .overlay-nav-button {
-    color: #cccccc; /* White text to match close button’s SVG stroke */
+    color: #b3b3b3; /* White text to match close button’s SVG stroke */
     font-size: 1.5rem; /* Adjust size of ❮ and ❯ */
     text-align: center;
     line-height: 4rem; /* Center vertically */
