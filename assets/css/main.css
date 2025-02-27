@@ -1994,3 +1994,71 @@ footer {
 }
 
 
+
+
+
+/* Navigation container positioned at bottom-right */
+.overlay-nav-container {
+    position: absolute;
+    bottom: 1rem; /* Space from bottom */
+    right: 1rem; /* Space from right */
+    display: flex;
+    gap: 0.5rem; /* Space between buttons */
+}
+
+/* Base styles for navigation buttons, matching close button */
+.overlay-nav-button {
+    display: block;
+    width: 4rem; /* Same clickable area as close button */
+    height: 4rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    border-radius: 100%;
+    outline: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    overflow: hidden;
+    position: relative; /* For pseudo-element positioning */
+}
+
+/* Visual appearance with text instead of SVG */
+.overlay-nav-button:before {
+    -moz-transition: background-color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 100%;
+    background-color: transparent;
+}
+
+/* Text content styling */
+.overlay-nav-button {
+    color: #ffffff; /* White text to match close button’s SVG stroke */
+    font-size: 1.5rem; /* Adjust size of ❮ and ❯ */
+    text-align: center;
+    line-height: 4rem; /* Center vertically */
+}
+
+/* Hover effect */
+.overlay-nav-button:hover:before {
+    background-color: rgba(255, 255, 255, 0.075);
+}
+
+/* Active effect */
+.overlay-nav-button:active:before {
+    background-color: rgba(255, 255, 255, 0.175);
+}
+
+/* Remove focus outline */
+.overlay-nav-button:focus {
+    outline: none !important;
+}

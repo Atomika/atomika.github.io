@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Create overlay structure
     const overlay = document.createElement("div");
     overlay.classList.add("image-overlay");
 
@@ -45,24 +44,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     textContainer.appendChild(overlayText);
 
-    // Add navigation buttons
+    // Navigation container
     const navContainer = document.createElement("div");
     navContainer.classList.add("overlay-nav-container");
 
     const prevButton = document.createElement("div");
-    prevButton.classList.add("overlay-prev-div");
+    prevButton.classList.add("overlay-nav-button", "overlay-prev-button");
     prevButton.textContent = "❮";
     prevButton.addEventListener("click", showPreviousImage);
 
     const nextButton = document.createElement("div");
-    nextButton.classList.add("overlay-next-div");
+    nextButton.classList.add("overlay-nav-button", "overlay-next-button");
     nextButton.textContent = "❯";
     nextButton.addEventListener("click", showNextImage);
 
     navContainer.appendChild(prevButton);
     navContainer.appendChild(nextButton);
 
-    // Assemble overlay
     overlayContent.appendChild(closeButton);
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
@@ -70,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 
-    // Gallery images setup
     const images = Array.from(document.querySelectorAll(".work-gallery img"));
     let currentIndex = 0;
 
@@ -82,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Core functions
     function openOverlay(index) {
         currentIndex = index;
         const img = images[currentIndex];
@@ -135,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Overlay click handlers
     overlay.addEventListener("click", function (event) {
         if (event.target === overlay) {
             event.stopPropagation();
