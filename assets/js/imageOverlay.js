@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const closeButton = document.createElement("div");
     closeButton.classList.add("overlay-close-button");
-    closeButton.addEventListener("click", closeOverlay);
+    closeButton.addEventListener("click", function () {
+        closeOverlay();
+    });
 
     const imageContainer = document.createElement("div");
     imageContainer.classList.add("overlay-image-container");
@@ -116,51 +118,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function handleKeyPress(event) {
-        if (event.key === "Escape") {
-            closeOverlay();
-        } else if (event.key === "ArrowLeft") {
+        if (event.key === "ArrowLeft") {
             showPreviousImage();
         } else if (event.key === "ArrowRight") {
             showNextImage();
         }
     }
-
-    overlay.addEventListener("click", function (event) {
-        if (event.target === overlay) {
-            closeOverlay();
-        }
-    });
-
-    overlayContent.addEventListener("click", function (event) {
-        event.stopPropagation();
-    });
-
-    // Apply styles for the navigation buttons in the bottom right
-    const style = document.createElement("style");
-    style.textContent = `
-        .overlay-nav-container {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            display: flex;
-            gap: 10px;
-        }
-        .overlay-prev-div, .overlay-next-div {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            font-size: 1.5rem;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .overlay-prev-div:hover, .overlay-next-div:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-    `;
-    document.head.appendChild(style);
 });
