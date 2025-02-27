@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Create overlay structure
     const overlay = document.createElement("div");
     overlay.classList.add("image-overlay");
 
@@ -7,9 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const closeButton = document.createElement("div");
     closeButton.classList.add("overlay-close-button");
-    closeButton.addEventListener("click", function () {
-        closeOverlay();
-    });
+    closeButton.addEventListener("click", closeOverlay);
 
     const imageContainer = document.createElement("div");
     imageContainer.classList.add("overlay-image-container");
@@ -19,13 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const overlayImageCaption = document.createElement("p");
     overlayImageCaption.classList.add("overlay-image-caption");
-
-    overlayImageCaption.style.letterSpacing = "0.2rem";
-    overlayImageCaption.style.fontSize = "0.7rem";
-    overlayImageCaption.style.opacity = "0.75";
-    overlayImageCaption.style.marginBottom = "2px";
-    overlayImageCaption.style.textTransform = "uppercase";
-    overlayImageCaption.style.marginTop = "10px";
+    Object.assign(overlayImageCaption.style, {
+        letterSpacing: "0.2rem",
+        fontSize: "0.7rem",
+        opacity: "0.75",
+        marginBottom: "2px",
+        textTransform: "uppercase",
+        marginTop: "10px"
+    });
 
     imageContainer.appendChild(overlayImage);
     imageContainer.appendChild(overlayImageCaption);
@@ -35,16 +35,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const overlayText = document.createElement("p");
     overlayText.classList.add("overlay-description");
-
-    overlayText.style.letterSpacing = "0.2rem";
-    overlayText.style.fontSize = "0.8rem";
-    overlayText.style.opacity = "0.75";
-    overlayText.style.marginBottom = "0";
-    overlayText.style.textTransform = "uppercase";
+    Object.assign(overlayText.style, {
+        letterSpacing: "0.2rem",
+        fontSize: "0.8rem",
+        opacity: "0.75",
+        marginBottom: "0",
+        textTransform: "uppercase"
+    });
 
     textContainer.appendChild(overlayText);
 
-    // Create navigation buttons (bottom right)
+    // Add navigation buttons
     const navContainer = document.createElement("div");
     navContainer.classList.add("overlay-nav-container");
 
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     navContainer.appendChild(prevButton);
     navContainer.appendChild(nextButton);
 
+    // Assemble overlay
     overlayContent.appendChild(closeButton);
     overlayContent.appendChild(imageContainer);
     overlayContent.appendChild(textContainer);
@@ -68,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 
+    // Gallery images setup
     const images = Array.from(document.querySelectorAll(".work-gallery img"));
     let currentIndex = 0;
 
@@ -79,12 +82,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Core functions
     function openOverlay(index) {
         currentIndex = index;
         const img = images[currentIndex];
         overlayImage.src = img.getAttribute("src");
         overlayImageCaption.textContent = img.getAttribute("alt") || "No title available";
-        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available.";
+        overlayText.innerHTML = img.getAttribute("data-description") || "No additional info available";
 
         adjustImageSize();
         overlay.classList.add("active");
@@ -105,23 +109,43 @@ document.addEventListener("DOMContentLoaded", function () {
         overlayImage.style.width = "auto";
     }
 
-    function showPreviousImage() {
+    function showPreviousImage(event) {
+        if (event) event.stopPropagation();
         if (currentIndex > 0) {
             openOverlay(currentIndex - 1);
         }
     }
 
-    function showNextImage() {
+    function showNextImage(event) {
+        if (event) event.stopPropagation();
         if (currentIndex < images.length - 1) {
             openOverlay(currentIndex + 1);
         }
     }
 
     function handleKeyPress(event) {
-        if (event.key === "ArrowLeft") {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        if (event.key === "Escape") {
+            closeOverlay();
+        } else if (event.key === "ArrowLeft") {
             showPreviousImage();
         } else if (event.key === "ArrowRight") {
             showNextImage();
         }
     }
+
+    // Overlay click handlers
+    overlay.addEventListener("click", function (event) {
+        if (event.target === overlay) {
+            event.stopPropagation();
+            closeOverlay();
+            event.preventDefault();
+        }
+    });
+
+    overlayContent.addEventListener("click", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    });
 });
