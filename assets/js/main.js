@@ -282,19 +282,19 @@
 
 
 
-			// Handle clicks on all hash links
-$('a[href*="#"]').not('[href="#"]').on('click', function(event) {
-    var id = $(this).attr('href').substr(1); // Extract the hash ID (e.g., "work")
-    var $article = $main_articles.filter('#' + id);
-
-    // If a matching article exists, show it
-    if ($article.length > 0) {
-        event.preventDefault(); // Prevent default anchor behavior
-        $main._show(id);       // Show the article
-        location.hash = id;    // Update the URL hash
-    }
-});
-
+			$('a[href*="#"]').not('[href="#"]').on('click', function(event) {
+				var id = $(this).attr('href').substr(1);
+				var $article = $main_articles.filter('#' + id);
+			
+				if ($article.length > 0) {
+					event.preventDefault();
+					$main._show(id); // Show the article
+					location.hash = id; // Update the hash
+					setTimeout(function() {
+						$window.scrollTop(0); // Force scroll to top after a delay
+					}, delay + 50); // delay (325ms) + a little extra
+				}
+			});
 
 
 
