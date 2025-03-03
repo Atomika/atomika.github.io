@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function preloadImage(url, callback) {
             const img = new Image();
             img.src = url;
-            img.onload = () => callback();
+            img.onload = callback;
         }
 
         function changeBackground() {
@@ -35,19 +35,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
             preloadImage(selectedBg.src, () => {
-                bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
+                bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
                 bgElement.style.opacity = "0";
                 bgElement.style.filter = "blur(0.2rem)";
-
-                setTimeout(() => {
-                    bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
-                    bgElement.style.opacity = "1";
-                    bgElement.style.filter = "blur(0)";
-                    if (footerText) footerText.textContent = selectedBg.description;
-                    lastBackgrounds.push(randomIndex);
-                    if (lastBackgrounds.length > 5) lastBackgrounds.shift();
-                    sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
-                }, 500);
+                bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
+                
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        bgElement.style.opacity = "1";
+                        bgElement.style.filter = "blur(0)";
+                        if (footerText) footerText.textContent = selectedBg.description;
+                        lastBackgrounds.push(randomIndex);
+                        if (lastBackgrounds.length > 5) lastBackgrounds.shift();
+                        sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
+                    }, 50); // Reduce initial delay to start fade-in faster
+                });
             });
         }
 
