@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const bgElement = document.getElementById("bg");
-    const footerText = document.getElementById("footer-text"); // Get the footer element for text updates
+    const footerText = document.getElementById("footer-text");
     const body = document.body;
 
     if (bgElement) {
@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let lastBackgrounds = JSON.parse(sessionStorage.getItem("lastBgIndexes")) || [];
 
+        // Preload image function from Implementation 2
         function preloadImage(url, callback) {
             const img = new Image();
             img.src = url;
@@ -34,39 +35,75 @@ document.addEventListener("DOMContentLoaded", function () {
             } while (lastBackgrounds.includes(randomIndex) && backgrounds.length > 3);
 
             const selectedBg = backgrounds[randomIndex];
+
+            // Preload the image before applying it
             preloadImage(selectedBg.src, () => {
-                bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
-                bgElement.style.opacity = "0";
-                bgElement.style.filter = "blur(0.2rem)";
+                // Match Implementation 1's animation exactly
                 bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
-                
-                requestAnimationFrame(() => {
-                    setTimeout(() => {
-                        bgElement.style.opacity = "1";
-                        bgElement.style.filter = "blur(0)";
-                        if (footerText) footerText.textContent = selectedBg.description;
-                        lastBackgrounds.push(randomIndex);
-                        if (lastBackgrounds.length > 5) lastBackgrounds.shift();
-                        sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
-                    }, 50); // Reduce initial delay to start fade-in faster
-                });
+                bgElement.style.opacity = "0"; // Start with opacity 0
+                bgElement.style.filter = "blur(0.2rem)"; // Start with slight blur
+
+                setTimeout(() => {
+                    // Change background and apply fade-in after 500ms delay (Implementation 1)
+                    bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
+                    bgElement.style.opacity = "1";
+                    bgElement.style.filter = "blur(0)";
+
+                    console.log("Background set to:", selectedBg.src);
+
+                    // Update footer text
+                    if (footerText) {
+                        footerText.textContent = selectedBg.description;
+                    }
+
+                    // Store the new background index
+                    lastBackgrounds.push(randomIndex);
+                    if (lastBackgrounds.length > 5) {
+                        lastBackgrounds.shift(); // Keep only the last 5 backgrounds
+                    }
+                    sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
+                }, 500); // Exact 500ms delay from Implementation 1
             });
         }
 
+        // Wait for preload to finish (Implementation 2)
         function waitForPreloadAndRun() {
             if (!body.classList.contains("is-preload")) {
                 changeBackground();
             } else {
-                const observer = new MutationObserver(() => {
+                const preloadObserver = new MutationObserver(() => {
                     if (!body.classList.contains("is-preload")) {
-                        observer.disconnect();
+                        preloadObserver.disconnect();
                         changeBackground();
                     }
                 });
-                observer.observe(body, { attributes: true });
+                preloadObserver.observe(body, { attributes: true });
             }
         }
 
+        // Initial background change
         waitForPreloadAndRun();
+
+        // Monitor article visibility for blur effect (Implementation 1)
+        const observer = new MutationObserver(function (mutationsList) {
+            for (const mutation of mutationsList) {
+                if (mutation.type === "attributes") {
+                    if (body.classList.contains("is-article-visible")) {
+                        // Apply background blur when article is visible
+                        bgElement.style.transition = "filter 0.5s ease";
+                        bgElement.style.filter = "blur(0.15rem)";
+                    } else {
+                        // Remove blur when article is not visible
+                        bgElement.style.transition = "filter 0.5s ease";
+                        bgElement.style.filter = "none";
+                    }
+                }
+            }
+        });
+
+        // Observe class changes on body for article visibility
+        observer.observe(body, { attributes: true });
+    } else {
+        console.log("Error: #bg element not found!");
     }
 });
