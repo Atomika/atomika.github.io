@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const bgElement = document.getElementById("bg");
-    const footerText = document.getElementById("footer-text"); // Get the footer element for text updates
+    const footerText = document.getElementById("footer-text");
 
     if (bgElement) {
         const backgrounds = [
@@ -18,8 +18,13 @@ document.addEventListener("DOMContentLoaded", function () {
             { src: "images/pic04.jpg", description: "Venom (2018)" }
         ];
 
-        // Retrieve the last three backgrounds from sessionStorage (or initialize an empty array)
         let lastBackgrounds = JSON.parse(sessionStorage.getItem("lastBgIndexes")) || [];
+
+        function preloadImage(src, callback) {
+            const img = new Image();
+            img.src = src;
+            img.onload = callback;
+        }
 
         function changeBackground() {
             let randomIndex;
@@ -31,52 +36,69 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Start by fading in the background immediately with a smooth transition
-            bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
-            bgElement.style.opacity = "0"; // Start with opacity 0
-            bgElement.style.filter = "blur(0.2rem)"; // Start with a slight blur
+            // Preload image first
+            preloadImage(selectedBg.src, function () {
+                // Image is fully loaded, now start the transition
+                bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
+                bgElement.style.opacity = "0"; // Start with opacity 0
+                bgElement.style.filter = "blur(0.2rem)"; // Start with a slight blur
 
-            setTimeout(() => {
-                // Change the background image after a small delay
-                bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
+                setTimeout(() => {
+                    // Change the background image after a small delay
+                    bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
 
-                // Apply opacity and remove blur smoothly
-                bgElement.style.opacity = "1";
-                bgElement.style.filter = "blur(0)";
+                    // Apply opacity and remove blur smoothly
+                    bgElement.style.opacity = "1";
+                    bgElement.style.filter = "blur(0)";
 
-                console.log("Background set to:", selectedBg.src);
+                    console.log("Background set to:", selectedBg.src);
 
-                // Update footer text with description
-                if (footerText) {
-                    footerText.textContent = selectedBg.description;
-                }
+                    // Update footer text with description
+                    if (footerText) {
+                        footerText.textContent = selectedBg.description;
+                    }
 
-                // Store the new background index in sessionStorage
-                lastBackgrounds.push(randomIndex);
-                if (lastBackgrounds.length > 5) {
-                    lastBackgrounds.shift(); // Keep only the last 3 backgrounds
-                }
-                sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
+                    // Store the new background index in sessionStorage
+                    lastBackgrounds.push(randomIndex);
+                    if (lastBackgrounds.length > 5) {
+                        lastBackgrounds.shift(); // Keep only the last 3 backgrounds
+                    }
+                    sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
 
-            }, 500); // Small delay before the background is changed
+                }, 500); // Small delay before the background is changed
+            });
         }
 
-        // Initial background change on page load
-        changeBackground();
+        // Preload the first background before applying anything
+        let initialIndex = Math.floor(Math.random() * backgrounds.length);
+        let initialBg = backgrounds[initialIndex];
+
+        preloadImage(initialBg.src, function () {
+            bgElement.style.backgroundImage = `url('${initialBg.src}')`;
+            bgElement.style.opacity = "1";
+            console.log("Initial background preloaded:", initialBg.src);
+
+            if (footerText) {
+                footerText.textContent = initialBg.description;
+            }
+
+            lastBackgrounds.push(initialIndex);
+            sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
+
+            // Now start the background change cycle
+            setTimeout(changeBackground, 5000); // Change background after initial display
+        });
 
         // Monitor article visibility for blur effect
         const body = document.body;
 
-        // Add event listener for article visibility
         const observer = new MutationObserver(function (mutationsList) {
             for (const mutation of mutationsList) {
                 if (mutation.type === "attributes") {
                     if (body.classList.contains("is-article-visible")) {
-                        // Apply background blur when article is visible
                         bgElement.style.transition = "filter 0.5s ease";
                         bgElement.style.filter = "blur(0.15rem)";
                     } else {
-                        // Remove the background blur when article is not visible
                         bgElement.style.transition = "filter 0.5s ease";
                         bgElement.style.filter = "none";
                     }
@@ -84,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Configure the observer to monitor the class changes on the body
         observer.observe(body, { attributes: true });
 
     } else {
