@@ -282,24 +282,6 @@
 
 
 
-			$('a[href*="#"]').not('[href="#"]').on('click', function(event) {
-				var id = $(this).attr('href').substr(1);
-				var $article = $main_articles.filter('#' + id);
-			
-				if ($article.length > 0) {
-					event.preventDefault();
-					$main._show(id); // Show the article
-					location.hash = id; // Update the hash
-					setTimeout(function() {
-						$window.scrollTop(0); // Force scroll to top after a delay
-					}, delay + 50); // delay (325ms) + a little extra
-				}
-			});
-
-
-
-
-
 			
 		// Articles.
 			$main_articles.each(function() {
