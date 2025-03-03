@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let lastBackgrounds = JSON.parse(sessionStorage.getItem("lastBgIndexes")) || [];
 
+        // Ensure background starts completely hidden
+        bgElement.style.opacity = "0";
+
         function preloadImage(src, callback) {
             const img = new Image();
             img.src = src;
@@ -29,53 +32,45 @@ document.addEventListener("DOMContentLoaded", function () {
         function changeBackground() {
             let randomIndex;
             
-            // Ensure the new background is NOT in the last 3 used
             do {
                 randomIndex = Math.floor(Math.random() * backgrounds.length);
             } while (lastBackgrounds.includes(randomIndex) && backgrounds.length > 3);
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Preload image first
+            // Preload the new image before applying any changes
             preloadImage(selectedBg.src, function () {
-                // Image is fully loaded, now start the transition
+                // Once loaded, apply the transition and fade in
                 bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
-                bgElement.style.opacity = "0"; // Start with opacity 0
-                bgElement.style.filter = "blur(0.2rem)"; // Start with a slight blur
+                bgElement.style.opacity = "0"; // Start fade-out
 
                 setTimeout(() => {
-                    // Change the background image after a small delay
                     bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
-
-                    // Apply opacity and remove blur smoothly
-                    bgElement.style.opacity = "1";
+                    bgElement.style.opacity = "1"; // Fade back in
                     bgElement.style.filter = "blur(0)";
 
                     console.log("Background set to:", selectedBg.src);
 
-                    // Update footer text with description
                     if (footerText) {
                         footerText.textContent = selectedBg.description;
                     }
 
-                    // Store the new background index in sessionStorage
                     lastBackgrounds.push(randomIndex);
                     if (lastBackgrounds.length > 5) {
-                        lastBackgrounds.shift(); // Keep only the last 3 backgrounds
+                        lastBackgrounds.shift();
                     }
                     sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
-
-                }, 500); // Small delay before the background is changed
+                }, 500); // Delay before applying new background
             });
         }
 
-        // Preload the first background before applying anything
+        // **Fix the Initial Load: Preload first image before showing anything**
         let initialIndex = Math.floor(Math.random() * backgrounds.length);
         let initialBg = backgrounds[initialIndex];
 
         preloadImage(initialBg.src, function () {
             bgElement.style.backgroundImage = `url('${initialBg.src}')`;
-            bgElement.style.opacity = "1";
+            bgElement.style.opacity = "1"; // Only show after loading
             console.log("Initial background preloaded:", initialBg.src);
 
             if (footerText) {
@@ -85,13 +80,12 @@ document.addEventListener("DOMContentLoaded", function () {
             lastBackgrounds.push(initialIndex);
             sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
 
-            // Now start the background change cycle
-            setTimeout(changeBackground, 5000); // Change background after initial display
+            // Start background change cycle after the initial display
+            setTimeout(changeBackground, 5000);
         });
 
         // Monitor article visibility for blur effect
         const body = document.body;
-
         const observer = new MutationObserver(function (mutationsList) {
             for (const mutation of mutationsList) {
                 if (mutation.type === "attributes") {
