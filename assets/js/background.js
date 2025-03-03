@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
             preloadImage(selectedBg.src, () => {
+                bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
                 bgElement.style.opacity = "0";
                 bgElement.style.filter = "blur(0.2rem)";
 
