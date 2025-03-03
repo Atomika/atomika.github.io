@@ -20,13 +20,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let lastBackgrounds = JSON.parse(sessionStorage.getItem("lastBgIndexes")) || [];
 
-        // Ensure background starts completely hidden
-        bgElement.style.opacity = "0";
-
         function preloadImage(src, callback) {
             const img = new Image();
             img.src = src;
-            img.onload = callback;
+            img.onload = () => callback(img);
         }
 
         function changeBackground() {
@@ -38,16 +35,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Preload the new image before applying any changes
+            // Preload next image in a hidden img element
             preloadImage(selectedBg.src, function () {
-                // Once loaded, apply the transition and fade in
                 bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
-                bgElement.style.opacity = "0"; // Start fade-out
+                bgElement.style.opacity = "0"; // Fade out
 
                 setTimeout(() => {
                     bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
-                    bgElement.style.opacity = "1"; // Fade back in
-                    bgElement.style.filter = "blur(0)";
+                    bgElement.style.opacity = "1"; // Fade in
 
                     console.log("Background set to:", selectedBg.src);
 
@@ -60,11 +55,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         lastBackgrounds.shift();
                     }
                     sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
-                }, 500); // Delay before applying new background
+                }, 500);
             });
         }
 
-        // **Fix the Initial Load: Preload first image before showing anything**
+        // Preload first background image before showing anything
         let initialIndex = Math.floor(Math.random() * backgrounds.length);
         let initialBg = backgrounds[initialIndex];
 
@@ -80,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
             lastBackgrounds.push(initialIndex);
             sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
 
-            // Start background change cycle after the initial display
             setTimeout(changeBackground, 5000);
         });
 
