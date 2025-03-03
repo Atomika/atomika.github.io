@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let lastBackgrounds = JSON.parse(sessionStorage.getItem("lastBgIndexes")) || [];
 
-        // Preload image function from Implementation 2
+        // Preload image function
         function preloadImage(url, callback) {
             const img = new Image();
             img.src = url;
@@ -36,18 +36,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Preload the image before applying it
+            // Preload the new image
             preloadImage(selectedBg.src, () => {
-                // Match Implementation 1's animation exactly
+                // Set transition properties
                 bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
                 bgElement.style.opacity = "0"; // Start with opacity 0
-                bgElement.style.filter = "blur(0.2rem)"; // Start with slight blur
+                bgElement.style.filter = "blur(0.2rem)"; // Start with blur
 
+                // Apply the new background and start fade-in after 166ms delay
                 setTimeout(() => {
-                    // Change background and apply fade-in after 500ms delay (Implementation 1)
                     bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
-                    bgElement.style.opacity = "1";
-                    bgElement.style.filter = "blur(0)";
+                    bgElement.style.opacity = "1"; // Fade in over 10s
+                    bgElement.style.filter = "blur(0)"; // Remove blur over 0.5s
 
                     console.log("Background set to:", selectedBg.src);
 
@@ -59,14 +59,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Store the new background index
                     lastBackgrounds.push(randomIndex);
                     if (lastBackgrounds.length > 5) {
-                        lastBackgrounds.shift(); // Keep only the last 5 backgrounds
+                        lastBackgrounds.shift();
                     }
                     sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
-                }, 500); // Exact 500ms delay from Implementation 1
+                }, 166); // Reduced from 500ms to 166ms (1/3 of original)
             });
         }
 
-        // Wait for preload to finish (Implementation 2)
+        // Wait for preload to finish
         function waitForPreloadAndRun() {
             if (!body.classList.contains("is-preload")) {
                 changeBackground();
@@ -84,16 +84,14 @@ document.addEventListener("DOMContentLoaded", function () {
         // Initial background change
         waitForPreloadAndRun();
 
-        // Monitor article visibility for blur effect (Implementation 1)
+        // Monitor article visibility for blur effect
         const observer = new MutationObserver(function (mutationsList) {
             for (const mutation of mutationsList) {
                 if (mutation.type === "attributes") {
                     if (body.classList.contains("is-article-visible")) {
-                        // Apply background blur when article is visible
                         bgElement.style.transition = "filter 0.5s ease";
                         bgElement.style.filter = "blur(0.15rem)";
                     } else {
-                        // Remove blur when article is not visible
                         bgElement.style.transition = "filter 0.5s ease";
                         bgElement.style.filter = "none";
                     }
