@@ -28,23 +28,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function changeBackground() {
             let randomIndex;
-            
+
             do {
                 randomIndex = Math.floor(Math.random() * backgrounds.length);
             } while (lastBackgrounds.includes(randomIndex) && backgrounds.length > 3);
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Preload next image in a hidden img element
+            // Preload next image first before changing the background
             preloadImage(selectedBg.src, function () {
-                bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
-                bgElement.style.opacity = "0"; // Fade out
+                // Step 1: Fade out
+                bgElement.style.transition = "opacity 2s ease-out"; // Short fade out
+                bgElement.style.opacity = "0"; 
 
                 setTimeout(() => {
+                    // Step 2: Switch background only when fully faded out
                     bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
-                    bgElement.style.opacity = "1"; // Fade in
 
-                    console.log("Background set to:", selectedBg.src);
+                    // Step 3: Wait a moment for the browser to process before fading back in
+                    setTimeout(() => {
+                        bgElement.style.transition = "opacity 8s cubic-bezier(0.25, 0.8, 0.25, 1)"; // Long fade in
+                        bgElement.style.opacity = "1";
+                    }, 100); // Tiny delay ensures no mid-frame flashes
 
                     if (footerText) {
                         footerText.textContent = selectedBg.description;
@@ -55,17 +60,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         lastBackgrounds.shift();
                     }
                     sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
-                }, 500);
+                }, 2000); // Background switch happens only after full fade-out
             });
         }
 
-        // Preload first background image before showing anything
+        // **Fix Initial Load: Preload first background before showing anything**
         let initialIndex = Math.floor(Math.random() * backgrounds.length);
         let initialBg = backgrounds[initialIndex];
 
         preloadImage(initialBg.src, function () {
             bgElement.style.backgroundImage = `url('${initialBg.src}')`;
-            bgElement.style.opacity = "1"; // Only show after loading
+            bgElement.style.opacity = "1"; // Show only after preloading
             console.log("Initial background preloaded:", initialBg.src);
 
             if (footerText) {
@@ -75,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
             lastBackgrounds.push(initialIndex);
             sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
 
-            setTimeout(changeBackground, 5000);
+            setTimeout(changeBackground, 10000);
         });
 
         // Monitor article visibility for blur effect
