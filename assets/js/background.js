@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const bgElement = document.getElementById("bg");
-    const footerText = document.getElementById("footer-text"); // Get the footer element for text updates
+    const footerText = document.getElementById("footer-text");
+    const body = document.body;
 
     if (bgElement) {
         const backgrounds = [
@@ -18,65 +19,79 @@ document.addEventListener("DOMContentLoaded", function () {
             { src: "images/pic04.jpg", description: "Venom (2018)" }
         ];
 
-        // Retrieve the last three backgrounds from sessionStorage (or initialize an empty array)
         let lastBackgrounds = JSON.parse(sessionStorage.getItem("lastBgIndexes")) || [];
+
+        // Preload image function
+        function preloadImage(url, callback) {
+            const img = new Image();
+            img.src = url;
+            img.onload = callback;
+        }
 
         function changeBackground() {
             let randomIndex;
-            
-            // Ensure the new background is NOT in the last 3 used
             do {
                 randomIndex = Math.floor(Math.random() * backgrounds.length);
             } while (lastBackgrounds.includes(randomIndex) && backgrounds.length > 3);
 
             const selectedBg = backgrounds[randomIndex];
 
-            // Start by fading in the background immediately with a smooth transition
-            bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
-            bgElement.style.opacity = "0"; // Start with opacity 0
-            bgElement.style.filter = "blur(0.2rem)"; // Start with a slight blur
+            // Preload the new image
+            preloadImage(selectedBg.src, () => {
+                // Set transition properties
+                bgElement.style.transition = "opacity 10s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.5s ease";
+                bgElement.style.opacity = "0"; // Start with opacity 0
+                bgElement.style.filter = "blur(0.2rem)"; // Start with blur
 
-            setTimeout(() => {
-                // Change the background image after a small delay
-                bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
+                // Apply the new background and start fade-in after 166ms delay
+                setTimeout(() => {
+                    bgElement.style.backgroundImage = `url('${selectedBg.src}')`;
+                    bgElement.style.opacity = "1"; // Fade in over 10s
+                    bgElement.style.filter = "blur(0)"; // Remove blur over 0.5s
 
-                // Apply opacity and remove blur smoothly
-                bgElement.style.opacity = "1";
-                bgElement.style.filter = "blur(0)";
+                    console.log("Background set to:", selectedBg.src);
 
-                console.log("Background set to:", selectedBg.src);
+                    // Update footer text
+                    if (footerText) {
+                        footerText.textContent = selectedBg.description;
+                    }
 
-                // Update footer text with description
-                if (footerText) {
-                    footerText.textContent = selectedBg.description;
-                }
-
-                // Store the new background index in sessionStorage
-                lastBackgrounds.push(randomIndex);
-                if (lastBackgrounds.length > 5) {
-                    lastBackgrounds.shift(); // Keep only the last 3 backgrounds
-                }
-                sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
-
-            }, 500); // Small delay before the background is changed
+                    // Store the new background index
+                    lastBackgrounds.push(randomIndex);
+                    if (lastBackgrounds.length > 5) {
+                        lastBackgrounds.shift();
+                    }
+                    sessionStorage.setItem("lastBgIndexes", JSON.stringify(lastBackgrounds));
+                }, 166); // Reduced from 500ms to 166ms (1/3 of original)
+            });
         }
 
-        // Initial background change on page load
-        changeBackground();
+        // Wait for preload to finish
+        function waitForPreloadAndRun() {
+            if (!body.classList.contains("is-preload")) {
+                changeBackground();
+            } else {
+                const preloadObserver = new MutationObserver(() => {
+                    if (!body.classList.contains("is-preload")) {
+                        preloadObserver.disconnect();
+                        changeBackground();
+                    }
+                });
+                preloadObserver.observe(body, { attributes: true });
+            }
+        }
+
+        // Initial background change
+        waitForPreloadAndRun();
 
         // Monitor article visibility for blur effect
-        const body = document.body;
-
-        // Add event listener for article visibility
         const observer = new MutationObserver(function (mutationsList) {
             for (const mutation of mutationsList) {
                 if (mutation.type === "attributes") {
                     if (body.classList.contains("is-article-visible")) {
-                        // Apply background blur when article is visible
                         bgElement.style.transition = "filter 0.5s ease";
                         bgElement.style.filter = "blur(0.15rem)";
                     } else {
-                        // Remove the background blur when article is not visible
                         bgElement.style.transition = "filter 0.5s ease";
                         bgElement.style.filter = "none";
                     }
@@ -84,9 +99,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Configure the observer to monitor the class changes on the body
+        // Observe class changes on body for article visibility
         observer.observe(body, { attributes: true });
-
     } else {
         console.log("Error: #bg element not found!");
     }
