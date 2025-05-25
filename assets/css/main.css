@@ -1658,7 +1658,6 @@ body.is-preload #bg:before {
 			color: rgba(255, 255, 255, 0.75); /* Light grey assuming white base */
 			margin-bottom: 0;
 			text-transform: uppercase;
-			opacity: inherit; /* Let opacity animate from parent */
 		}
 
 		body.is-article-visible #footer {
