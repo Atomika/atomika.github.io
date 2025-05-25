@@ -1655,9 +1655,10 @@ body.is-preload #bg:before {
 		#footer .copyright {
 			letter-spacing: 0.2rem;
 			font-size: 0.6rem;
-			opacity: 0.75;
+			color: rgba(255, 255, 255, 0.75); /* Light grey assuming white base */
 			margin-bottom: 0;
 			text-transform: uppercase;
+			opacity: inherit; /* Let opacity animate from parent */
 		}
 
 		body.is-article-visible #footer {
