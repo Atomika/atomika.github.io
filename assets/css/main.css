@@ -1658,6 +1658,7 @@ body.is-preload #bg:before {
 			color: rgba(255, 255, 255, 0.75); /* Light grey assuming white base */
 			margin-bottom: 0;
 			text-transform: uppercase;
+			transition: opacity 1s ease-in-out 0.3s; /* 0.3s delay */
 		}
 
 		body.is-article-visible #footer {
@@ -1674,6 +1675,10 @@ body.is-preload #bg:before {
 
 		body.is-preload #footer {
 			opacity: 0;
+		}
+
+		body:not(.is-preload) #footer .copyright {
+			opacity: 1;
 		}
 
 /* Adjust the panel size for the Work page */
