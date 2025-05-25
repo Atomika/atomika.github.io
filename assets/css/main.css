@@ -1658,7 +1658,8 @@ body.is-preload #bg:before {
 			color: rgba(255, 255, 255, 0.75); /* Light grey assuming white base */
 			margin-bottom: 0;
 			text-transform: uppercase;
-			opacity: inherit; /* Let opacity animate from parent */
+			opacity: 0;
+			transition: opacity 1s ease-in-out 0.3s; /* Slower fade-in with slight delay */
 		}
 
 		body.is-article-visible #footer {
@@ -1676,6 +1677,11 @@ body.is-preload #bg:before {
 		body.is-preload #footer {
 			opacity: 0;
 		}
+
+		body:not(.is-preload) #footer .copyright {
+			opacity: 1; /* Will trigger the fade-in */
+		}
+
 
 /* Adjust the panel size for the Work page */
 #work {
